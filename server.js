@@ -18,14 +18,8 @@ MySQL Configuration
 */
 var knex = require('knex')({
 	client: 'mysql',
-	connection: {
-		host: process.env.MYSQL_Host,
-		user: process.env.MYSQL_User,
-		password: process.env.MYSQL_Password,
-		database: process.env.MYSQL_Database_Name
-	}
+	connection: process.env.JAWSDB_URL
 })
-
 /*
 Steam oAuth
 */
@@ -55,12 +49,9 @@ app.use(require("cookie-parser")())
 
 //Cookie middleware
 app.use(function (req, res, next) {
-	if (req.cookies.cookieName === undefined) {
+	if (!req.cookies.userid) {
 		// no: set a new cookie
-		var randomNumber=Math.random().toString();
-		randomNumber=randomNumber.substring(2,randomNumber.length);
-		res.cookie('cookieName',randomNumber);
-		console.log('cookie created successfully');
+		console.log('cookie not found');
 	}  else {
 		// yes, cookie was already present 
 		console.log('cookie exists', req.cookies);
@@ -76,26 +67,38 @@ app.get('/', function (req,res){
 
 app.post("/login", function (req,res,next) {
 	if (!req.body||!req.body.username||!req.body.password) return res.sendStatus(400);
-	knex('users').select().where("username",req.body.username).then((data)=>{
-		if (data.length>0) {
-			bcrypt.compare( req.body.password, data[0].hash, function(err,bool) {
+	knex('users').select().where("username",req.body.username).then((rows)=>{
+		// Username found in DB: Attempting to process...
+		if (rows.length>0) {
+
+			let entry = rows[0];
+			let hash = entry.hash.toString('utf8');
+			bcrypt.compare( req.body.password, hash, function(err,bool) {
 				if (!err){
-					if (req.cookies.id === undefined) {
+					// Was bcrypt compare successful?
+					if (bool){
 						// no: set a new cookie
-						var randomNumber=Math.random().toString();
-						randomNumber=randomNumber.substring(2,randomNumber.length);
-						res.cookie('id',randomNumber);
-						console.log('cookie created successfully');
-					}  else {
-						// yes, cookie was already present 
-						console.log('cookie exists', req.cookies);
-					} 
-					res.send(bool);
+						if (req.cookies.userid === undefined) {
+							var randomNumber=Math.random().toString();
+							randomNumber=randomNumber.substring(2,randomNumber.length);
+							res.cookie('userid',randomNumber);
+							console.log('cookie created successfully');
+						}  else {
+							// yes, cookie was already present 
+							console.log('cookie exists', req.cookies);
+						}
+						res.send(200);
+					}  
+					else {
+						res.send(400);
+					}
 				} else {
-					console.log(err)
+					console.log("Error Logging in:",err)
 				}
 			});
-		} else {
+		} 
+		// Username not found in DB: Send Vague Fail Message.
+		else {
 			res.sendStatus(400)
 		}
 	})
@@ -106,15 +109,17 @@ app.post("/login", function (req,res,next) {
 app.post("/signup", function (req,res,next) {
 	if (!req.body||!req.body.username||!req.body.password) return res.sendStatus(400);
 	var username = req.body.username;
-	knex('users').select().where("username",req.body.username).then((data)=>{
-		console.log(data)
-		if (data.length>0) {
+	knex('users').select().where("username",req.body.username).then((rows)=>{
+		if (rows.length>0) {
 			console.log("User already exists")
 			res.redirect("/")
 		} else {
 			bcrypt.hash(req.body.password,saltRounds).then(function(hash) {
 				// Store this in the DB
-				knex('users').insert({username,hash}).then(()=>{
+				knex('users').insert({
+					username,
+					hash
+				}).then(()=>{
 					res.redirect("/")
 				})
 			})
