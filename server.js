@@ -140,6 +140,7 @@ app.post("/signup", function (req,res,next) {
 			} else {
 				bcrypt.hash(req.body.password,saltRounds).then(function(hash) {
 					// Store this in the DB
+					console.log(username,hash)
 					knex('users').insert({
 						username,
 						hash,
