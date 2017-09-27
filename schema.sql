@@ -1,6 +1,7 @@
 CREATE TABLE users(
-  user_id INT NOT NULL AUTO_INCREMENT,
-  username CHAR(24) NOT NULL,
-  hash BINARY(60) NOT NULL,
-  PRIMARY KEY ( user_id )
+	user_id 	serial  PRIMARY KEY,
+	username 	varchar(24) NOT NULL,
+	hash 		bytea(60),
+	role 		integer DEFAULT 1,
+	faction 	integer DEFAULT 0
 );
