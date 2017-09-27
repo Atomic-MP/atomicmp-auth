@@ -16,10 +16,12 @@ var SteamStrategy = require("passport-steam");
 /*
 MySQL Configuration
 */
-var knex = require('knex')({
-	client: 'mysql',
-	connection: process.env.JAWSDB_URL
+const knex = require('knex')({
+	client: 'pg',
+	connection: process.env.DATABASE_URL,
+	ssl:true
 })
+
 /*
 Steam oAuth
 */
@@ -35,9 +37,27 @@ passport.use(new SteamStrategy({
 	}
 ));
 
-
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+
+
+
+/*
+Model for valid signup credentials.
+*/
+function isValidSignupCredentials(obj) {
+	console.log(obj);
+	return (
+		obj.username 							&&
+		obj.password 							&&
+		/^[a-zA-Z\ ]*$/.test(obj.username) 		&&
+		/^[a-zA-Z0-9_]*$/.test(obj.password)	&&
+		obj.username.length > 3 				&&
+		obj.username.length < 24 				&&
+		obj.password.length > 8
+	) ? true : false;
+}
+
 
 
 app.use(express.static(__dirname+"/public/views"));
@@ -65,6 +85,7 @@ app.get('/', function (req,res){
 	res.sendFile("index.html");
 })
 
+
 app.post("/login", function (req,res,next) {
 	if (!req.body||!req.body.username||!req.body.password) return res.sendStatus(400);
 	knex('users').select().where("username",req.body.username).then((rows)=>{
@@ -87,10 +108,10 @@ app.post("/login", function (req,res,next) {
 							// yes, cookie was already present 
 							console.log('cookie exists', req.cookies);
 						}
-						res.send(200);
+						res.sendStatus(200);
 					}  
 					else {
-						res.send(400);
+						res.sendStatus(400);
 					}
 				} else {
 					console.log("Error Logging in:",err)
@@ -108,45 +129,53 @@ app.post("/login", function (req,res,next) {
 
 app.post("/signup", function (req,res,next) {
 	if (!req.body||!req.body.username||!req.body.password) return res.sendStatus(400);
-	var username = req.body.username;
-	knex('users').select().where("username",req.body.username).then((rows)=>{
-		if (rows.length>0) {
-			console.log("User already exists")
-			res.redirect("/")
-		} else {
-			bcrypt.hash(req.body.password,saltRounds).then(function(hash) {
-				// Store this in the DB
-				knex('users').insert({
-					username,
-					hash
-				}).then(()=>{
-					res.redirect("/")
+	
+	if (isValidSignupCredentials(req.body)){
+		console.log("Valid signup")
+		var username = req.body.username;
+		knex('users').select().where("username",req.body.username).then((rows)=>{
+			if (rows.length>0) {
+				console.log(`User ${username} already exists`)
+				res.sendStatus(409)
+			} else {
+				bcrypt.hash(req.body.password,saltRounds).then(function(hash) {
+					// Store this in the DB
+					knex('users').insert({
+						username,
+						hash,
+						role:0,
+						faction:0
+					}).then(()=>{
+						res.redirect("/")
+					})
 				})
-			})
-		}
-	})
+			}
+		})
+	} else {
+		console.log("Nah")
+		res.sendStatus(400)
+		res.end();
+	}
 })
 
+
 app.get('/auth/steam',
-  passport.authenticate('steam'),
-  function(req, res) {
-    // The request will be redirected to Steam for authentication, so
-    // this function will not be called.
-  });
+	passport.authenticate('steam'),
+	function(req, res) {
+		// The request will be redirected to Steam for authentication, so
+		// this function will not be called.
+	}
+);
+
 
 app.get('/auth/steam/return',
-  passport.authenticate('steam', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+	passport.authenticate('steam', { failureRedirect: '/login' }),
+	function(req, res) {
+		// Successful authentication, redirect home.
+		res.redirect('/');
+	}
+);
 
-// console.log(hash);
-// bcrypt.compare(password,hash,function(err,res){
-// 	if (!err){
-// 		console.log(res);
-// 	}
-// });
 app.listen(PORT, function () {
 	console.log("Ready on "+PORT)
 })
