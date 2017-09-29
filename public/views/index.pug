@@ -8,7 +8,10 @@ html(lang="en")
 		block header
 		nav
 			if !user
-				ul.navbar
+				ul.navbar.navbar-left
+					li.nav-logo
+						a(href="/") FMP Control
+				ul.navbar.navbar-right
 					li.nav-item
 						a(href="register") Register
 					li.nav-item

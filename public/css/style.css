@@ -7,42 +7,80 @@
 	--body-main:		#f9ab57;
 	--body-accent:		#facf57;
 }
+body{
+	min-width: 500px;
+	padding-top: 60px;
+}
 h1,h2,h3,h4,h5,h6{
 	font-family: 'Roboto', sans-serif;
 }
 
 nav {
+	height: 60px;
 	background-color: var(--header-main);
 	border-bottom: 3px solid var(--header-accent);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-width: 500px;
 }
+
+ul.navbar-left{
+	float:left;
+}
+
+ul.navbar-right{
+	float:right;
+}
+
 ul.navbar {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    height:100%;
     background-color: var(--header-main);
 }
 
-ul.navbar li {float: right;}
+.nav-logo{
+	/*height: 100%;*/
+	font-size: 30px;
+	padding: 8px 0px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
 
-ul.navbar li a {
+
+.nav-logo a {
+	font-size: 30px;
+	padding: 15px 30px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+ul.navbar-right li {float: right;}
+
+ul.navbar-right li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 20px 16px;
     text-decoration: none;
 }
 
-ul.navbar li a:hover:not(.active) {background-color: var(--header-accent)}
+ul.navbar-right li a:hover:not(.active) {background-color: var(--header-accent)}
 
 ul.navbar li a.active {background-color: var(--body-accent)}
 
 ul.navbar li.right {float: right;}
 
-@media screen and (max-width: 600px){
+/*@media screen and (max-width: 600px){
     ul.navbar li.right, 
     ul.navbar li {float: none;}
-}
+}*/
 .site-wrap {
 	margin: 20px 0;
 }

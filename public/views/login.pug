@@ -8,13 +8,16 @@ html(lang="en")
 		block header
 		nav
 			if !user
-				ul.navbar
+				ul.navbar.navbar-left
+					li.nav-logo
+						a(href="/") FMP Control
+				ul.navbar.navbar-right
 					li.nav-item
 						a(href="register") Register
 					li.nav-item
 						a(href="login") Login
 		.site-wrap
-			h1 Fommo Auth
+			h1 Log In
 			form#login(action="/login" method="post")
 				label Username
 					input(type="text" name="username" autocomplete="off")
