@@ -92,7 +92,7 @@ function isValidSignupCredentials(obj) {
 
 app.set('view engine','pug');
 app.set('views', path.join(__dirname+"/public/views"));
-app.use(express.static(__dirname+"/public/views"));
+// app.use(express.static(__dirname+"/public/views"));
 app.use(express.static(__dirname+"/public/js"));
 app.use(express.static(__dirname+"/public/css"));
 app.use(bodyParser.json());
@@ -121,11 +121,20 @@ app.get('/', function (req,res){
 	})
 })
 
-// TODO make me real shit
-app.get('/get/user', authenticationMiddleware, function (req,res){
-	res.sendJSON("{user:1}")
+// // TODO make me real shit
+// app.get('/get/user', authenticationMiddleware, function (req,res){
+// 	res.sendJSON("{user:1}")
+// })
+
+
+app.get('/login', function(req,res) {
+	res.render("login.pug")
 })
 
+
+app.get('/register', function(req,res) {
+	res.render("register.pug")
+})
 
 app.post('/login', passport.authenticate('local'), (req, res)=>{
 	

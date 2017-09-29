@@ -38,4 +38,4 @@ CREATE TABLE keys(
 	key_id 			serial PRIMARY KEY,
 	key 			varchar(23) NOT NULL,
 	owner 			integer REFERENCES users(user_id)
-)
+);
