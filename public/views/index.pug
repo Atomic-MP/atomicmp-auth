@@ -1,0 +1,20 @@
+doctype html
+html(lang="en")
+	head
+		title= title
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto")
+		link(rel="stylesheet" type="text/css" href="style.css")
+	body
+		block header
+		nav
+			if !user
+				ul.navbar
+					li.nav-item
+						a(href="register.html") Register
+					li.nav-item
+						a(href="login.html") Login
+		.site-wrap
+			h1 Fommo Auth
+			p.
+				Sign in to your FMP account above.
+
