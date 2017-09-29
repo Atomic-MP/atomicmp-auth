@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+	head
+		title= title
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto")
+		link(rel="stylesheet" type="text/css" href="style.css")
+	body
+		block header
+		nav
+			if !user
+				ul.navbar
+					li.nav-item
+						a(href="register") Register
+					li.nav-item
+						a(href="login") Login
+		.site-wrap
+			h1 Fommo Auth
+			form#login(action="/login" method="post")
+				label Username
+					input(type="text" name="username" autocomplete="off")
+				label Password
+					input(type="text" name="password" autocomplete="off")
+				input(type="submit")
