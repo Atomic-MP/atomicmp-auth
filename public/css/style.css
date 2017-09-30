@@ -35,40 +35,39 @@ ul.navbar-right{
 }
 
 ul.navbar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    height:100%;
-    background-color: var(--header-main);
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	height:100%;
+	background-color: var(--header-main);
 }
 
 .nav-logo{
-	/*height: 100%;*/
 	font-size: 30px;
 	padding: 8px 0px;
-    color: white;
-    text-decoration: none;
-    text-align: center;
+	color: white;
+	text-decoration: none;
+	text-align: center;
 }
 
 
 .nav-logo a {
 	font-size: 30px;
 	padding: 15px 30px;
-    color: white;
-    text-decoration: none;
-    text-align: center;
+	color: white;
+	text-decoration: none;
+	text-align: center;
 }
 
 ul.navbar-right li {float: right;}
 
 ul.navbar-right li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 18.5px 16px;
-    text-decoration: none;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 18.5px 16px;
+	text-decoration: none;
 }
 
 ul.navbar-right li a:hover:not(.active) {background-color: var(--header-accent)}
@@ -78,8 +77,8 @@ ul.navbar li a.active {background-color: var(--body-accent)}
 ul.navbar li.right {float: right;}
 
 /*@media screen and (max-width: 600px){
-    ul.navbar li.right, 
-    ul.navbar li {float: none;}
+	ul.navbar li.right, 
+	ul.navbar li {float: none;}
 }*/
 
 .site-wrap {
