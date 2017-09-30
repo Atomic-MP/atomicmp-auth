@@ -16,7 +16,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 nav {
-	height: 60px;
+	height: 57px;
 	background-color: var(--header-main);
 	border-bottom: 3px solid var(--header-accent);
 	position: fixed;
@@ -67,7 +67,7 @@ ul.navbar-right li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 20px 16px;
+    padding: 18.5px 16px;
     text-decoration: none;
 }
 
@@ -81,9 +81,59 @@ ul.navbar li.right {float: right;}
     ul.navbar li.right, 
     ul.navbar li {float: none;}
 }*/
+
 .site-wrap {
+	margin: 0px auto;
+	padding: 20px 20px;
+	max-width: 800px;
+}
+
+.site-wrap form {
 	margin: 20px 0;
 }
+
+label {
+	margin: 0 0 16px 0;
+	display:block;
+	clear:both;
+	font-size: 18px;
+}
+
+.site-wrap form input{
+	font-family: "Roboto",sans-serif;
+	display:block;
+	clear:both;
+	padding:3px;
+}
+
+.site-wrap form input[type="submit"] {
+	color: white;
+	font-size: 18px;
+	background-color: var(--header-main);
+	border-top: 1px solid var(--header-accent);
+	border-right: 1px solid var(--header-accent);
+	border-bottom: 2px solid var(--header-accent);
+	border-left: 1px solid var(--header-accent);
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+.site-wrap form input[type="submit"]:hover {
+	color: white;
+	font-size: 18px;
+	background-color: var(--header-accent);
+	border-top: 1px solid var(--header-accent);
+	border-right: 1px solid var(--header-accent);
+	border-bottom: 2px solid var(--header-accent);
+	border-left: 1px solid var(--header-accent);
+	border-radius: 5px;
+	padding: 5px 10px;
+	box-shadow: 1px 1px 3px 1px #DDDDDD;
+	-webkit-box-shadow: 1px 1px 3px 1px #DDDDDD;
+	-moz-box-shadow: 1px 1px 3px 1px #DDDDDD;
+	-o-box-shadow: 1px 1px 3px 1px #DDDDDD;
+}
+
 
 p {
 	margin: 16px 0;

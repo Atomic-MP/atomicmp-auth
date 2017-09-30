@@ -19,8 +19,10 @@ html(lang="en")
 		.site-wrap
 			h1 Join FMP
 			form#register(action="/register" method="post")
-				label Username
-					input(type="text" name="username" autocomplete="off")
-				label Password
-					input(type="text" name="password" autocomplete="off")
-				input(type="submit")
+				label Username:
+					input(type="text" name="username" autocomplete="off" placeholder="Wastelander")
+				label Password:
+					input(type="password" name="password" autocomplete="off" placeholder="********")
+				label Confirm Password:
+					input(type="password" name="confirm-password" autocomplete="off" placeholder="********")
+				input(type="submit" value="Create Account")
