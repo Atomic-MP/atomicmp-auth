@@ -148,13 +148,17 @@ app.post("/register", function (req,res,next) {
 	
 	if (isValidSignupCredentials(req.body)){
 		var username = req.body.username;
-		knex('users').select().where("username",req.body.username).then((rows)=>{
+		// Check if username exists; case insensitive
+		knex.raw(`SELECT * FROM users WHERE LOWER(username)=LOWER('${req.body.username}')`).then((data)=>{
+			let rows = data.rows;
 			if (rows.length>0) {
-				console.log(`User ${username} already exists`)
+				console.log(`User ${rows[0].username} already exists`)
 				res.sendStatus(409)
 			} else {
 				bcrypt.hash(req.body.password,saltRounds).then(function(hash) {
 					// Store this in the DB
+					let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+					console.log(ip)
 					knex('users').insert({
 						username,
 						hash,

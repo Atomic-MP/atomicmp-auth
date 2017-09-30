@@ -30,7 +30,7 @@ CREATE TABLE users(
 	hash 			bytea NOT NULL,
 	role 			integer REFERENCES roles(role_id) NOT NULL,
 	faction 		integer REFERENCES factions(faction_id),
-	created_at 		date
+	created_at 		timestamp
 );
 
 
@@ -39,3 +39,4 @@ CREATE TABLE keys(
 	key 			varchar(23) NOT NULL,
 	owner 			integer REFERENCES users(user_id)
 );
+
