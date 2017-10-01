@@ -98,7 +98,7 @@ app.set('views', path.join(__dirname+"/public/views"));
 // app.use(express.static(__dirname+"/public/views"));
 app.use(express.static(__dirname+"/public/js"));
 app.use(express.static(__dirname+"/public/css"));
-app.use(favicon(__dirname + '/public/favicon/favicon.png'));
+app.use(favicon(__dirname + '/public/favicon.png'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(require("cookie-parser")());
@@ -121,7 +121,7 @@ app.get('/', function (req,res){
 		user = req.user;
 	}
 	res.render('index.pug',{
-		title: "Fommo",
+		title: "Fommo Auth",
 		user:user
 	})
 })
@@ -133,12 +133,26 @@ app.get('/', function (req,res){
 
 
 app.get('/login', function(req,res) {
-	res.render("login.pug")
+	var user;
+	if (req.isAuthenticated()){
+		user = req.user;
+	}
+	res.render('login.pug',{
+		title: "Fommo Auth",
+		user:user
+	})
 })
 
 
 app.get('/register', function(req,res) {
-	res.render("register.pug")
+	var user;
+	if (req.isAuthenticated()){
+		user = req.user;
+	}
+	res.render('register.pug',{
+		title: "Fommo Auth",
+		user:user
+	})
 })
 
 

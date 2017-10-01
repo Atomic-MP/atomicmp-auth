@@ -7,15 +7,22 @@ html(lang="en")
 	body
 		block header
 		nav
+			ul.navbar.navbar-left
+				li.nav-logo
+					a(href="/") FMP Control
+
 			if !user
-				ul.navbar.navbar-left
-					li.nav-logo
-						a(href="/") FMP Control
 				ul.navbar.navbar-right
 					li.nav-item
-						a(href="register") Register
-					li.nav-item
 						a(href="login") Login
+					li.nav-item
+						a(href="register") Register
+			else
+				ul.navbar.navbar-right
+					li.nav-item
+						a(href="logout") Log Out
+					li.nav-item
+						a(href="users/"+user.user_id)= user.username
 		.site-wrap
 			h1 Log In
 			form#login(action="/login" method="post")
