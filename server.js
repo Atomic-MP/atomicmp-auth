@@ -7,6 +7,7 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 
 const express = require("express");
+const favicon = require('express-favicon');
 const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -27,7 +28,7 @@ const knex = require('knex')({
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-
+app.use(session({ secret: 'anything' }));
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -62,9 +63,9 @@ passport.serializeUser((user, done)=>{
 
 passport.deserializeUser((id, done)=>{
 	console.log("deserualize ", id);
-	db.one("SELECT user_id, user_name, user_email, user_role FROM users " +
-					"WHERE user_id = $1", [id])
-	.then((user)=>{
+	knex('users').select().where("user_id",id)
+	.then((data)=>{
+		let user = data[0];
 		//log.debug("deserializeUser ", user);
 		done(null, user);
 	})
@@ -81,11 +82,13 @@ function isValidSignupCredentials(obj) {
 	return (
 		obj.username 							&&
 		obj.password 							&&
+		obj.confirmPassword						&&
 		/^[a-zA-Z\ ]*$/.test(obj.username) 		&&
 		/^[a-zA-Z0-9_]*$/.test(obj.password)	&&
 		obj.username.length >= 3 				&&
 		obj.username.length <= 24 				&&
-		obj.password.length >= 8
+		obj.password.length >= 8 				&&
+		obj.password ==obj.confirmPassword
 	) ? true : false;
 }
 
@@ -95,6 +98,7 @@ app.set('views', path.join(__dirname+"/public/views"));
 // app.use(express.static(__dirname+"/public/views"));
 app.use(express.static(__dirname+"/public/js"));
 app.use(express.static(__dirname+"/public/css"));
+app.use(favicon(__dirname + '/public/favicon/favicon.png'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(require("cookie-parser")());
@@ -117,7 +121,8 @@ app.get('/', function (req,res){
 		user = req.user;
 	}
 	res.render('index.pug',{
-		title: "Fommo Auth"
+		title: "Fommo",
+		user:user
 	})
 })
 
@@ -134,6 +139,13 @@ app.get('/login', function(req,res) {
 
 app.get('/register', function(req,res) {
 	res.render("register.pug")
+})
+
+
+app.get('/logout', function(req,res) {
+	req.session.destroy()
+	req.logout()
+	res.redirect('/')
 })
 
 app.post('/login', passport.authenticate('local'), (req, res)=>{
