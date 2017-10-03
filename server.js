@@ -165,9 +165,9 @@ app.get('/logout', function(req,res) {
 app.post('/login', passport.authenticate('local'), (req, res)=>{
 	
 	console.log(req.user);
-	res.writeHead(200);
-	
-	res.redirect("/");
+	res.sendStatus(200);
+
+	// res.redirect("/");
 });
 
 
