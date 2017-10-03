@@ -7,15 +7,38 @@
 	--body-main:		#f9ab57;
 	--body-accent:		#facf57;
 }
-body{
-	min-width: 500px;
-	padding-top: 60px;
-}
-h1,h2,h3,h4,h5,h6{
-	font-family: 'Roboto', sans-serif;
+
+
+html {
+	height:calc(100% - 60px);
+	width:100%;
+	margin:0;
+	padding:0;
 }
 
-nav {
+body {
+	height:100%;
+	width:100%;
+	margin:0;
+	padding:0;
+}
+body {
+	min-width: 500px;
+	padding-top: 60px;
+	background: #404040 url(https://staticdelivery.nexusmods.com/contents/Templates/130/bg.jpg) top center no-repeat fixed;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Roboto', sans-serif;
+	color: var(--header-main);
+}
+
+nav {  
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	user-select: none;          /* Likely future */      
+	user-select: none;
 	height: 57px;
 	background-color: var(--header-main);
 	border-bottom: 3px solid var(--header-accent);
@@ -82,6 +105,7 @@ ul.navbar li.right {float: right;}
 }*/
 
 .site-wrap {
+	background-color: white;
 	margin: 0px auto;
 	padding: 20px 20px;
 	max-width: 800px;
