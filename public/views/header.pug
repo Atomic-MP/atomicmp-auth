@@ -1,10 +1,17 @@
-extends index.pug
-
-block append header
 nav
-	h3 Fommo Auth
-	ul.navbar
-		li.nav-item 
-			a(href="register.html") Register
-		li.nav-item
-			a(href="login.html") Login
+	ul.navbar.navbar-left
+		li.nav-logo
+			a(href="/") FMP Control
+
+	if !user
+		ul.navbar.navbar-right
+			li.nav-item
+				a(href="login") Login
+			li.nav-item
+				a(href="register") Register
+	else
+		ul.navbar.navbar-right
+			li.nav-item
+				a(href="logout") Log Out
+			li.nav-item
+				a(href="users/"+user.user_id)= user.username

@@ -28,7 +28,10 @@ const knex = require('knex')({
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-app.use(session({ secret: 'anything' }));
+app.use(session({ secret: 'anything',
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(passport.initialize())
 app.use(passport.session())
 

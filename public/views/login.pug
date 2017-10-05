@@ -2,33 +2,38 @@ doctype html
 html(lang="en")
 	head
 		title= title
-		link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto")
-		link(rel="stylesheet" type="text/css" href="style.css")
-		link(rel="icon" type="image/png" href="favicon.png")
+		include meta/theme
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
 	body
-		block header
-		nav
-			ul.navbar.navbar-left
-				li.nav-logo
-					a(href="/") FMP Control
-
-			if !user
-				ul.navbar.navbar-right
-					li.nav-item
-						a(href="login") Login
-					li.nav-item
-						a(href="register") Register
-			else
-				ul.navbar.navbar-right
-					li.nav-item
-						a(href="logout") Log Out
-					li.nav-item
-						a(href="users/"+user.user_id)= user.username
+		include header
 		.site-wrap
 			h1 Log In
-			form#login(action="/login" method="post")
+			form#login
 				label Username
 					input(type="text" name="username" autocomplete="off")
 				label Password
 					input(type="password" name="password" autocomplete="off")
 				input(type="submit" value="Log In")
+		script(type="text/javascript").
+			$(document).ready(function() {
+				console.log("Document ready")
+				
+				$('form#login').on("submit", function(e){
+					e.preventDefault();
+					var formdata = $(this).serialize();
+					console.log(formdata)
+					$.ajax({
+						url : '/login',
+						type: 'POST',
+						data:formdata,
+						dataType:"html",
+						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+						success : function (response) {
+							document.location.href="/";
+						},
+						error: function(xhr, resp, text) {
+							console.log(xhr, resp, text);
+						}
+					});
+				})
+			});
