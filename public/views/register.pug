@@ -10,9 +10,10 @@ html(lang="en")
 			h1 Join FMP
 			form#register(action="/register" method="post")
 				label Username:
-					input(type="text" name="username" autocomplete="off" placeholder="Wastelander")
+					input(type="text" name="username" placeholder="Wastelander"
+pattern="[A-Za-z_ ]{3,24}" autocomplete="off" required)
 				label Password:
-					input(type="password" name="password" autocomplete="off" placeholder="********")
+					input(type="password" name="password" autocomplete="off"  pattern=".{8,}" placeholder="********" required)
 				label Confirm Password:
-					input(type="password" name="confirmPassword" autocomplete="off" placeholder="********")
+					input(type="password" name="confirmPassword" pattern=".{8,}" autocomplete="off" placeholder="********" required)
 				input(type="submit" value="Create Account")

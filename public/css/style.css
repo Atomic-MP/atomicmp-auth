@@ -116,7 +116,7 @@ ul.navbar li.right {float: right;}
 }
 
 label {
-	margin: 0 0 16px 0;
+	margin: 16px 0 0 0;
 	display:block;
 	clear:both;
 	font-size: 18px;
@@ -139,6 +139,7 @@ label {
 	border-left: 1px solid var(--header-accent);
 	border-radius: 5px;
 	padding: 5px 10px;
+	margin-top: 12px;
 }
 
 .site-wrap form input[type="submit"]:hover {
@@ -160,4 +161,13 @@ label {
 
 p {
 	margin: 16px 0;
+}
+
+
+.error {
+	color: red;
+	font-size: 14px;
+	padding:0px;
+	margin:0px;
+	min-height: 20px;
 }

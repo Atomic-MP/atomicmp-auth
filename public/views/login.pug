@@ -10,18 +10,20 @@ html(lang="en")
 			h1 Log In
 			form#login
 				label Username
-					input(type="text" name="username" autocomplete="off")
+					input(type="text" name="username" 
+pattern="[A-Za-z_ ]{3,24}" autocomplete="off" required)
 				label Password
-					input(type="password" name="password" autocomplete="off")
+					input(type="password" name="password" pattern=".{8,}" autocomplete="off" required)
+				p.error
 				input(type="submit" value="Log In")
 		script(type="text/javascript").
 			$(document).ready(function() {
 				console.log("Document ready")
+					$("p.error").html(" ")
 				
 				$('form#login').on("submit", function(e){
 					e.preventDefault();
 					var formdata = $(this).serialize();
-					console.log(formdata)
 					$.ajax({
 						url : '/login',
 						type: 'POST',
@@ -32,7 +34,10 @@ html(lang="en")
 							document.location.href="/";
 						},
 						error: function(xhr, resp, text) {
-							console.log(xhr, resp, text);
+							if (text = "Unauthorized") {
+								console.log("Login Failed")
+								$("p.error").html("Login Failed")
+							}
 						}
 					});
 				})
