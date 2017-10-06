@@ -12,8 +12,39 @@ html(lang="en")
 				label Username:
 					input(type="text" name="username" placeholder="Wastelander"
 pattern="[A-Za-z_ ]{3,24}" autocomplete="off" required)
+				p.input-description.
+					Username must be between 3-24 characters and be only A-Za-z.
 				label Password:
 					input(type="password" name="password" autocomplete="off"  pattern=".{8,}" placeholder="********" required)
+				p.input-description.
+					Password must be 8 or more characters.
 				label Confirm Password:
 					input(type="password" name="confirmPassword" pattern=".{8,}" autocomplete="off" placeholder="********" required)
+				p.error
 				input(type="submit" value="Create Account")
+		script(type="text/javascript").
+			$(document).ready(function() {
+				console.log("Document ready")
+					$("p.error").html(" ")
+				
+				$('form#register').on("submit", function(e){
+					e.preventDefault();
+					var formdata = $(this).serialize();
+					$.ajax({
+						url : '/register',
+						type: 'POST',
+						data:formdata,
+						dataType:"html",
+						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+						success : function (response) {
+							document.location.href="/";
+						},
+						error: function(xhr, resp, text) {
+							if (text = "Unauthorized") {
+								console.log("Account Creation Failed")
+								$("p.error").html("Account Creation Failed")
+							}
+						}
+					});
+				})
+			});
