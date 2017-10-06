@@ -172,23 +172,28 @@ app.route('/register')
 			} else {
 				knex('keys').select('key_id')
 				.where('key',req.body.key)
+				.andWhere('owner',null)
 				.then((data)=> {
 					if (data.length > 0) {
 						var keyID = data[0].key_id;
 						bcrypt.hash(req.body.password,saltRounds).then(function(hash) {
 							// Store this in the DB
 							let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-							knex('users').returning('user_id').insert({
+							knex('users')
+							.returning('user_id')
+							.insert({
 								username,
 								hash,
 								role:3,
 								faction: null,
 								created_at: new Date()
-							}).then((returning)=>{
+							})
+							.then((returning)=>{
 								knex('keys').where('key_id',keyID).update('owner', returning[0]).then(()=>{
 									res.redirect("/");
 								})
-							}).catch(err=> {
+							})
+							.catch(err=> {
 								console.log(err);
 							})
 						})
@@ -244,7 +249,6 @@ app.get("/keygen", function (req, res) {
 
 		(function addKey(key){
 			knex("keys").where('key',key).then(data=> {
-				console.log(data)
 				if (data.length === 0) {
 					knex('keys').insert({
 						key,
