@@ -10,16 +10,29 @@ html(lang="en")
 			h1 Join FMP
 			form#register(action="/register" method="post")
 				label Username:
-					input(type="text" name="username" placeholder="Wastelander"
-pattern="[A-Za-z_ ]{3,24}" autocomplete="off" required)
+					input(
+						type="text" 
+						name="username" 
+						placeholder="Wastelander"
+						pattern="[A-Za-z_ ]{3,24}" 
+						autocomplete="off"
+						required)
 				p.input-description.
 					Username must be between 3-24 characters and be only A-Za-z.
 				label Password:
-					input(type="password" name="password" autocomplete="off"  pattern=".{8,}" placeholder="********" required)
+					input(
+						type="password" 
+						name="password" 
+						autocomplete="off"  
+						pattern=".{8,}"
+						placeholder="********" 
+						required)
 				p.input-description.
 					Password must be 8 or more characters.
 				label Confirm Password:
 					input(type="password" name="confirmPassword" pattern=".{8,}" autocomplete="off" placeholder="********" required)
+				label Key:
+					input(type="text" name="key" pattern=".{23}" autocomplete="off" placeholder="FMP-????-???-????-????" required)
 				p.error
 				input(type="submit" value="Create Account")
 		script(type="text/javascript").

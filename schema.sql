@@ -8,11 +8,11 @@ CREATE TABLE roles (
 );
 
 -- Hardcoded roles on initialization
+INSERT INTO roles (role_name) VALUES ('banned');
+INSERT INTO roles (role_name) VALUES ('kicked');
 INSERT INTO roles (role_name) VALUES ('user');
 INSERT INTO roles (role_name) VALUES ('moderator');
 INSERT INTO roles (role_name) VALUES ('admin');
-INSERT INTO roles (role_name) VALUES ('kicked');
-INSERT INTO roles (role_name) VALUES ('banned');
 
 -- Factions. Update as needed.
 CREATE TABLE factions (
@@ -37,6 +37,7 @@ CREATE TABLE users(
 CREATE TABLE keys(
 	key_id 			serial PRIMARY KEY,
 	key 			varchar(23) NOT NULL,
-	owner 			integer REFERENCES users(user_id)
+	owner 			integer REFERENCES users(user_id),
+	created_by 		integer REFERENCES users(user_id)
 );
 

@@ -86,6 +86,7 @@ function isValidSignupCredentials(obj) {
 		obj.username 							&&
 		obj.password 							&&
 		obj.confirmPassword						&&
+		obj.key 								&&
 		/^[a-zA-Z\ ]*$/.test(obj.username) 		&&
 		/^[a-zA-Z0-9_]*$/.test(obj.password)	&&
 		obj.username.length >= 3 				&&
@@ -129,13 +130,9 @@ app.get('/', function (req,res){
 	})
 })
 
-// // TODO make me real shit
-// app.get('/get/user', authenticationMiddleware, function (req,res){
-// 	res.sendJSON("{user:1}")
-// })
 
-
-app.get('/login', function(req,res) {
+app.route('/login')
+.get(function(req,res) {
 	var user;
 	if (req.isAuthenticated()){
 		user = req.user;
@@ -145,14 +142,76 @@ app.get('/login', function(req,res) {
 		user:user
 	})
 })
+.post(passport.authenticate('local'), (req, res)=>{
+	res.sendStatus(200);
+});
 
 
-app.get('/register', function(req,res) {
+app.route('/register')
+.get(function(req,res) {
 	var user;
 	if (req.isAuthenticated()){
 		user = req.user;
 	}
 	res.render('register.pug',{
+		title: "Fommo Auth",
+		user:user
+	})
+})
+.post(function (req,res,next) {
+	if (!req.body||!req.body.username||!req.body.password) return res.sendStatus(400);
+	
+	if (isValidSignupCredentials(req.body)){
+		var username = req.body.username;
+		// Check if username exists; case insensitive
+		knex.raw(`SELECT * FROM users WHERE LOWER(username)=LOWER('${req.body.username}')`).then((data)=>{
+			let rows = data.rows;
+			if (rows.length>0) {
+				console.log(`User ${rows[0].username} already exists`)
+				res.sendStatus(409)
+			} else {
+				knex('keys').select('key_id')
+				.where('key',req.body.key)
+				.then((data)=> {
+					if (data.length > 0) {
+						var keyID = data[0].key_id;
+						bcrypt.hash(req.body.password,saltRounds).then(function(hash) {
+							// Store this in the DB
+							let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+							knex('users').returning('user_id').insert({
+								username,
+								hash,
+								role:3,
+								faction: null,
+								created_at: new Date()
+							}).then((returning)=>{
+								knex('keys').where('key_id',keyID).update('owner', returning[0]).then(()=>{
+									res.redirect("/");
+								})
+							}).catch(err=> {
+								console.log(err);
+							})
+						})
+					} else {
+						res.sendStatus(409);
+					}
+				})
+			}
+		})
+	} else {
+		console.log("Nah");
+		res.sendStatus(400);
+		res.end();
+	}
+});
+
+
+app.get('/user/:id', function(req,res) {
+	var user;
+	if (req.isAuthenticated()){
+		user = req.user;
+	}
+	res.render('users.pug',{
 		title: "Fommo Auth",
 		user:user
 	})
@@ -165,73 +224,46 @@ app.get('/logout', function(req,res) {
 	res.redirect('/')
 })
 
-app.post('/login', passport.authenticate('local'), (req, res)=>{
-	
-	console.log(req.user);
-	res.sendStatus(200);
 
-	// res.redirect("/");
-});
-
-
-app.post("/register", function (req,res,next) {
-	if (!req.body||!req.body.username||!req.body.password) return res.sendStatus(400);
-	
-	if (isValidSignupCredentials(req.body)){
-		var username = req.body.username;
-		// Check if username exists; case insensitive
-		knex.raw(`SELECT * FROM users WHERE LOWER(username)=LOWER('${req.body.username}')`).then((data)=>{
-			let rows = data.rows;
-			if (rows.length>0) {
-				console.log(`User ${rows[0].username} already exists`)
-				res.sendStatus(409)
-			} else {
-				bcrypt.hash(req.body.password,saltRounds).then(function(hash) {
-					// Store this in the DB
-					let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-					console.log(ip)
-					knex('users').insert({
-						username,
-						hash,
-						role:1,
-						faction: null,
-						created_at: new Date()
-					}).then(()=>{
-						res.redirect("/")
-					}).catch(err=> {
-						console.log(err)
-					})
-				})
+app.get("/keygen", function (req, res) {
+	if (req.isAuthenticated() && req.user.role === 5) {
+		var randomString = function (len, bits) {
+			bits = bits || 36;
+			var outStr = "", newStr;
+			while (outStr.length < len) {
+				newStr = Math.random().toString(bits).slice(2);
+				outStr += newStr.slice(0, Math.min(newStr.length, (len - outStr.length)));
 			}
-		})
+			return outStr.toUpperCase();
+		};
+
+
+		function createKey (){
+			return ("FMP-"+randomString(4,16)+"-"+randomString(4,16)+"-"+randomString(4,16)+"-"+randomString(4,16));
+		}
+
+		(function addKey(key){
+			knex("keys").where('key',key).then(data=> {
+				console.log(data)
+				if (data.length === 0) {
+					knex('keys').insert({
+						key,
+						created_by: req.user.id,
+					}).then( res.send(key) );
+				} else{
+					// Key already exists! Recursively try again.
+					addKey(createKey());
+				}
+			})
+		})(createKey())
 	} else {
-		console.log("Nah")
-		res.sendStatus(400)
-		res.end();
+		res.redirect("/")
 	}
 })
 
 
-app.get('/auth/steam',
-	passport.authenticate('steam'),
-	function(req, res) {
-		// The request will be redirected to Steam for authentication, so
-		// this function will not be called.
-	}
-);
-
-
-app.get('/auth/steam/return',
-	passport.authenticate('steam', { failureRedirect: '/login' }),
-	function(req, res) {
-		// Successful authentication, redirect home.
-		res.redirect('/');
-	}
-);
-
-
 app.use(function(req,res) { 
-		res.sendStatus('404');
+		res.redirect("/");
 });
 app.listen(PORT, function () {
 	console.log("Ready on "+PORT)
