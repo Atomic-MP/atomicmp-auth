@@ -30,34 +30,55 @@ html(lang="en")
 				p.input-description.
 					Password must be 8 or more characters.
 				label Confirm Password:
-					input(type="password" name="confirmPassword" pattern=".{8,}" autocomplete="off" placeholder="********" required)
+					input(
+						type="password" 
+						name="confirmPassword" 
+						pattern=".{8,}" 
+						autocomplete="off" 
+						placeholder="********" 
+						required)
 				label Key:
-					input(type="text" name="key" pattern=".{23}" autocomplete="off" placeholder="FMP-????-???-????-????" required)
+					input(
+						type="text" 
+						name="key" 
+						pattern=".{23}" 
+						autocomplete="off" 
+						placeholder="FMP-????-???-????-????" 
+						required)
 				p.error
 				input(type="submit" value="Create Account")
 		script(type="text/javascript").
+			var submitting = false;
 			$(document).ready(function() {
 				console.log("Document ready")
 					$("p.error").html(" ")
 				
 				$('form#register').on("submit", function(e){
 					e.preventDefault();
-					var formdata = $(this).serialize();
-					$.ajax({
-						url : '/register',
-						type: 'POST',
-						data:formdata,
-						dataType:"html",
-						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-						success : function (response) {
-							document.location.href="/";
-						},
-						error: function(xhr, resp, text) {
-							if (text = "Unauthorized") {
-								console.log("Account Creation Failed")
-								$("p.error").html("Account Creation Failed")
+					if (!submitting) {
+						submitting = true;
+						$('form#register input[type=submit]').css('opacity', 0.6)
+						var formdata = $(this).serialize();
+						$.ajax({
+							url : '/register',
+							type: 'POST',
+							data:formdata,
+							dataType:"html",
+							contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+							success : function (response) {
+								submitting = false;
+								$('form#register input[type=submit]').css('opacity', 1.0)
+								document.location.href="/";
+							},
+							error: function(xhr, resp, text) {
+								submitting = false;
+								$('form#register input[type=submit]').css('opacity', 1.0)
+								if (text = "Unauthorized") {
+									console.log("Account Creation Failed")
+									$("p.error").html("Account Creation Failed")
+								}
 							}
-						}
-					});
+						});
+					}
 				})
 			});

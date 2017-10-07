@@ -26,7 +26,7 @@ INSERT INTO factions (faction_name) VALUES ('Sons Of Liberty');
 -- User model. This will likely need to be added _last_ due to the nature of its references.
 CREATE TABLE users(
 	user_id 		serial  PRIMARY KEY,
-	username 		varchar(24) NOT NULL,
+	username 		varchar(24) NOT NULL unique,
 	hash 			bytea NOT NULL,
 	role 			integer REFERENCES roles(role_id) NOT NULL,
 	faction 		integer REFERENCES factions(faction_id),
