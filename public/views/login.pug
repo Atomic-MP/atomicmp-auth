@@ -3,23 +3,33 @@ html(lang="en")
 	head
 		title= title
 		include meta/theme
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+		include meta/scripts
 	body
 		include header
 		.site-wrap
 			h1 Log In
 			form#login
 				label Username
-					input(type="text" name="username" 
-pattern="[A-Za-z_ ]{3,24}" autocomplete="off" required)
+					input(
+						type="text"
+						name="username"
+						pattern="[A-Za-z_ ]{3,24}" 
+						autocomplete="off" 
+						required)
 				label Password
-					input(type="password" name="password" pattern=".{8,}" autocomplete="off" required)
+					input(
+						type="password" 
+						name="password" 
+						pattern=".{8,}" 
+						autocomplete="off" 
+						required)
 				p.error
 				input(type="submit" value="Log In")
+
 		script(type="text/javascript").
 			$(document).ready(function() {
 				console.log("Document ready")
-					$("p.error").html(" ")
+					$("p.error").html("")
 				
 				$('form#login').on("submit", function(e){
 					e.preventDefault();

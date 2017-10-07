@@ -212,14 +212,30 @@ app.route('/register')
 
 
 app.get('/user/:id', function(req,res) {
-	var user;
+
 	if (req.isAuthenticated()){
-		user = req.user;
+		var user = req.user;
+		var targetUserID = req.params.id;
+		knex("users")
+		.join('roles', 'users.role', '=', 'roles.role_id')
+		.select('user_id','username','role_name', 'faction', 'created_at')
+		.where('user_id',targetUserID)
+		.then((data)=> {
+			console.log(data);
+			var targetUser;
+			if (data.length > 0) {
+				targetUser = data[0];
+			}
+
+			res.render('users.pug',{
+				title: "Fommo Auth",
+				user:user,
+				targetUser
+			})
+		}).catch((err)=> console.log(err))
+	} else {
+		res.redirect("/");
 	}
-	res.render('users.pug',{
-		title: "Fommo Auth",
-		user:user
-	})
 })
 
 

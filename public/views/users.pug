@@ -3,14 +3,16 @@ html(lang="en")
 	head
 		title= title
 		include meta/theme
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+		include meta/scripts
 	body
 		include header
 		.site-wrap
-			h1 Fommo Auth
-			if !user
+			if !targetUser
 				p.
-					Sign in to your FMP account above.
+					User not found.
 			else
-				h3= user.username
-				p= "ID: "+user.user_id
+				h2= targetUser.username
+				p= "ID: "+targetUser.user_id
+				p= "Role: "+targetUser.role_name
+				if targetUser.faction
+					p= "Faction: "+targetUser.faction

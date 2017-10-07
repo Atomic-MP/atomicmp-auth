@@ -3,7 +3,7 @@ html(lang="en")
 	head
 		title= title
 		include meta/theme
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+		include meta/scripts
 	body
 		include header
 		.site-wrap
@@ -51,7 +51,7 @@ html(lang="en")
 			var submitting = false;
 			$(document).ready(function() {
 				console.log("Document ready")
-					$("p.error").html(" ")
+				$("p.error").html(" ")
 				
 				$('form#register').on("submit", function(e){
 					e.preventDefault();
