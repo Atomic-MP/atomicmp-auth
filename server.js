@@ -32,6 +32,7 @@ app.use(session({ secret: 'anything',
     resave: true,
     saveUninitialized: true
 }));
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -83,15 +84,17 @@ Model for valid signup credentials.
 */
 function isValidSignupCredentials(obj) {
 	return (
-		obj.username 							&&
-		obj.password 							&&
-		obj.confirmPassword						&&
-		obj.key 								&&
-		/^[a-zA-Z\ ]*$/.test(obj.username) 		&&
-		/^[a-zA-Z0-9_]*$/.test(obj.password)	&&
-		obj.username.length >= 3 				&&
-		obj.username.length <= 24 				&&
-		obj.password.length >= 8 				&&
+		obj.username 									&&
+		obj.password 									&&
+		obj.confirmPassword								&&
+		obj.key 										&&
+		(obj.username.replace(/ /g,'').length >= 3)		&&
+		(!obj.username.startsWith(" "))					&&
+		/^[a-zA-Z\ ]*$/.test(obj.username) 				&&
+		/^[a-zA-Z0-9_]*$/.test(obj.password)			&&
+		obj.username.length >= 3 						&&
+		obj.username.length <= 24 						&&
+		obj.password.length >= 8 						&&
 		obj.password ==obj.confirmPassword
 	) ? true : false;
 }
@@ -160,7 +163,7 @@ app.route('/register')
 })
 .post(function (req,res,next) {
 	if (!req.body||!req.body.username||!req.body.password) return res.sendStatus(400);
-	
+	req.body.username = req.body.username.trim();
 	if (isValidSignupCredentials(req.body)){
 		var username = req.body.username;
 		// Check if username exists; case insensitive
@@ -189,7 +192,10 @@ app.route('/register')
 								created_at: new Date()
 							})
 							.then((returning)=>{
-								knex('keys').where('key_id',keyID).update('owner', returning[0]).then(()=>{
+								knex('keys')
+								.where('key_id',keyID)
+								.update('owner', returning[0])
+								.then(()=>{
 									res.redirect("/");
 								})
 							})
@@ -283,7 +289,7 @@ app.get("/keygen", function (req, res) {
 
 
 app.use(function(req,res) { 
-		res.redirect("/");
+	res.redirect("/");
 });
 app.listen(PORT, function () {
 	console.log("Ready on "+PORT)
