@@ -25,7 +25,8 @@ body {
 body {
 	min-width: 500px;
 	padding-top: 60px;
-	background: #404040 url(https://staticdelivery.nexusmods.com/contents/Templates/130/bg.jpg) top center no-repeat fixed;
+	background: #211C18 url(https://lh3.googleusercontent.com/HBt3ab5jayj5jo9gpiW5a5ZKjLdvqQndJcGgdS8rHOMs7f8oPr5FYURtWlVQCbVvH2LGXBmFb4l5RgQ=w1920-h978) top center no-repeat fixed;
+	background-size: cover;
 }
 
 h1,h2,h3,h4,h5,h6 {
