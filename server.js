@@ -276,7 +276,7 @@ app.get("/keygen", function (req, res) {
 
 
 		function createKey (){
-			return ("FMP-"+randomString(4,16)+"-"+randomString(4,16)+"-"+randomString(4,16)+"-"+randomString(4,16));
+			return ("AMP-"+randomString(4,16)+"-"+randomString(4,16)+"-"+randomString(4,16)+"-"+randomString(4,16));
 		}
 
 		(function addKey(key){
