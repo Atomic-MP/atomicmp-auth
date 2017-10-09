@@ -103,10 +103,18 @@ function isValidSignupCredentials(obj) {
 app.set('view engine','pug');
 app.set('views', path.join(__dirname+"/public/views"));
 // app.use(express.static(__dirname+"/public/views"));
-app.use(express.static(__dirname+"/public/images"));
-app.use(express.static(__dirname+"/public/js"));
-app.use(express.static(__dirname+"/public/css"));
-app.use(express.static(__dirname+"/public/fonts"));
+app.use(express.static(__dirname+"/public/images", {
+  maxage: '2h'
+}));
+app.use(express.static(__dirname+"/public/js", {
+  maxage: '2h'
+}));
+app.use(express.static(__dirname+"/public/css", {
+  maxage: '2h'
+}));
+app.use(express.static(__dirname+"/public/fonts", {
+  maxage: '2h'
+}));
 app.use(favicon(__dirname + '/public/favicon.png'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
