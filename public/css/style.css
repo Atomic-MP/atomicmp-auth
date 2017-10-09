@@ -2,10 +2,10 @@
 	padding:0;
 	margin:0;
 	font-family: 'Open Sans', sans-serif;
-	--header-main:      #f48503;
-	--header-accent:    #d16f05;
+	--header-main:      #f76b3a;
+	--header-accent:    #293744;
 	--body-main:		#f9ab57;
-	--body-accent:		#facf57;
+	--body-accent:		#f9f9d2;
 }
 
 
@@ -69,7 +69,6 @@ ul.navbar {
 
 .nav-logo{
 	font-size: 30px;
-	padding: 8px 0px;
 	color: white;
 	text-decoration: none;
 	text-align: center;
@@ -79,7 +78,7 @@ ul.navbar {
 .nav-logo a {
 	font-size: 30px;
 	padding: 15px 30px;
-	color: white;
+	color: #f9f9d2;
 	text-decoration: none;
 	text-align: center;
 }
@@ -106,7 +105,7 @@ ul.navbar li.right {float: right;}
 }*/
 
 .site-wrap {
-	background-color: white;
+	background-color: #eee;
 	margin: 0px auto;
 	padding: 20px 20px;
 	max-width: 800px;

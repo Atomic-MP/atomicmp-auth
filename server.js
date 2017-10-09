@@ -106,6 +106,7 @@ app.set('views', path.join(__dirname+"/public/views"));
 app.use(express.static(__dirname+"/public/images"));
 app.use(express.static(__dirname+"/public/js"));
 app.use(express.static(__dirname+"/public/css"));
+app.use(express.static(__dirname+"/public/fonts"));
 app.use(favicon(__dirname + '/public/favicon.png'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
