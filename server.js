@@ -77,7 +77,11 @@ passport.deserializeUser((id, done)=>{
 		done(new Error(`User with the id ${id} does not exist`));
 	})
 });
-
+/*
+Global data.
+*/
+const brand = "Atomic MP"
+const slogan = "A Multiplayer Fallout Roleplay Experience"
 
 /*
 Model for valid signup credentials.
@@ -138,7 +142,7 @@ app.get('/', function (req,res){
 		user = req.user;
 	}
 	res.render('index.pug',{
-		title: "Fommo Auth",
+		title: brand + " - " + slogan,
 		user:user
 	})
 })
@@ -151,7 +155,7 @@ app.route('/login')
 		user = req.user;
 	}
 	res.render('login.pug',{
-		title: "Fommo Auth",
+		title: brand + " - " + slogan,
 		user:user
 	})
 })
@@ -167,7 +171,7 @@ app.route('/register')
 		user = req.user;
 	}
 	res.render('register.pug',{
-		title: "Fommo Auth",
+		title: brand + " - " + slogan,
 		user:user
 	})
 })
@@ -244,7 +248,7 @@ app.get('/user/:id', function(req,res) {
 			}
 
 			res.render('users.pug',{
-				title: "Fommo Auth",
+				title: brand + " - " + slogan,
 				user:user,
 				targetUser
 			})
