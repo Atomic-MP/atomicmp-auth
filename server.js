@@ -91,7 +91,7 @@ function isValidSignupCredentials(obj) {
 		(obj.username.replace(/ /g,'').length >= 3)		&&
 		(!obj.username.startsWith(" "))					&&
 		/^[a-zA-Z\ ]*$/.test(obj.username) 				&&
-		/^[a-zA-Z0-9_]*$/.test(obj.password)			&&
+		/^[a-zA-Z0-9_!%]*$/.test(obj.password)			&&
 		obj.username.length >= 3 						&&
 		obj.username.length <= 24 						&&
 		obj.password.length >= 8 						&&
