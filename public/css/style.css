@@ -23,7 +23,6 @@ body {
 	padding:0;
 }
 body {
-	min-width: 500px;
 	padding-top: 60px;
 	background: #211C18 url(/background1.png) top center no-repeat fixed;
 	background-size: cover;

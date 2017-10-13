@@ -90,12 +90,12 @@ function isValidSignupCredentials(obj) {
 	return (
 		obj.username 									&&
 		obj.password 									&&
-		obj.confirmPassword								&&
+		obj.confirmPassword 							&&
 		obj.key 										&&
-		(obj.username.replace(/ /g,'').length >= 3)		&&
-		(!obj.username.startsWith(" "))					&&
+		(obj.username.replace(/ /g,'').length >= 3) 	&&
+		(!obj.username.startsWith(" ")) 				&&
 		/^[a-zA-Z\ ]*$/.test(obj.username) 				&&
-		/^[a-zA-Z0-9_!%]*$/.test(obj.password)			&&
+		/^[a-zA-Z0-9_!%]*$/.test(obj.password) 			&&
 		obj.username.length >= 3 						&&
 		obj.username.length <= 24 						&&
 		obj.password.length >= 8 						&&
@@ -108,16 +108,16 @@ app.set('view engine','pug');
 app.set('views', path.join(__dirname+"/public/views"));
 // app.use(express.static(__dirname+"/public/views"));
 app.use(express.static(__dirname+"/public/images", {
-  maxage: '2h'
+  maxage: '48h'
 }));
 app.use(express.static(__dirname+"/public/js", {
-  maxage: '2h'
+  maxage: '48h'
 }));
 app.use(express.static(__dirname+"/public/css", {
-  maxage: '2h'
+  maxage: '48h'
 }));
 app.use(express.static(__dirname+"/public/fonts", {
-  maxage: '2h'
+  maxage: '48h'
 }));
 app.use(favicon(__dirname + '/public/favicon.png'));
 app.use(bodyParser.json());
@@ -301,6 +301,11 @@ app.get("/keygen", function (req, res) {
 	}
 })
 
+app.get('/download',function(req,res) {
+	if (req.isAuthenticated()){
+		res.redirect("http://www.mediafire.com/file/56grsxsr8lety0s/WindowsNoEditor.rar");
+	}
+})
 
 app.use(function(req,res) { 
 	res.redirect("/");
