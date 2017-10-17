@@ -37,7 +37,7 @@ CREATE TABLE users(
 CREATE TABLE keys(
 	key_id 			serial PRIMARY KEY,
 	key 			varchar(23) NOT NULL,
-	owner 			integer REFERENCES users(user_id),
+	owner 			integer REFERENCES users(user_id) ON DELETE CASCADE,
 	created_by 		integer REFERENCES users(user_id)
 );
 
