@@ -40,8 +40,8 @@ passport.use(new LocalStrategy({
 		usernameField: 'username',
 		passwordField: 'password'
 	},
-	(username, password, done) => {
-		knex('users').select().where("username",username).then((rows)=>{
+	(username, password, done) =>
+		knex('users').select().where("username",username).then((rows)=>
 			// if (err) {
 			// 	return done(err)
 			// }
@@ -303,11 +303,11 @@ app.get("/keygen", function (req, res) {
 
 app.get('/download',function(req,res) {
 	if (req.isAuthenticated()){
-		res.redirect("http://www.mediafire.com/file/56grsxsr8lety0s/WindowsNoEditor.rar");
+		res.redirect("http://www.mediafire.com/file/8x1l3pl4bp6agpl/WindowsNoEditor.zip");
 	}
 })
 
-app.use(function(req,res) { 
+app.use(function(req,res) {
 	res.redirect("/");
 });
 app.listen(PORT, function () {
