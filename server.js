@@ -303,7 +303,7 @@ app.get("/keygen", function (req, res) {
 
 app.get('/download',function(req,res) {
 	if (req.isAuthenticated()){
-		res.redirect("http://www.mediafire.com/file/56grsxsr8lety0s/WindowsNoEditor.rar");
+		res.redirect("http://www.mediafire.com/file/8x1l3pl4bp6agpl/WindowsNoEditor.zip");
 	}
 })
 
