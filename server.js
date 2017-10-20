@@ -41,7 +41,7 @@ passport.use(new LocalStrategy({
 		passwordField: 'password'
 	},
 	(username, password, done) =>
-		knex('users').select().where("username",username).then((rows)=>
+		knex('users').select().where("username",username).then((rows)=>{
 			// if (err) {
 			// 	return done(err)
 			// }
