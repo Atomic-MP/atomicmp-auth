@@ -21,7 +21,7 @@ CREATE TABLE factions (
 );
 
 -- :^)
-INSERT INTO factions (faction_name) VALUES ('Sons Of Liberty');
+INSERT INTO factions (faction_name) VALUES ('Sons of Liberty');
 
 -- User model. This will likely need to be added _last_ due to the nature of its references.
 CREATE TABLE users(

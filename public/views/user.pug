@@ -1,0 +1,38 @@
+doctype html
+html(lang="en")
+	head
+		title= title
+		include meta/metatags
+		include meta/theme
+		include meta/scripts
+		script(type="text/javascript").
+			moment().format()
+	body
+		include header
+		.site-wrap
+			if !targetUser
+				p.
+					User not found.
+			else
+				h2(id="username")= targetUser.username
+				table(id="userinfo" style="visibility: hidden;")
+					tr
+						td= "ID"
+						td(id="user-id")= targetUser.user_id
+					tr
+						td= "Role"
+						td(id="role")= targetUser.role_name
+					tr
+						td= "Joined"
+						td(id="join-date")
+					
+					if targetUser.faction
+						tr
+							td= "Faction"
+							td(id="faction")= targetUser.faction
+	script(type="text/javascript").
+		$(document).ready(()=>{
+			console.log(moment(new Date("#{targetUser.created_at}")))
+			$("#join-date").html(moment(new Date("#{targetUser.created_at}")).fromNow());
+			$("#userinfo").css("visibility","visible");
+		})

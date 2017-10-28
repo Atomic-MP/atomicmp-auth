@@ -11,6 +11,8 @@ const favicon = require('express-favicon');
 const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
+const moment = require("moment");
+moment().format();
 const jwt = require("jsonwebtoken");
 const pug = require("pug");
 const passport = require("passport");
@@ -28,7 +30,7 @@ const knex = require('knex')({
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-app.use(session({ secret: 'anything',
+app.use(session({ secret: process.env.PASSPORT_SECRET || "anything",
     resave: true,
     saveUninitialized: true
 }));
@@ -247,7 +249,7 @@ app.get('/user/:id', function(req,res) {
 				targetUser = data[0];
 			}
 
-			res.render('users.pug',{
+			res.render('user.pug',{
 				title: brand + " - " + slogan,
 				user:user,
 				targetUser
@@ -286,9 +288,10 @@ app.get("/keygen", function (req, res) {
 		(function addKey(key){
 			knex("keys").where('key',key).then(data=> {
 				if (data.length === 0) {
+					console.log(req.user);
 					knex('keys').insert({
 						key,
-						created_by: req.user.id,
+						created_by: req.user.user_id,
 					}).then( res.send(key) );
 				} else{
 					// Key already exists! Recursively try again.
