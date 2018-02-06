@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+	head
+		title= title
+		include meta/metatags
+		include meta/theme
+		include meta/scripts
+	body
+		include header
+		.site-wrap
+			if !targetUser
+				p.
+					User not found.
+			else
+				h2= targetUser.username
+				p= "ID: "+targetUser.user_id
+				p= "Role: "+targetUser.role_name
+				if targetUser.faction
+					p= "Faction: "+targetUser.faction

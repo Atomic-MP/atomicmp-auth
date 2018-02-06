@@ -64,11 +64,13 @@ passport.use(new LocalStrategy({
 
 passport.serializeUser((user, done)=>{
 	console.log("serialize ", user);
-	done(null, user.user_id);
+	knex('users').where('user_id', user.user_id).update('last_seen', new Date()).then(() => {
+		done(null, user.user_id);
+	});
 });
 
 passport.deserializeUser((id, done)=>{
-	console.log("deserualize ", id);
+	console.log("deserialize ", id);
 	knex('users').select().where("user_id",id)
 	.then((data)=>{
 		let user = data[0];
