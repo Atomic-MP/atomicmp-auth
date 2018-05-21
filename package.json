@@ -4,8 +4,10 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon -r dotenv/config src/index",
+    "test": "standard && jest --forceExit",
+    "populate-db": "node -r dotenv/config src/scripts/populate-db.js"
   },
   "author": "",
   "license": "ISC",
