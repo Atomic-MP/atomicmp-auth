@@ -85,7 +85,7 @@ Model for valid signup credentials.
 */
 const isValidSignupCredentials = payload => {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/
-  const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,50}/
+  const validPasswordRegex = /^([A-Za-z\d$@$!%*?&]){8,50}$/
   return (
     payload.username &&
     payload.password &&
