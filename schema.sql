@@ -20,9 +20,6 @@ CREATE TABLE factions (
 	faction_name 	varchar(30) NOT NULL
 );
 
--- :^)
-INSERT INTO factions (faction_name) VALUES ('Sons of Liberty');
-
 -- User model. This will likely need to be added _last_ due to the nature of its references.
 CREATE TABLE users(
 	user_id 		serial  PRIMARY KEY,

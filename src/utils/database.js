@@ -1,9 +1,6 @@
-/*
-MySQL Configuration
-*/
 const knex = require('knex')({
   client: 'pg',
-  connection: process.env.DATABASE_URL || 'localhost'
+  connection: process.env.POSTGRES_URL || 'localhost'
 })
 
 module.exports = knex

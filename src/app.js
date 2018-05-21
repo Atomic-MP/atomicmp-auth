@@ -37,7 +37,7 @@ passport.use(new LocalStrategy({
 (username, password, done) => {
   db('users')
     .select()
-    .where('username', username).then((rows) => {
+    .where('username', username).then(rows => {
       // if (err) {
       //   return done(err)
       // }
@@ -83,7 +83,7 @@ const slogan = 'A Multiplayer Fallout Roleplay Experience'
 /*
 Model for valid signup credentials.
 */
-const isValidSignupCredentials = (payload) => {
+const isValidSignupCredentials = payload => {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/
   const validPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,50}/
   return (
@@ -192,7 +192,7 @@ app.route('/register')
                       faction: null,
                       created_at: new Date()
                     })
-                    .then((returning) => {
+                    .then(returning => {
                       db('keys')
                         .where('key_id', keyID)
                         .update('owner', returning[0])
@@ -224,8 +224,7 @@ app.get('/user/:id', (req, res) => {
       .join('roles', 'users.role', '=', 'roles.role_id')
       .select('user_id', 'username', 'role_name', 'faction', 'created_at')
       .where('user_id', targetUserID)
-      .then((data) => {
-        console.log(data)
+      .then(data => {
         var targetUser
         if (data.length > 0) {
           targetUser = data[0]
@@ -236,7 +235,7 @@ app.get('/user/:id', (req, res) => {
           user: user,
           targetUser
         })
-      }).catch((err) => console.log(err))
+      }).catch(err => console.log(err))
   } else {
     res.redirect('/')
   }
@@ -261,7 +260,7 @@ app.get('/keygen', (req, res) => {
       return outStr.toUpperCase()
     }
 
-    const createKey = () => 'AMP-' + randomString(4, 16) + '-' + randomString(4, 16) + '-' + randomString(4, 16) + '-' + randomString(4, 16)
+    const generateKey = () => 'AMP-' + randomString(4, 16) + '-' + randomString(4, 16) + '-' + randomString(4, 16) + '-' + randomString(4, 16)
 
     const addKey = key => {
       db('keys')
@@ -274,12 +273,12 @@ app.get('/keygen', (req, res) => {
             }).then(res.send(key))
           } else {
             // Key already exists! Recursively try again.
-            addKey(createKey())
+            addKey(generateKey())
           }
         })
     }
 
-    addKey(createKey())
+    addKey(generateKey())
   } else {
     res.redirect('/')
   }
