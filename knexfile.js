@@ -15,7 +15,11 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: process.env.POSTGRES_DATABASE
+      tableName: process.env.POSTGRES_DATABASE,
+      directory: './src/utils/migrations'
+    },
+    seeds: {
+      directory: './src/utils/seeds'
     }
   },
 
