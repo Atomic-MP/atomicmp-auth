@@ -37,7 +37,6 @@ const createTablePromises = [
         t.integer('faction').unsigned()
         t.timestamp('created_at').defaultTo(db.fn.now())
         t.timestamp('last_seen').defaultTo(db.fn.now())
-
       })
         .then(resolve(tableName))
         .catch(reject)
