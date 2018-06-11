@@ -7,7 +7,7 @@
     "start": "node src/server.js",
     "dev": "nodemon -r dotenv/config src/server.js",
     "test": "standard && jest --forceExit",
-    "populate-db": "node -r dotenv/config src/scripts/populate-db.js"
+    "create-admin": "node -r dotenv/config src/scripts/create-admin-account.js"
   },
   "author": "",
   "license": "ISC",
