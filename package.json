@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon -r dotenv/config src/index",
+    "dev": "nodemon -r dotenv/config src/server.js",
     "test": "standard && jest --forceExit",
     "populate-db": "node -r dotenv/config src/scripts/populate-db.js"
   },
