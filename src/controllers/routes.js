@@ -72,7 +72,7 @@ router.route('/register')
           console.log(`User ${rows[0].username} already exists`)
           res.sendStatus(409)
         } else {
-          db('keys').select('key_id')
+          db('keys').select('key_id', 'discord_id')
             .where('key', req.body.key)
             .andWhere('owner', null)
             .then(data => {
@@ -81,6 +81,7 @@ router.route('/register')
                 bcrypt.hash(req.body.password, saltRounds).then(hash => {
                   // Store this in the DB
                   // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+
                   db('users')
                     .returning('user_id')
                     .insert({
@@ -88,6 +89,7 @@ router.route('/register')
                       hash,
                       role: 3,
                       faction: null,
+                      discord_id: data[0].discord_id,
                       created_at: new Date()
                     })
                     .then(returning => {
@@ -143,43 +145,6 @@ router.get('/logout', (req, res) => {
   req.session.destroy()
   req.logout()
   res.redirect('/')
-})
-
-router.get('/keygen', (req, res) => {
-  if (req.isAuthenticated() && req.user.role === 5) {
-    const randomString = (len, bits) => {
-      bits = bits || 36
-      let outStr = ''
-      let newStr
-      while (outStr.length < len) {
-        newStr = Math.random().toString(bits).slice(2)
-        outStr += newStr.slice(0, Math.min(newStr.length, (len - outStr.length)))
-      }
-      return outStr.toUpperCase()
-    }
-
-    const generateKey = () => 'AMP-' + randomString(4, 16) + '-' + randomString(4, 16) + '-' + randomString(4, 16) + '-' + randomString(4, 16)
-
-    const addKey = key => {
-      db('keys')
-        .where('key', key)
-        .then(data => {
-          if (data.length === 0) {
-            db('keys').insert({
-              key,
-              created_by: req.user.user_id
-            }).then(res.send(key))
-          } else {
-            // Key already exists! Recursively try again.
-            addKey(generateKey())
-          }
-        })
-    }
-
-    addKey(generateKey())
-  } else {
-    res.redirect('/')
-  }
 })
 
 router.get('/download', (req, res) => {
