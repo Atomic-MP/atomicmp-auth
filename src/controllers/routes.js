@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const isEmpty = require('lodash.isempty')
+const first = require('lodash.first')
 const db = require('../utils/database')
 const passport = require('../middlewares/passport')
 const bcrypt = require('bcrypt')
@@ -60,82 +62,56 @@ router.route('/register')
       user: user
     })
   })
-  .post((req, res, next) => {
+  .post(async (req, res, next) => {
     if (!req.body || !req.body.username || !req.body.password) return res.sendStatus(400)
     req.body.username = req.body.username.trim()
     if (isValidSignupCredentials(req.body)) {
       var username = req.body.username
       // Check if username exists; case insensitive
-      db.raw(`SELECT * FROM users WHERE LOWER(username)=LOWER('${req.body.username}')`).then(data => {
-        let rows = data.rows
-        if (rows.length > 0) {
-          console.log(`User ${rows[0].username} already exists`)
-          res.sendStatus(409)
-        } else {
-          db('keys').select('key_id', 'discord_id')
-            .where('key', req.body.key)
-            .andWhere('owner', null)
-            .then(data => {
-              if (data.length > 0) {
-                const keyID = data[0].key_id
-                bcrypt.hash(req.body.password, saltRounds).then(hash => {
-                  // Store this in the DB
-                  // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-
-                  db('users')
-                    .returning('user_id')
-                    .insert({
-                      username,
-                      hash,
-                      role: 3,
-                      faction: null,
-                      discord_id: data[0].discord_id,
-                      created_at: new Date()
-                    })
-                    .then(returning => {
-                      db('keys')
-                        .where('key_id', keyID)
-                        .update('owner', returning[0])
-                        .then(() => {
-                          res.redirect('/')
-                        })
-                    })
-                    .catch(err => {
-                      console.log(err)
-                    })
-                })
-              } else {
-                res.sendStatus(409)
-              }
-            })
-        }
-      })
-    } else {
-      res.sendStatus(400)
-      res.end()
+      const usernameExists = !isEmpty(await db.raw(`SELECT * FROM users WHERE LOWER(username)=LOWER('${req.body.username}')`).rows)
+      if (usernameExists) {
+        console.log(`User ${username} already exists`)
+        return res.sendStatus(409)
+      }
+      const key = first(await db('keys').select('key_id', 'discord_id')
+        .where('key', req.body.key)
+        .andWhere('owner', null))
+      if (!key) {
+        return res.sendStatus(409)
+      }
+      const keyID = key.key_id
+      const hash = await bcrypt.hash(req.body.password, saltRounds)
+      const ownerId = first(await db('users')
+        .returning('user_id')
+        .insert({
+          username,
+          hash,
+          role: 3,
+          faction: null,
+          discord_id: key.discord_id,
+          created_at: new Date()
+        }))
+      await db('keys')
+        .where('key_id', keyID)
+        .update('owner', ownerId)
+      res.redirect('/')
     }
   })
 
-router.get('/user/:id', (req, res) => {
+router.get('/user/:id', async (req, res) => {
   if (req.isAuthenticated()) {
     var user = req.user
     var targetUserID = req.params.id
-    db('users')
+    const targetUser = first(await db('users')
       .join('roles', 'users.role', '=', 'roles.role_id')
       .select('user_id', 'username', 'role_name', 'faction', 'created_at')
-      .where('user_id', targetUserID)
-      .then(data => {
-        var targetUser
-        if (data.length > 0) {
-          targetUser = data[0]
-        }
+      .where('user_id', targetUserID))
 
-        res.render('user.pug', {
-          title: brand + ' - ' + slogan,
-          user: user,
-          targetUser
-        })
-      }).catch(err => console.log(err))
+    res.render('user.pug', {
+      title: brand + ' - ' + slogan,
+      user: user,
+      targetUser
+    })
   } else {
     res.redirect('/')
   }
