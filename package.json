@@ -19,8 +19,8 @@
     "express": "^4.16.3",
     "express-favicon": "^2.0.1",
     "express-session": "^1.15.6",
-    "jsonwebtoken": "^8.2.2",
-    "knex": "^0.14.6",
+    "jsonwebtoken": "^8.3.0",
+    "knex": "^0.15.2",
     "lodash.first": "^3.0.0",
     "lodash.isempty": "^4.4.0",
     "moment": "^2.22.2",
@@ -32,6 +32,7 @@
     "pug": "^2.0.3"
   },
   "devDependencies": {
-    "standard": "^11.0.1"
+    "eslint": "^5.4.0",
+    "prettier-eslint": "^8.8.2"
   }
 }
