@@ -1,8 +1,5 @@
 'use strict'
 
-/*
-Loading environmental variables from .env file
-*/
 require('dotenv').config()
 
 const express = require('express')
@@ -14,9 +11,6 @@ const moment = require('moment')
 const passport = require('./middlewares/passport')
 const router = require('./controllers/routes')
 moment().format()
-// const jwt = require("jsonwebtoken");
-// const pug = require("pug");
-// var SteamStrategy = require("passport-steam");
 const session = require('express-session')
 
 app.use(session({ secret: process.env.PASSPORT_SECRET || 'anything',
@@ -52,6 +46,8 @@ app.use(require('cookie-parser')())
 //     : res.redirect('/')
 // }
 
+
 app.use(router)
+
 
 module.exports = app

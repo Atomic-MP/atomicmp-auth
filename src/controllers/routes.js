@@ -9,6 +9,11 @@ const { brand, slogan, saltRounds } = require('../constants')
 /*
 Model for valid signup credentials.
 */
+
+const api = require("./api");
+
+router.use("/api", api);
+
 const isValidSignupCredentials = payload => {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/
   const validPasswordRegex = /^([A-Za-z\d$@$!%*?&]){8,50}$/
