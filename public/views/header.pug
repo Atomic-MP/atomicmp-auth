@@ -1,22 +1,15 @@
-nav
-	ul.navbar.navbar-left
-		li.nav-logo
-			a(href="/")
-				img(src='/amp-header-logo.png' style="width:300px; height:58px")
+nav.topnav#topnav
+	a(class="nav-logo" href="/")
+		img(src='/amp-header-logo.png' style="width:300px; height:58px")
 
 	if !user
-		ul.navbar.navbar-right
-			li.nav-item
-				a(href="/login") Login
-			li.nav-item
-				a(href="/register") Register
-			li.nav-item
-				a(href="https://discord.gg/5kPpTKw" target="_blank") Discord
+		a(class="nav-item" href="https://discord.gg/5kPpTKw" target="_blank") Discord
+		a(class="nav-item" href="/register") Register
+		a(class="nav-item" href="/login") Login
+		a(class="nav-item" href="javascript:void(0);" class="icon" onclick="toggleTopnav()") &#9776;
+			p 
 	else
-		ul.navbar.navbar-right
-			li.nav-item
-				a(href="/logout") Log Out
-			li.nav-item
-				a(href="/user/"+user.user_id)= user.username
-			li.nav-item
-				a(href="https://discord.gg/5kPpTKw" target="_blank") Discord
+		a(class="nav-item" href="https://discord.gg/5kPpTKw" target="_blank") Discord
+		a(class="nav-item" href="/user/"+user.user_id)= user.username
+		a(class="nav-item" href="/logout") Log Out
+		a(class="nav-item" href="javascript:void(0);" class="icon" onclick="toggleTopnav()") &#9776;
