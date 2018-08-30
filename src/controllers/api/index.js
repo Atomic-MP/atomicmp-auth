@@ -27,7 +27,7 @@ router.get('/sample-user-data', (req, res) => {
 });
 
 router.post('/sample-user-data', async (req, res) => {
-  const { health } = req.body.health;
+  const { health } = req.body;
   await db('test_data').insert({
     health,
   });
