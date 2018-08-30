@@ -25,7 +25,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '../public/views'));
-// app.use(express.static(__dirname+"/public/views"));
 app.use(
   express.static(path.join(__dirname, '../public/images'), {
     maxage: '48h',

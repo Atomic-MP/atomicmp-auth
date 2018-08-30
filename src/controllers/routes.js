@@ -5,7 +5,7 @@ const first = require('lodash.first');
 const db = require('../services/database');
 const passport = require('../middlewares/passport');
 const bcrypt = require('bcrypt');
-const { brand, slogan, saltRounds } = require('../constants');
+const { brand, slogan, saltRounds } = require('../utils/constants');
 /*
 Model for valid signup credentials.
 */
