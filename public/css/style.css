@@ -152,7 +152,6 @@ p {
   .topnav a.icon {
 		padding-top: 20px;
 		padding-bottom: 4px;
-    /* float: right; */
     display: block;
   	font-size: 17px;
     position: absolute;
@@ -164,6 +163,9 @@ p {
 @media screen and (max-width: 600px) {
   .topnav.responsive {position: relative;}
   .topnav.responsive .icon {
+		padding-top: 20px;
+		padding-bottom: 4px;
+  	font-size: 17px;
     position: absolute;
     right: 0;
     top: 0;
