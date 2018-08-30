@@ -1,21 +1,26 @@
-// Update with your config settings.
-
-require('dotenv').config()
+require('dotenv').config();
+const {
+  POSTGRES_HOST,
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_DATABASE,
+} = process.env;
 
 module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: process.env.POSTGRES_DATABASE,
-      user: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD
+      host: POSTGRES_HOST,
+      database: POSTGRES_DATABASE,
+      user: POSTGRES_USER,
+      password: POSTGRES_PASSWORD
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
-      tableName: process.env.POSTGRES_DATABASE,
+      tableName: POSTGRES_DATABASE,
       directory: './src/utils/migrations'
     },
     seeds: {
@@ -26,32 +31,32 @@ module.exports = {
   staging: {
     client: 'postgresql',
     connection: {
-      database: process.env.POSTGRES_DATABASE,
-      user: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD
+      database: POSTGRES_DATABASE,
+      user: POSTGRES_USER,
+      password: POSTGRES_PASSWORD
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
-      tableName: process.env.POSTGRES_DATABASE
+      tableName: POSTGRES_DATABASE
     }
   },
 
   production: {
     client: 'postgresql',
     connection: {
-      database: process.env.POSTGRES_DATABASE,
-      user: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD
+      database: POSTGRES_DATABASE,
+      user: POSTGRES_USER,
+      password: POSTGRES_PASSWORD
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
-      tableName: process.env.POSTGRES_DATABASE
+      tableName: POSTGRES_DATABASE
     }
   }
 }

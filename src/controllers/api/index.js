@@ -1,9 +1,9 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
-const db = require('../../utils/database');
-const fs = require('fs')
+const db = require('../../services/database');
+const fs = require('fs');
 
-router.get("/sample-user-data", (req, res) => {
+router.get('/sample-user-data', (req, res) => {
   res.json({
     user_id: 1,
     is_admin: false,
@@ -23,16 +23,15 @@ router.get("/sample-user-data", (req, res) => {
     thirst: 55.43,
     health: Math.floor(Math.random() * 100 + 1),
     caps: 587,
-  })
+  });
 });
 
 router.post('/sample-user-data', async (req, res) => {
-  const { health } = req.body.health
-  await db('test_data')
-    .insert({
-      health
-    })
-  res.sendStatus(200)
-})
+  const { health } = req.body.health;
+  await db('test_data').insert({
+    health,
+  });
+  res.sendStatus(200);
+});
 
-module.exports = router
+module.exports = router;
