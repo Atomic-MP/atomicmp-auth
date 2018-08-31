@@ -130,16 +130,12 @@ p {
   padding: 20px 16px;
   text-decoration: none;
   font-size: 17px;
-	text-shadow: 1px 1px 3px 1px black;
+	text-shadow: 1px 1px 3px black;
+	transition: all .1s ease-in-out;
 }
 
 .nav-item:hover {
   background-color: var(--header-accent);
-  color: white;
-}
-
-.active {
-  background-color: #4CAF50;
   color: white;
 }
 
@@ -154,7 +150,7 @@ p {
 		padding-bottom: 4px;
     display: block;
   	font-size: 17px;
-    position: absolute;
+		position: absolute;
     right: 0;
     top: 0;
   }
@@ -166,7 +162,7 @@ p {
 		padding-top: 20px;
 		padding-bottom: 4px;
   	font-size: 17px;
-    position: absolute;
+		position: absolute;
     right: 0;
     top: 0;
   }
