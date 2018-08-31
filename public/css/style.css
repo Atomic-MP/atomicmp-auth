@@ -154,11 +154,10 @@ p {
     right: 0;
     top: 0;
   }
-}
-
-@media screen and (max-width: 600px) {
-  .topnav.responsive {position: relative;}
-  .topnav.responsive .icon {
+  .topnav.responsive {
+		position: relative;
+	}
+  .topnav.responsive a.icon {
 		padding-top: 20px;
 		padding-bottom: 4px;
   	font-size: 17px;
@@ -166,6 +165,9 @@ p {
     right: 0;
     top: 0;
   }
+  .topnav.responsive a:not(:first-child):not(.icon) {
+		padding: 14px 16px;
+	}
   .topnav.responsive a {
     float: none;
     display: block;
