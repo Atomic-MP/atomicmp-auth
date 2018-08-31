@@ -143,6 +143,12 @@ p {
   display: none;
 }
 
+.topnav a.discord-icon {
+	padding: 10px 16px;
+	font-size: 32px;
+	text-shadow: none;
+}
+
 @media screen and (max-width: 600px) {
   .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
