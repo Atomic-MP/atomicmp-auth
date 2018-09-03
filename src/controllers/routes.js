@@ -51,7 +51,9 @@ router.get('/user/:id', async (req, res) => {
 
 router.get('/download', (req, res) => {
   if (req.isAuthenticated()) {
-    res.redirect('https://www.dropbox.com/s/d38336bouy9efoi/AMPBuild_29-07-18.zip');
+    res.redirect(
+      'https://www.dropbox.com/s/d38336bouy9efoi/AMPBuild_29-07-18.zip'
+    );
   }
 });
 

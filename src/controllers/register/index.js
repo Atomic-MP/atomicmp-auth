@@ -44,7 +44,7 @@ router
       const usernameExists = !isEmpty(
         await db.raw(
           `SELECT * FROM users WHERE LOWER(username)=LOWER('${
-          req.body.username
+            req.body.username
           }')`
         ).rows
       );
