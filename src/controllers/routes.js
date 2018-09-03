@@ -1,34 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const isEmpty = require('lodash.isempty');
 const first = require('lodash.first');
 const db = require('../services/database');
-const passport = require('../middlewares/passport');
-const bcrypt = require('bcrypt');
-const { brand, slogan, saltRounds } = require('../utils/constants');
+const { brand, slogan } = require('../utils/constants');
 /*
 Model for valid signup credentials.
 */
 
-const api = require('./api');
+const apiRoutes = require('./api');
+const loginRoutes = require('./login');
+const logoutRoutes = require('./logout');
+const registerRoutes = require('./register');
 
-router.use('/api', api);
-
-const isValidSignupCredentials = payload => {
-  const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
-  const validPasswordRegex = /^([A-Za-z\d$@$!%*?&]){8,50}$/;
-  return (
-    payload.username &&
-    payload.password &&
-    payload.confirmPassword &&
-    payload.key &&
-    payload.password === payload.confirmPassword &&
-    payload.username.replace(/ /g, '').length >= 3 &&
-    !payload.username.startsWith(' ') &&
-    validUsernameRegex.test(payload.username) &&
-    validPasswordRegex.test(payload.password)
-  );
-};
+router.use('/api', apiRoutes);
+router.use('/login', loginRoutes);
+router.use('/logout', logoutRoutes);
+router.use('/register', registerRoutes);
 
 router.get('/', (req, res) => {
   let user;
@@ -40,82 +27,6 @@ router.get('/', (req, res) => {
     user: user,
   });
 });
-
-router
-  .route('/login')
-  .get((req, res) => {
-    let user;
-    if (req.isAuthenticated()) {
-      user = req.user;
-    }
-    res.render('login.pug', {
-      title: brand + ' - ' + slogan,
-      user: user,
-    });
-  })
-  .post(passport.authenticate('local'), (req, res) => {
-    res.sendStatus(200);
-  });
-
-router
-  .route('/register')
-  .get((req, res) => {
-    let user;
-    if (req.isAuthenticated()) {
-      user = req.user;
-    }
-    res.render('register.pug', {
-      title: brand + ' - ' + slogan,
-      user: user,
-    });
-  })
-  .post(async (req, res, next) => {
-    if (!req.body || !req.body.username || !req.body.password)
-      return res.sendStatus(400);
-    req.body.username = req.body.username.trim();
-    if (isValidSignupCredentials(req.body)) {
-      var username = req.body.username;
-      // Check if username exists; case insensitive
-      const usernameExists = !isEmpty(
-        await db.raw(
-          `SELECT * FROM users WHERE LOWER(username)=LOWER('${
-            req.body.username
-          }')`
-        ).rows
-      );
-      if (usernameExists) {
-        console.log(`User ${username} already exists`);
-        return res.sendStatus(409);
-      }
-      const key = first(
-        await db('keys')
-          .select('key_id', 'discord_id')
-          .where('key', req.body.key)
-          .andWhere('owner', null)
-      );
-      if (!key) {
-        return res.sendStatus(409);
-      }
-      const keyID = key.key_id;
-      const hash = await bcrypt.hash(req.body.password, saltRounds);
-      const ownerId = first(
-        await db('users')
-          .returning('user_id')
-          .insert({
-            username,
-            hash,
-            role: 3,
-            faction: null,
-            discord_id: key.discord_id,
-            created_at: new Date(),
-          })
-      );
-      await db('keys')
-        .where('key_id', keyID)
-        .update('owner', ownerId);
-      res.redirect('/');
-    }
-  });
 
 router.get('/user/:id', async (req, res) => {
   if (req.isAuthenticated()) {
@@ -138,17 +49,9 @@ router.get('/user/:id', async (req, res) => {
   }
 });
 
-router.get('/logout', (req, res) => {
-  req.session.destroy();
-  req.logout();
-  res.redirect('/');
-});
-
 router.get('/download', (req, res) => {
   if (req.isAuthenticated()) {
-    res.redirect(
-      'http://www.mediafire.com/file/8x1l3pl4bp6agpl/WindowsNoEditor.zip'
-    );
+    res.redirect('https://www.dropbox.com/s/d38336bouy9efoi/AMPBuild_29-07-18.zip');
   }
 });
 

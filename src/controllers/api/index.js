@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../services/database');
-const fs = require('fs');
 
 router.get('/sample-user-data', (req, res) => {
   res.json({
