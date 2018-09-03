@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const passport = require('../../middlewares/passport');
-const { brand, slogan } = require('../../utils/constants');
+const { title } = require('../../utils/constants');
+const { JWT_SECRET } = process.env;
 
 router
   .route('/')
@@ -11,12 +13,18 @@ router
       user = req.user;
     }
     res.render('login.pug', {
-      title: brand + ' - ' + slogan,
-      user: user,
+      title,
+      user,
     });
   })
-  .post(passport.authenticate('local'), (req, res) => {
-    res.sendStatus(200);
+  .post((req, res) => {
+    passport.authenticate('local', (err, user, info) => {      
+      const token = jwt.sign({ 
+        userID: user.user_id,
+        username: user.username
+      }, JWT_SECRET);
+      res.json({ token });
+    })(req,res);
   });
 
 module.exports = router;

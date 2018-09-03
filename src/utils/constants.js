@@ -1,6 +1,5 @@
 const constants = {
-  brand: 'Atomic MP',
-  slogan: 'A Multiplayer Fallout Roleplay Experience',
+  title: 'Atomic MP - A Multiplayer Fallout Roleplay Experience',
   saltRounds: 10,
 };
 

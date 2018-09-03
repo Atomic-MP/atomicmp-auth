@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const first = require('lodash.first');
 const db = require('../services/database');
-const { brand, slogan } = require('../utils/constants');
+const { title } = require('../utils/constants');
 /*
 Model for valid signup credentials.
 */
@@ -17,14 +17,55 @@ router.use('/login', loginRoutes);
 router.use('/logout', logoutRoutes);
 router.use('/register', registerRoutes);
 
+
+// /api/dump-user-state
+/*
+{
+  money: 3000,
+  inventory: 'apple,,,,,,,,,'
+    player_pos_x: 100,
+    player_pos_y: -201.54,
+    player_pos_z: 350,
+    hunger: 55.43,
+    thirst: 55.43,
+    health: Math.floor(Math.random() * 100 + 1),
+}
+
+/api/update-user/:id/money
+  caps: 587,
+
+/api/update-user/:id/inventory
+  
+{
+  inventory: 
+}
+*/
+
+// /api/user-stats
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.get('/', (req, res) => {
   let user;
   if (req.isAuthenticated()) {
     user = req.user;
   }
   res.render('index.pug', {
-    title: brand + ' - ' + slogan,
-    user: user,
+    title,
+    user,
   });
 });
 
@@ -40,8 +81,8 @@ router.get('/user/:id', async (req, res) => {
     );
 
     res.render('user.pug', {
-      title: brand + ' - ' + slogan,
-      user: user,
+      title,
+      user,
       targetUser,
     });
   } else {

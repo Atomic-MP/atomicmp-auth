@@ -4,7 +4,7 @@ const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
 const bcrypt = require('bcrypt');
 const db = require('../../services/database');
-const { brand, slogan, saltRounds } = require('../../utils/constants');
+const { title, saltRounds } = require('../../utils/constants');
 
 const isValidSignupCredentials = payload => {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
@@ -30,8 +30,8 @@ router
       user = req.user;
     }
     res.render('register.pug', {
-      title: brand + ' - ' + slogan,
-      user: user,
+      title,
+      user,
     });
   })
   .post(async (req, res, next) => {

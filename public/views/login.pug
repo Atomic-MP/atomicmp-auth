@@ -34,7 +34,7 @@ html(lang="en")
 				
 				$('form#login').on("submit", function(e){
 					e.preventDefault();
-					var formdata = $(this).serialize();
+					const formdata = $(this).serialize();
 					$.ajax({
 						url : '/login',
 						type: 'POST',
@@ -42,6 +42,17 @@ html(lang="en")
 						dataType:"html",
 						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 						success : function (response) {
+							const data = JSON.parse(response);
+							window.sessionStorage.setItem("authToken", data.token);
+
+							const token = window.sessionStorage.getItem('authToken');
+							if (token) {
+								$.ajaxSetup({
+									headers: {
+										'x-access-token': token
+									}
+								});
+							}
 							document.location.href="/";
 						},
 						error: function(xhr, resp, text) {

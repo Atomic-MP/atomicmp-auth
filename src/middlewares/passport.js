@@ -33,7 +33,7 @@ passport.serializeUser(async (user, done) => {
   await db('users')
     .where('user_id', user.user_id)
     .update('last_seen', new Date());
-  done(null, user.user_id);
+  done(null, user);
 });
 
 passport.deserializeUser(async (id, done) => {
