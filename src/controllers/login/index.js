@@ -15,8 +15,17 @@ router
       user: user,
     });
   })
-  .post(passport.authenticate('local'), (req, res) => {
-    res.sendStatus(200);
+  .post((req, res) => {
+    passport.authenticate('local', (err, user, info) => {
+      if (user) {
+        const id = user.user_id.toString();
+        res.json({id});
+      } else {
+        res.sendStatus(401);
+      }
+
+    })(req, res);
   });
+
 
 module.exports = router;
