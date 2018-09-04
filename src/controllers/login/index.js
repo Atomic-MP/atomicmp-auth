@@ -15,17 +15,20 @@ router
       user: user,
     });
   })
-  .post((req, res) => {
-    passport.authenticate('local', (err, user, info) => {
-      if (user) {
-        const id = user.user_id.toString();
-        res.json({id});
-      } else {
-        res.sendStatus(401);
-      }
+  // .post((req, res) => {
+  //   passport.authenticate('local', (err, user, info) => {
+  //     if (user) {
+  //       const id = user.user_id.toString();
+  //       res.json({id});
+  //     } else {
+  //       res.sendStatus(401);
+  //     }
 
-    })(req, res);
-  });
+  //   })(req, res);
+  // });
 
+  .post(passport.authenticate('local'), (req, res) => {
+    res.sendStatus(200)
+  })
 
 module.exports = router;
