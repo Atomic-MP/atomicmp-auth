@@ -49,7 +49,7 @@ html(lang="en")
 				p.error
 				input(type="submit" value="Create Account")
 		script(type="text/javascript").
-			var submitting = false;
+			let submitting = false;
 			$(document).ready(function() {
 				console.log("Document ready")
 				$("p.error").html(" ")
@@ -59,11 +59,11 @@ html(lang="en")
 					if (!submitting) {
 						submitting = true;
 						$('form#register input[type=submit]').css('opacity', 0.6)
-						var formdata = $(this).serialize();
+						const formdata = $(this).serialize();
 						$.ajax({
 							url : '/register',
 							type: 'POST',
-							data:formdata,
+							data: formdata,
 							dataType:"html",
 							contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 							success : function (response) {

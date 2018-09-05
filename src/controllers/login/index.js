@@ -22,7 +22,6 @@ router
   .post((req, res) => {
     loginStrategy.authenticate('local', (err, user, info) => {
       if (user) {
-        console.log(user)
         const token = jwt.sign(
           {
             userId: user.user_id,
@@ -30,7 +29,6 @@ router
           },
           JWT_SECRET
         );
-        console.log(token)
         res.json({ token });
       } else {
         res.sendStatus(401);

@@ -1,5 +1,5 @@
 function toggleTopnav() {
-  var x = document.getElementById('topnav');
+  const x = document.getElementById('topnav');
   if (x.className === 'topnav') {
     x.className += ' responsive';
   } else {

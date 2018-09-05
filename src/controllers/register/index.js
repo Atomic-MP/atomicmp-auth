@@ -39,7 +39,7 @@ router
       return res.sendStatus(400);
     req.body.username = req.body.username.trim();
     if (isValidSignupCredentials(req.body)) {
-      var username = req.body.username;
+      const username = req.body.username;
       // Check if username exists; case insensitive
       const usernameExists = !isEmpty(
         await db.raw(

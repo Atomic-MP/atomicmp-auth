@@ -56,8 +56,8 @@ router.get('/', (req, res) => {
 
 router.get('/user/:id', async (req, res) => {
   if (req.isAuthenticated()) {
-    var user = req.user;
-    var targetUserID = req.params.id;
+    const user = req.user;
+    const targetUserID = req.params.id;
     const targetUser = first(
       await db('users')
         .join('roles', 'users.role', '=', 'roles.role_id')

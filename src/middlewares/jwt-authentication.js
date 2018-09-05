@@ -9,8 +9,7 @@ const { JWT_SECRET } = process.env;
 const opts = {}
 opts.secretOrKey = JWT_SECRET;
 opts.jwtFromRequest = ExtractJwt.fromExtractors([(req) => {
-  console.log(req.cookies);
-  var token = null;
+  let token = null;
   if (req && req.cookies) {
     token = req.cookies['jwt'];
   }

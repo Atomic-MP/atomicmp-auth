@@ -35,7 +35,7 @@ router.post('/sample-user-data', async (req, res) => {
 });
 
 router.put('/update-user-info/:id', async (req, res) => {
-  var targetUserID = req.params.id;
+  const targetUserID = req.params.id;
   const { health } = req.body;
   await db('users')
     .where('user_id', targetUserID)
@@ -44,7 +44,7 @@ router.put('/update-user-info/:id', async (req, res) => {
 });
 
 router.get('/user-info/:id', async (req, res) => {
-  var targetUserID = req.params.id;
+  const targetUserID = req.params.id;
   const data = await db('users')
     .where('user_id', targetUserID)
     .select('username', 'health', 'discord_id');
