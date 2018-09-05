@@ -18,12 +18,16 @@ router
     });
   })
   .post((req, res) => {
-    passport.authenticate('local', (err, user, info) => {      
-      const token = jwt.sign({ 
-        userID: user.user_id,
-        username: user.username
-      }, JWT_SECRET);
-      res.json({ token });
+    passport.authenticate('local', (err, user, info) => {
+      if (user) {
+        const token = jwt.sign({ 
+          userID: user.user_id,
+          username: user.username
+        }, JWT_SECRET);
+        res.json({ token });
+      } else {
+        res.sendStatus(401);
+      }
     })(req,res);
   });
 

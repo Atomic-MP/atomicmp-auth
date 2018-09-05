@@ -156,7 +156,7 @@ p {
   .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
 		padding-top: 20px;
-		padding-bottom: 4px;
+		padding-bottom: 20px;
     display: block;
   	font-size: 17px;
 		position: absolute;
@@ -168,7 +168,7 @@ p {
 	}
   .topnav.responsive a.icon {
 		padding-top: 20px;
-		padding-bottom: 4px;
+		padding-bottom: 20px;
   	font-size: 17px;
 		position: absolute;
     right: 0;

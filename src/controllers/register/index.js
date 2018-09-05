@@ -73,6 +73,7 @@ router
             faction: null,
             discord_id: key.discord_id,
             created_at: new Date(),
+            health: 100,
           })
       );
       await db('keys')

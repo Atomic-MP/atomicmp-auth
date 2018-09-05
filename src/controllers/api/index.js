@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../services/database');
+const first = require('lodash.first');
+const isEmpty = require('lodash.isempty');
 
 router.get('/sample-user-data', (req, res) => {
   res.json({
@@ -30,7 +32,28 @@ router.post('/sample-user-data', async (req, res) => {
   await db('test_data').insert({
     health,
   });
-  res.sendStatus(200);
 });
+
+router.put('/update-user-info/:id', async (req, res) => {
+  var targetUserID = req.params.id;
+  const { health } = req.body;
+  await db('users')
+    .where('user_id', targetUserID)
+    .update({health})
+  res.sendStatus(200)
+})
+
+router.get('/user-info/:id', async (req, res) => {
+  var targetUserID = req.params.id;
+  const data = await db('users')
+    .where('user_id', targetUserID)
+    .select('username', 'health', 'discord_id')
+  if (!isEmpty(data)) {
+    const responseData = first(data)
+    res.json(responseData)
+  } else {
+    res.sendStatus(404)
+  }
+})
 
 module.exports = router;
