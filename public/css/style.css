@@ -59,6 +59,7 @@ label {
 
 .site-wrap form input[type="submit"] {
 	color: white;
+	text-shadow: 1px 1px 3px black;
 	font-size: 18px;
 	background-color: var(--header-main);
 	border-top: 1px solid var(--header-accent);
@@ -136,7 +137,6 @@ p {
 
 .nav-item:hover {
   background-color: var(--header-accent);
-  color: white;
 }
 
 .topnav .icon {
@@ -144,15 +144,15 @@ p {
 }
 
 .topnav a.discord-icon {
-	
-		padding: 18px 16px;
+	padding: 18px 16px;
 }
+
 .topnav a.discord-icon i {
 	font-size: 24px;
 	text-shadow: none;
-
 }
-@media screen and (max-width: 600px) {
+
+@media screen and (max-width: 650px) {
   .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
 		padding-top: 20px;
