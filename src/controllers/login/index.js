@@ -11,13 +11,13 @@ router
   .get((req, res) => {
     jwtAuthentication.authenticate('jwt', (err, user, info) => {
       if (err) {
-        res.sendStatus(503)
+        res.sendStatus(503);
       }
       res.render('login.pug', {
         title,
         user,
       });
-    })(req,res)
+    })(req, res);
   })
   .post((req, res) => {
     loginStrategy.authenticate('local', (err, user, info) => {

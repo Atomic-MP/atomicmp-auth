@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const moment = require('moment');
 const router = require('./controllers/routes');
-const jwtAuthenticator = require('./middlewares/jwt-authentication')
+const jwtAuthenticator = require('./middlewares/jwt-authentication');
 moment().format();
 
 app.set('view engine', 'pug');
