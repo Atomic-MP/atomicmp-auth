@@ -9,15 +9,11 @@ const { JWT_SECRET } = process.env;
 router
   .route('/')
   .get((req, res) => {
-    jwtAuthentication.authenticate('jwt', (err, user, info) => {
-      if (err) {
-        res.sendStatus(503);
-      }
-      res.render('login.pug', {
-        title,
-        user,
-      });
-    })(req, res);
+    const user = req.user
+    res.render('login.pug', {
+      title,
+      user,
+    });
   })
   .post((req, res) => {
     loginStrategy.authenticate('local', (err, user, info) => {
