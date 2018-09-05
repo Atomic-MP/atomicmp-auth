@@ -47,11 +47,7 @@ html(lang="en")
 
 							const token = window.sessionStorage.getItem('authToken');
 							if (token) {
-								$.ajaxSetup({
-									headers: {
-										'x-access-token': token
-									}
-								});
+								document.cookie = "jwt=" + token
 							}
 							document.location.href="/";
 						},

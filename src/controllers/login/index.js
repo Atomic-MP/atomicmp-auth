@@ -1,32 +1,36 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const passport = require('../../middlewares/login-strategy');
+const loginStrategy = require('../../middlewares/login-strategy');
+const jwtAuthentication = require('../../middlewares/jwt-authentication');
 const { title } = require('../../utils/constants');
 const { JWT_SECRET } = process.env;
 
 router
   .route('/')
   .get((req, res) => {
-    let user;
-    if (req.isAuthenticated()) {
-      user = req.user;
-    }
-    res.render('login.pug', {
-      title,
-      user,
-    });
+    jwtAuthentication.authenticate('jwt', (err, user, info) => {
+      if (err) {
+        res.sendStatus(503)
+      }
+      res.render('login.pug', {
+        title,
+        user,
+      });
+    })(req,res)
   })
   .post((req, res) => {
-    passport.authenticate('local', (err, user, info) => {
+    loginStrategy.authenticate('local', (err, user, info) => {
       if (user) {
+        console.log(user)
         const token = jwt.sign(
           {
-            userID: user.user_id,
+            userId: user.user_id,
             username: user.username,
           },
           JWT_SECRET
         );
+        console.log(token)
         res.json({ token });
       } else {
         res.sendStatus(401);
