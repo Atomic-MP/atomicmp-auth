@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon -r dotenv/config",
+    "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write '{src,public}/**/*.js' '{src,public}/*/!(node_modules)/**/*.js'",
     "lint": "eslint {src} --ignore-path .gitignore ",
     "test": "jest --forceExit",
