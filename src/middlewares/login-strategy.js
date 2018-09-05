@@ -23,30 +23,10 @@ passport.use(
       // Always use hashed passwords and fixed time comparison
       bcrypt.compare(password, user.hash.toString('utf-8'), (err, isValid) => {
         if (err) return done(err);
-        return !isValid ? done(null, false) : done(null, user);
+        return done(null, !isValid ? null : user);
       });
     }
   )
 );
-
-passport.serializeUser(async (user, done) => {
-  await db('users')
-    .where('user_id', user.user_id)
-    .update('last_seen', new Date());
-  done(null, user);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = first(
-      await db('users')
-        .select()
-        .where('user_id', id)
-    );
-    done(null, user);
-  } catch (err) {
-    done(new Error(`User with the id ${id} does not exist`));
-  }
-});
 
 module.exports = passport;

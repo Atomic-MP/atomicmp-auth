@@ -17,7 +17,6 @@ router.use('/login', loginRoutes);
 router.use('/logout', logoutRoutes);
 router.use('/register', registerRoutes);
 
-
 // /api/dump-user-state
 /*
 {
@@ -42,21 +41,6 @@ router.use('/register', registerRoutes);
 */
 
 // /api/user-stats
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 router.get('/', (req, res) => {
   let user;

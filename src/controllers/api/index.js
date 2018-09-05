@@ -39,21 +39,21 @@ router.put('/update-user-info/:id', async (req, res) => {
   const { health } = req.body;
   await db('users')
     .where('user_id', targetUserID)
-    .update({health})
-  res.sendStatus(200)
-})
+    .update({ health });
+  res.sendStatus(200);
+});
 
 router.get('/user-info/:id', async (req, res) => {
   var targetUserID = req.params.id;
   const data = await db('users')
     .where('user_id', targetUserID)
-    .select('username', 'health', 'discord_id')
+    .select('username', 'health', 'discord_id');
   if (!isEmpty(data)) {
-    const responseData = first(data)
-    res.json(responseData)
+    const responseData = first(data);
+    res.json(responseData);
   } else {
-    res.sendStatus(404)
+    res.sendStatus(404);
   }
-})
+});
 
 module.exports = router;
