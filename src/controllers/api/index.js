@@ -45,11 +45,9 @@ router.post('/sample-user-data', async (req, res) => {
 
 router.put('/save', async (req, res) => {
   const user = req.user;
-  console.log(user)
-  console.log(req.body)
   const { health } = req.body;
   await db('users')
-    .where('user_id', user.id)
+    .where('user_id', user.user_id)
     .update({ health });
   res.sendStatus(200);
 });
