@@ -44,8 +44,8 @@ router.post('/sample-user-data', async (req, res) => {
 });
 
 router.put('/save', async (req, res) => {
-  console.log(user)
   const user = req.user;
+  console.log(user)
   console.log(req.body)
   const { health } = req.body;
   await db('users')
