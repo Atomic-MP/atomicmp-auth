@@ -1,4 +1,4 @@
-const { ROLES } = require('../../../utils/constants')
+const { ROLES } = require('../../../utils/constants');
 
 exports.up = async (knex, Promise) => {
   await knex.schema.createTable('roles', table => {

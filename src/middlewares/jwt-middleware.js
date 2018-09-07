@@ -1,14 +1,14 @@
-const jwtAuthentication = require('./jwt-authentication')
+const jwtAuthentication = require('./jwt-authentication');
 
 function jwtMiddleware(req, res, next) {
   jwtAuthentication.authenticate('jwt', (err, user, info) => {
     if (err) {
-      res.sendStatus(503)
+      res.sendStatus(503);
     }
-    req.user = user
+    req.user = user;
 
-    next()
-  })(req, res)
+    next();
+  })(req, res);
 }
 
-module.exports = jwtMiddleware
+module.exports = jwtMiddleware;

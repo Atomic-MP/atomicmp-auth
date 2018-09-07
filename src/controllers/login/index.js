@@ -8,7 +8,7 @@ const { JWT_SECRET } = process.env;
 router
   .route('/')
   .get((req, res) => {
-    const user = req.user
+    const user = req.user;
     res.render('login.pug', {
       TITLE,
       user,
