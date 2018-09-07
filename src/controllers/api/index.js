@@ -4,7 +4,9 @@ const db = require('../../services/database');
 const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
 const {
-
+  HEADS,
+  HAIRS,
+  HAIR_COLORS,
 } = require('../../utils/constants')
 
 function protectedRoute(req, res, next) {
@@ -48,6 +50,7 @@ router.post('/sample-user-data', async (req, res) => {
 
 router.put('/save', async (req, res) => {
   const user = req.user;
+  console.log('[SAVE]', user)
   const { health } = req.body;
   await db('users')
     .where('user_id', user.user_id)
@@ -58,18 +61,49 @@ router.put('/save', async (req, res) => {
 router.put('/set-appearance', async (req, res) => {
   const user = req.user;
   const {
+    head,
     hair,
     hair_color,
-    isMale: sex
+    is_male
   } = req.body;
+  console.log('[SET-APPEARANCE] user', user)
 
-  if (hair) {
+  if (head == undefined || hair == undefined || hair_color == undefined || is_male == undefined) {
+    console.error("[SET-APPEARANCE][ERROR] Payload contains insufficient data")
+    res.sendStatus(400);
+    return;
+  }
+  if (head < 1 > HEADS) {
+    console.error(`[SET-APPEARANCE][ERROR] Head ${head} is malformed`)
+    res.sendStatus(400);
+    return;
+  }
 
+  if (hair < 1 > HAIRS) {
+    console.error(`[SET-APPEARANCE][ERROR] Hair ${hair} is malformed`)
+    res.sendStatus(400);
+    return;
+  }
+  if (hair_color < 1 > HAIR_COLORS) {
+    console.error(`[SET-APPEARANCE][ERROR] Hair Color ${hair_color} is malformed`)
+    res.sendStatus(400);
+    return;
+  }
+  if (typeof is_male !== 'boolean') {
+    console.error(`[SET-APPEARANCE][ERROR] Sex ${is_male} is malformed`)
+    res.sendStatus(400);
+    return;
   }
 
   await db('users')
     .where('user_id', user.user_id)
-    .update()
+    .update({
+      head,
+      hair,
+      hair_color,
+      is_male
+    })
+  res.sendStatus(200)
 })
 
 router.get('/user-info/:id', async (req, res) => {
@@ -88,7 +122,7 @@ router.get('/user-info/:id', async (req, res) => {
 
 router.get('/load', async (req, res) => {
   const user = req.user;
-  const payload = Object.assign({}, user)
+  const payload = Object.assign({}, user);
   delete payload.hash;
   res.json(payload)
 })
