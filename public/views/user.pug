@@ -30,9 +30,9 @@ html(lang="en")
 						tr
 							td= "Faction"
 							td(id="faction")= targetUser.faction
-	script(type="text/javascript").
-		$(document).ready(()=>{
-			console.log(moment(new Date("#{targetUser.created_at}")))
-			$("#join-date").html(moment(new Date("#{targetUser.created_at}")).fromNow());
-			$("#userinfo").css("visibility","visible");
-		})
+				script(type="text/javascript").
+					$(document).ready(()=>{
+						console.log(moment(new Date("#{targetUser.created_at}")))
+						$("#join-date").html(moment(new Date("#{targetUser.created_at}")).fromNow());
+						$("#userinfo").css("visibility","visible");
+					})
