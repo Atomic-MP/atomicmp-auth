@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const loginStrategy = require('../../middlewares/login-strategy');
-const jwtAuthentication = require('../../middlewares/jwt-authentication');
-const { title } = require('../../utils/constants');
+const { TITLE } = require('../../utils/constants');
 const { JWT_SECRET } = process.env;
 
 router
@@ -11,7 +10,7 @@ router
   .get((req, res) => {
     const user = req.user
     res.render('login.pug', {
-      title,
+      TITLE,
       user,
     });
   })

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const first = require('lodash.first');
 const db = require('../services/database');
-const { title } = require('../utils/constants');
+const { TITLE } = require('../utils/constants');
 
 /*
 Model for valid signup credentials.
@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
     user = req.user;
   }
   res.render('index.pug', {
-    title,
+    TITLE,
     user,
   });
 });
@@ -66,7 +66,7 @@ router.get('/user/:id', async (req, res) => {
     );
 
     res.render('user.pug', {
-      title,
+      TITLE,
       user,
       targetUser,
     });

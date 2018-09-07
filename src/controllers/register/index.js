@@ -4,7 +4,7 @@ const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
 const bcrypt = require('bcrypt');
 const db = require('../../services/database');
-const { title, saltRounds } = require('../../utils/constants');
+const { TITLE, SALT_ROUNDS } = require('../../utils/constants');
 
 const isValidSignupCredentials = payload => {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
@@ -30,7 +30,7 @@ router
       user = req.user;
     }
     res.render('register.pug', {
-      title,
+      TITLE,
       user,
     });
   })
@@ -62,7 +62,7 @@ router
         return res.sendStatus(409);
       }
       const keyID = key.key_id;
-      const hash = await bcrypt.hash(req.body.password, saltRounds);
+      const hash = await bcrypt.hash(req.body.password, SALT_ROUNDS);
       const ownerId = first(
         await db('users')
           .returning('user_id')

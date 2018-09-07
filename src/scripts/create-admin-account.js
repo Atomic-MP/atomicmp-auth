@@ -1,7 +1,7 @@
 require('dotenv').config();
 const db = require('../services/database');
 const bcrypt = require('bcrypt');
-const { saltRounds } = require('../constants');
+const { SALT_ROUNDS } = require('../constants');
 const readline = require('readline');
 
 var username;
@@ -38,7 +38,7 @@ usernameIn
             let rows = data.rows;
             if (rows.length > 0)
               throw new Error(`User ${rows[0].username} already exists`);
-            bcrypt.hash(password, saltRounds).then(hash => {
+            bcrypt.hash(password, SALT_ROUNDS).then(hash => {
               // Store this in the DB
               // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
               db('users')

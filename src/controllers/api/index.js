@@ -3,6 +3,9 @@ const router = express.Router();
 const db = require('../../services/database');
 const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
+const {
+
+} = require('../../utils/constants')
 
 function protectedRoute(req, res, next) {
   if (!req.isAuthenticated()) {
@@ -52,6 +55,23 @@ router.put('/save', async (req, res) => {
   res.sendStatus(200);
 });
 
+router.put('/set-appearance', async (req, res) => {
+  const user = req.user;
+  const {
+    hair,
+    hair_color,
+    isMale: sex
+  } = req.body;
+
+  if (hair) {
+
+  }
+
+  await db('users')
+    .where('user_id', user.user_id)
+    .update()
+})
+
 router.get('/user-info/:id', async (req, res) => {
 
   const targetUserID = req.params.id;
@@ -68,8 +88,9 @@ router.get('/user-info/:id', async (req, res) => {
 
 router.get('/load', async (req, res) => {
   const user = req.user;
-  const payload = Object.assign({})
-  res.json(user)
+  const payload = Object.assign({}, user)
+  delete payload.hash;
+  res.json(payload)
 })
 
 module.exports = router;
