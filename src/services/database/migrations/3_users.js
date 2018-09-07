@@ -18,6 +18,11 @@ exports.up = async (knex, Promise) => {
     table.string('discord_id').notNullable();
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('last_seen').defaultTo(knex.fn.now());
+    table.float('health').defaultTo(100);
+    table.integer('head');
+    table.integer('hair');
+    table.integer('hair_color');
+    table.boolean('is_male');
   });
 };
 
