@@ -69,7 +69,16 @@ html(lang="en")
 							success : function (response) {
 								submitting = false;
 								$('form#register input[type=submit]').css('opacity', 1.0)
-								document.location.href="/";
+								const data = JSON.parse(response);
+								window.sessionStorage.setItem("authToken", data.token);
+
+								const token = window.sessionStorage.getItem('authToken');
+								if (token) {
+									document.cookie = "jwt=" + token
+								}
+								setTimeout(() => {
+									document.location.href="/"
+								}, 500)
 							},
 							error: function(xhr, resp, text) {
 								submitting = false;

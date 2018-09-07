@@ -3,7 +3,9 @@ const router = express.Router();
 const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const db = require('../../services/database');
+const { JWT_SECRET } = process.env;
 const { TITLE, SALT_ROUNDS } = require('../../utils/constants');
 
 const isValidSignupCredentials = payload => {
@@ -63,7 +65,7 @@ router
       }
       const keyID = key.key_id;
       const hash = await bcrypt.hash(req.body.password, SALT_ROUNDS);
-      const ownerId = first(
+      const userId = first(
         await db('users')
           .returning('user_id')
           .insert({
@@ -78,8 +80,17 @@ router
       );
       await db('keys')
         .where('key_id', keyID)
-        .update('owner', ownerId);
-      res.redirect('/');
+        .update('owner', userId);
+      const token = jwt.sign(
+        {
+          userId,
+          username,
+        },
+        JWT_SECRET
+      );
+      res.json({
+        token
+      });
     }
   });
 
