@@ -31,9 +31,6 @@ router.get('/sample-user-data', (req, res) => {
     player_pos_x: 100,
     player_pos_y: -201.54,
     player_pos_z: 350,
-    player_rot_x: 270,
-    player_rot_y: 0,
-    player_rot_z: 0,
     hunger: 55.43,
     thirst: 55.43,
     health: Math.floor(Math.random() * 100 + 1),
@@ -122,9 +119,7 @@ router.get('/user-info/:id', async (req, res) => {
 
 router.get('/load', async (req, res) => {
   const user = req.user;
-  const payload = Object.assign({}, user);
-  delete payload.hash;
-  res.json(payload)
+  res.json(user)
 })
 
 module.exports = router;
