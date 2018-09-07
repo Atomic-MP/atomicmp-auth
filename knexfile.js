@@ -1,9 +1,10 @@
-require('dotenv').config();
+require('dotenv').config()
 const {
   POSTGRES_HOST,
   POSTGRES_USER,
   POSTGRES_PASSWORD,
   POSTGRES_DATABASE,
+  PROD_POSTGRES_CONNECTION
 } = process.env;
 
 module.exports = {
@@ -21,10 +22,10 @@ module.exports = {
     },
     migrations: {
       tableName: POSTGRES_DATABASE,
-      directory: './src/utils/migrations'
+      directory: './src/services/database/migrations'
     },
     seeds: {
-      directory: './src/utils/seeds'
+      directory: './src/services/database/seeds'
     }
   },
 
@@ -46,17 +47,17 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: {
-      database: POSTGRES_DATABASE,
-      user: POSTGRES_USER,
-      password: POSTGRES_PASSWORD
-    },
+    connection: PROD_POSTGRES_CONNECTION,
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
-      tableName: POSTGRES_DATABASE
+      tableName: POSTGRES_DATABASE,
+      directory: './src/services/database/migrations'
+    },
+    seeds: {
+      directory: './src/services/database/seeds'
     }
   }
 }
