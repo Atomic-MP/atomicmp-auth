@@ -43,12 +43,11 @@ router.post('/sample-user-data', async (req, res) => {
   });
 });
 
-router.put('/update-user-info/:id', async (req, res) => {
-
-  const targetUserID = req.params.id;
+router.put('/save', async (req, res) => {
+  const user = req.user;
   const { health } = req.body;
   await db('users')
-    .where('user_id', targetUserID)
+    .where('user_id', user.id)
     .update({ health });
   res.sendStatus(200);
 });
