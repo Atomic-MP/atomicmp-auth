@@ -4,6 +4,15 @@ const db = require('../../services/database');
 const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
 
+function protectedRoute(req, res, next) {
+  if (!req.isAuthenticated()) {
+    res.sendStatus(401)
+    return;
+  }
+  next()
+}
+router.use(protectedRoute)
+
 router.get('/sample-user-data', (req, res) => {
   res.json({
     user_id: 1,
@@ -35,6 +44,7 @@ router.post('/sample-user-data', async (req, res) => {
 });
 
 router.put('/update-user-info/:id', async (req, res) => {
+
   const targetUserID = req.params.id;
   const { health } = req.body;
   await db('users')
@@ -44,6 +54,7 @@ router.put('/update-user-info/:id', async (req, res) => {
 });
 
 router.get('/user-info/:id', async (req, res) => {
+
   const targetUserID = req.params.id;
   const data = await db('users')
     .where('user_id', targetUserID)
@@ -55,5 +66,10 @@ router.get('/user-info/:id', async (req, res) => {
     res.sendStatus(404);
   }
 });
+
+router.get('/load', async (req, res) => {
+  const user = req.user;
+  res.json(user)
+})
 
 module.exports = router;
