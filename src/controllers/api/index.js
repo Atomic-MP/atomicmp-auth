@@ -44,7 +44,9 @@ router.post('/sample-user-data', async (req, res) => {
 });
 
 router.put('/save', async (req, res) => {
+  console.log(user)
   const user = req.user;
+  console.log(req.body)
   const { health } = req.body;
   await db('users')
     .where('user_id', user.id)
@@ -68,6 +70,7 @@ router.get('/user-info/:id', async (req, res) => {
 
 router.get('/load', async (req, res) => {
   const user = req.user;
+  const payload = Object.assign({})
   res.json(user)
 })
 
