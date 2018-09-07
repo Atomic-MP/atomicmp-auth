@@ -22,10 +22,14 @@ passport.use(
   new JwtStrategy(opts, async (jwt_payload, done) => {
     try {
       const targetUserID = jwt_payload.userId;
-      const data = first(await db('users').where('user_id', targetUserID));
+      const user = first(await db('users').where('user_id', targetUserID));
 
-      if (data) {
-        return done(null, data);
+      if (user) {
+        const userData = Object.assign({}, user)
+        // None of our views or APIs will require user hashes... Removing for security
+        // Consider abstracting hashes to a different table.
+        delete userData.hash;
+        return done(null, userData);
       } else {
         return done(null, false);
       }
