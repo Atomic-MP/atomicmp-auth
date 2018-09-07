@@ -14,7 +14,6 @@ moment().format();
 
 function jwtMiddleware(req, res, next) {
   jwtAuthentication.authenticate('jwt', (err, user, info) => {
-    if (!res.locals) res.locals = {}
     if (err) {
       res.sendStatus(503)
     }
