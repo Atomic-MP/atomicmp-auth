@@ -8,21 +8,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const moment = require('moment');
+const jwtMiddleware = require('./middlewares/jwt-middleware')
 const router = require('./controllers/routes');
-const jwtAuthentication = require('./middlewares/jwt-authentication')
 moment().format();
-
-function jwtMiddleware(req, res, next) {
-  jwtAuthentication.authenticate('jwt', (err, user, info) => {
-    if (err) {
-      res.sendStatus(503)
-    }
-    req.user = user
-
-    next()
-  })(req, res)
-}
-
 
 
 app.set('view engine', 'pug');
