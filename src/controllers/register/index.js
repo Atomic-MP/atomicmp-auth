@@ -89,7 +89,7 @@ router
         JWT_SECRET
       );
       res.json({
-        token
+        token,
       });
     }
   });
