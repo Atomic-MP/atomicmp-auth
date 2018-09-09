@@ -53,16 +53,22 @@ router.put('/save', async (req, res) => {
 
 router.put('/set-appearance', async (req, res) => {
   const user = req.user;
-  const { head, hair, hair_color, is_male } = req.body;
+  const { nickname, head, hair, hair_color, is_male } = req.body;
   console.log('[SET-APPEARANCE] user', user);
 
   if (
+    nickname == undefined ||
     head == undefined ||
     hair == undefined ||
     hair_color == undefined ||
     is_male == undefined
   ) {
     console.error('[SET-APPEARANCE][ERROR] Payload contains insufficient data');
+    res.sendStatus(400);
+    return;
+  }
+  if (nickname.length > 20) {
+    console.error(`[SET-APPEARANCE][ERROR] Nickname too long`);
     res.sendStatus(400);
     return;
   }
@@ -93,6 +99,7 @@ router.put('/set-appearance', async (req, res) => {
   await db('users')
     .where('user_id', user.user_id)
     .update({
+      nickname,
       head,
       hair,
       hair_color,
