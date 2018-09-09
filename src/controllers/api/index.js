@@ -67,7 +67,7 @@ router.put('/set-appearance', async (req, res) => {
     res.sendStatus(400);
     return;
   }
-  if (nickname.length > 20) {
+  if (nickname.length > 24) {
     console.error(`[SET-APPEARANCE][ERROR] Nickname too long`);
     res.sendStatus(400);
     return;
