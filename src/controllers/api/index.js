@@ -44,19 +44,14 @@ router.post('/sample-user-data', async (req, res) => {
 router.put('/save', async (req, res) => {
   const user = req.user;
   console.log('[SAVE]', user);
-  const {
-    health,
-    x_pos,
-    y_pos,
-    z_pos
-  } = req.body;
+  const { health, x_pos, y_pos, z_pos } = req.body;
   await db('users')
     .where('user_id', user.user_id)
     .update({
       health,
       x_pos,
       y_pos,
-      z_pos
+      z_pos,
     });
   res.sendStatus(200);
 });
