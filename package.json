@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
+  "engines": {
+    "node": "10.10.0"
+  },
   "scripts": {
     "start": "nodemon -r dotenv/config",
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
