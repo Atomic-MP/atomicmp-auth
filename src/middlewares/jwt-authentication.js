@@ -22,7 +22,7 @@ passport.use(
   new JwtStrategy(opts, async (jwt_payload, done) => {
     try {
       const targetUserID = jwt_payload.userId;
-      const user = first(await db('users').where('user_id', targetUserID));
+      const [user] = await db('users').where('user_id', targetUserID);
 
       if (user) {
         const userData = Object.assign({}, user);

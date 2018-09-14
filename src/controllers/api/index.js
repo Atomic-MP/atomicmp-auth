@@ -128,6 +128,12 @@ router.get('/user-info/:id', async (req, res) => {
 
 router.get('/load', async (req, res) => {
   const user = req.user;
+
+  if (user.faction) {
+    const [factionData] = await db('factions').where('faction_id', user.faction)
+    console.log(factionData)
+    user.faction_color = factionData.color
+  }
   res.json(user);
 });
 
