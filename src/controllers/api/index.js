@@ -1,8 +1,9 @@
 const express = require('express');
-const router = express.Router();
-const db = require('../../services/database');
 const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
+const hexRgb = require('hex-rgb');
+const router = express.Router();
+const db = require('../../services/database');
 const { HEADS, HAIRS, HAIR_COLORS } = require('../../utils/constants');
 
 function protectedRoute(req, res, next) {
@@ -130,9 +131,14 @@ router.get('/load', async (req, res) => {
   const user = req.user;
 
   if (user.faction) {
-    const [factionData] = await db('factions').where('faction_id', user.faction)
-    console.log(factionData)
-    user.faction_color = factionData.color
+    const [factionData] = await db('factions').where('faction_id', user.faction);
+    const [faction_color_r, faction_color_g, faction_color_b] = hexRgb(factionData.color, {
+      format: 'array'
+    })
+    
+    user.faction_color_r = faction_color_r;
+    user.faction_color_g = faction_color_g;
+    user.faction_color_b = faction_color_b;
   }
   res.json(user);
 });
