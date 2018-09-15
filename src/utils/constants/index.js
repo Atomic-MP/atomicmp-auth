@@ -1,7 +1,5 @@
-const generate1IndexedArray = length =>
-  Array(length)
-    .fill()
-    .map((_, index) => index + 1);
+const ITEMS = require('./items.json')
+
 
 const constants = {
   TITLE: 'Atomic MP - A Multiplayer Fallout Roleplay Experience',
@@ -31,6 +29,7 @@ const constants = {
       role_name: 'admin',
     },
   ],
+  ITEMS
 };
 
 module.exports = constants;
