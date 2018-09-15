@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+	head
+		title= TITLE
+		include meta/metatags
+		include meta/theme
+		include meta/scripts
+		script(type="text/javascript").
+			moment().format()
+	body
+		include header
+		.site-wrap
+			if !faction
+				p.
+					Faction not found.
+			else
+				h2(id="faction-name")= faction.name
+				table(id="faction-info")
+					tr
+						td= "ID"
+						td(id="faction-id")= faction.faction_id
+					tr
+						td= "Name"
+						td(id="faction-name")= faction.faction_name
+					tr
+						td= "Color"
+						td(id="faction-color")= faction.color

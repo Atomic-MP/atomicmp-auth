@@ -29,7 +29,8 @@ html(lang="en")
 					if targetUser.faction
 						tr
 							td= "Faction"
-							td(id="faction")= targetUser.faction
+							td(id="faction")
+								a(href='/faction/'+targetUser.faction)=targetUser.faction
 				script(type="text/javascript").
 					$(document).ready(()=>{
 						console.log(moment(new Date("#{targetUser.created_at}")))

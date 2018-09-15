@@ -33,12 +33,10 @@ router.get('/user/:id', async (req, res) => {
   if (req.isAuthenticated()) {
     const user = req.user;
     const targetUserID = req.params.id;
-    const targetUser = first(
-      await db('users')
-        .join('roles', 'users.role', '=', 'roles.role_id')
-        .select('user_id', 'username', 'role_name', 'faction', 'created_at')
-        .where('user_id', targetUserID)
-    );
+    const [targetUser] = await db('users')
+      .join('roles', 'users.role', '=', 'roles.role_id')
+      .select('user_id', 'username', 'role_name', 'faction', 'created_at')
+      .where('user_id', targetUserID)
 
     res.render('user.pug', {
       TITLE,
@@ -51,14 +49,23 @@ router.get('/user/:id', async (req, res) => {
 });
 
 router.get('/faction/:id', async (req, res) => {
-  console.log('asdf')
-  const targetFactionID = req.params.id;
-  const [faction] = await db('factions')
-    .where('faction_id', targetFactionID)
-  if (faction) {
-    res.json(faction);
+  if (req.isAuthenticated()) {
+    const user = req.user;
+    const targetFactionID = req.params.id;
+    const [faction] = await db('factions')
+      .where('faction_id', targetFactionID)
+    if (faction) {
+      console.log(faction)
+      res.render('faction.pug', {
+        TITLE,
+        user,
+        faction,
+      });
+    } else {
+      res.sendStatus(404);
+    }
   } else {
-    res.sendStatus(404);
+    res.redirect('/')
   }
 });
 
