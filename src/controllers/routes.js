@@ -50,6 +50,18 @@ router.get('/user/:id', async (req, res) => {
   }
 });
 
+router.get('/faction/:id', async (req, res) => {
+  console.log('asdf')
+  const targetFactionID = req.params.id;
+  const [faction] = await db('factions')
+    .where('faction_id', targetFactionID)
+  if (faction) {
+    res.json(faction);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
 router.get('/download', (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect(

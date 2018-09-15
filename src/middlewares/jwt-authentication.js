@@ -29,6 +29,8 @@ passport.use(
         // None of our views or APIs will require user hashes... Removing for security
         // Consider abstracting hashes to a different table.
         delete userData.hash;
+        if (user.inventory)
+          userData.inventory = JSON.parse(user.inventory)
         return done(null, userData);
       } else {
         return done(null, false);

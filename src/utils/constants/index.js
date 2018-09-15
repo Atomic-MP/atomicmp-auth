@@ -29,7 +29,8 @@ const constants = {
       role_name: 'admin',
     },
   ],
-  ITEMS
+  ITEMS,
+  INVENTORY_DELIMITER: 'データ'
 };
 
 module.exports = constants;
