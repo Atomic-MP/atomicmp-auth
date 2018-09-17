@@ -30,7 +30,7 @@ const constants = {
     },
   ],
   ITEMS,
-  INVENTORY_DELIMITER: 'データ'
+  INVENTORY_DELIMITER: '|'
 };
 
 module.exports = constants;
