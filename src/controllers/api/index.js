@@ -43,7 +43,7 @@ router.post('/sample-user-data', async (req, res) => {
 router.put('/save', async (req, res) => {
   const user = req.user;
   const { health, x_pos, y_pos, z_pos, inventory: inventoryData } = req.body;
-  const inventory = JSON.stringify(inventoryData)
+  console.log(inventory)
   
   await db('users')
     .where('user_id', user.user_id)
