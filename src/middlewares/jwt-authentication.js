@@ -30,7 +30,7 @@ passport.use(
         // Consider abstracting hashes to a different table.
         delete userData.hash;
         if (user.inventory)
-          userData.inventory = JSON.parse(user.inventory)
+          userData.inventory = user.inventory
         return done(null, userData);
       } else {
         return done(null, false);
