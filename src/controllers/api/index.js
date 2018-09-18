@@ -137,7 +137,7 @@ router.get('/faction-info/:id', async (req, res) => {
 
 router.get('/load', async (req, res) => {
   const user = req.user;
-
+  console.log(user);
   if (user.faction) {
     const [factionData] = await db('factions').where('faction_id', user.faction);
     const [faction_color_r, faction_color_g, faction_color_b] = hexRgb(factionData.color, {
