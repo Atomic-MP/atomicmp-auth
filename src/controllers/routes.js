@@ -12,11 +12,13 @@ const apiRoutes = require('./api');
 const loginRoutes = require('./login');
 const logoutRoutes = require('./logout');
 const registerRoutes = require('./register');
+const recoveryRoutes = require('./recovery')
 
 router.use('/api', apiRoutes);
 router.use('/login', loginRoutes);
 router.use('/logout', logoutRoutes);
 router.use('/register', registerRoutes);
+router.use('/recovery', recoveryRoutes)
 
 router.get('/', (req, res) => {
   let user;
