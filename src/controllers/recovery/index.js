@@ -16,6 +16,7 @@ const isValidPassword = payload => {
 
 router
   .get('/', async (req, res) => {
+    const user = req.user;
     const requestId = req.query.id;
     if (!requestId) {
       res.status(400).send({ error: 'Route requires id' });
