@@ -71,6 +71,7 @@ router
         hash: hash,
         recovery_request: '',
       });
+    res.sendStatus(200);
   });
 
 module.exports = router;
