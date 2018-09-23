@@ -12,13 +12,13 @@ const apiRoutes = require('./api');
 const loginRoutes = require('./login');
 const logoutRoutes = require('./logout');
 const registerRoutes = require('./register');
-const recoveryRoutes = require('./recovery')
+const recoveryRoutes = require('./recovery');
 
 router.use('/api', apiRoutes);
 router.use('/login', loginRoutes);
 router.use('/logout', logoutRoutes);
 router.use('/register', registerRoutes);
-router.use('/recovery', recoveryRoutes)
+router.use('/recovery', recoveryRoutes);
 
 router.get('/', (req, res) => {
   let user;
@@ -38,7 +38,7 @@ router.get('/user/:id', async (req, res) => {
     const [targetUser] = await db('users')
       .join('roles', 'users.role', '=', 'roles.role_id')
       .select('user_id', 'username', 'role_name', 'faction', 'created_at')
-      .where('user_id', targetUserID)
+      .where('user_id', targetUserID);
 
     res.render('user.pug', {
       TITLE,
@@ -54,10 +54,9 @@ router.get('/faction/:id', async (req, res) => {
   if (req.isAuthenticated()) {
     const user = req.user;
     const targetFactionID = req.params.id;
-    const [faction] = await db('factions')
-      .where('faction_id', targetFactionID)
+    const [faction] = await db('factions').where('faction_id', targetFactionID);
     if (faction) {
-      console.log(faction)
+      console.log(faction);
       res.render('faction.pug', {
         TITLE,
         user,
@@ -67,7 +66,7 @@ router.get('/faction/:id', async (req, res) => {
       res.sendStatus(404);
     }
   } else {
-    res.redirect('/')
+    res.redirect('/');
   }
 });
 

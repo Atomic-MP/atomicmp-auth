@@ -2,7 +2,12 @@ const express = require('express');
 const hexRgb = require('hex-rgb');
 const router = express.Router();
 const db = require('../../services/database');
-const { HEADS, HAIRS, HAIR_COLORS, INVENTORY_DELIMITER } = require('../../utils/constants');
+const {
+  HEADS,
+  HAIRS,
+  HAIR_COLORS,
+  INVENTORY_DELIMITER,
+} = require('../../utils/constants');
 
 function protectedRoute(req, res, next) {
   if (!req.isAuthenticated()) {
@@ -36,9 +41,9 @@ router.get('/sample-user-data', (req, res) => {
 router.put('/save', async (req, res) => {
   const user = req.user;
   const { health, x_pos, y_pos, z_pos, inventory, money } = req.body;
-  console.log(inventory)
-  console.log(money)
-  
+  console.log(inventory);
+  console.log(money);
+
   await db('users')
     .where('user_id', user.user_id)
     .update({
@@ -47,7 +52,7 @@ router.put('/save', async (req, res) => {
       y_pos,
       z_pos,
       inventory,
-      money
+      money,
     });
   res.sendStatus(200);
 });
@@ -121,8 +126,7 @@ router.get('/user-info/:id', async (req, res) => {
 });
 router.get('/faction-info/:id', async (req, res) => {
   const targetFactionID = req.params.id;
-  const [faction] = await db('factions')
-    .where('faction_id', targetFactionID)
+  const [faction] = await db('factions').where('faction_id', targetFactionID);
   if (faction) {
     res.json(faction);
   } else {
@@ -134,11 +138,17 @@ router.get('/load', async (req, res) => {
   const user = req.user;
   console.log(user);
   if (user.faction) {
-    const [factionData] = await db('factions').where('faction_id', user.faction);
-    const [faction_color_r, faction_color_g, faction_color_b] = hexRgb(factionData.color, {
-      format: 'array'
-    })
-    
+    const [factionData] = await db('factions').where(
+      'faction_id',
+      user.faction
+    );
+    const [faction_color_r, faction_color_g, faction_color_b] = hexRgb(
+      factionData.color,
+      {
+        format: 'array',
+      }
+    );
+
     user.faction_color_r = faction_color_r;
     user.faction_color_g = faction_color_g;
     user.faction_color_b = faction_color_b;

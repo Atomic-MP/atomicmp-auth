@@ -1,5 +1,4 @@
-const ITEMS = require('./items.json')
-
+const ITEMS = require('./items.json');
 
 const constants = {
   TITLE: 'Atomic MP - A Multiplayer Fallout Roleplay Experience',
@@ -30,7 +29,7 @@ const constants = {
     },
   ],
   ITEMS,
-  INVENTORY_DELIMITER: '|'
+  INVENTORY_DELIMITER: '|',
 };
 
 module.exports = constants;
