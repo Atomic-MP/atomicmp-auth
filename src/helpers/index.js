@@ -6,9 +6,9 @@ function isValidUsername({ username }) {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
   return (
     typeof username !== 'undefined' &&
-    payload.username.replace(/ /g, '').length >= 3 &&
-    !payload.username.startsWith(' ') &&
-    validUsernameRegex.test(payload.username)
+    username.replace(/ /g, '').length >= 3 &&
+    !username.startsWith(' ') &&
+    validUsernameRegex.test(username)
   );
 }
 
