@@ -18,20 +18,25 @@ describe('is valid username helper', () => {
     expect(isValidUsername(username)).toBeFalsy();
   });
   test('to be falsy on non-alphabetical characters', () => {
-    expect(isValidUsername('R6S')).toBeFalsy();
-    expect(isValidUsername('R-J')).toBeFalsy();
-    expect(isValidUsername('!!!')).toBeFalsy();
-    expect(isValidUsername("Po' Boy")).toBeFalsy();
-    expect(isValidUsername('test!')).toBeFalsy();
-    expect(isValidUsername('test@')).toBeFalsy();
-    expect(isValidUsername('test#')).toBeFalsy();
-    expect(isValidUsername('test$')).toBeFalsy();
-    expect(isValidUsername('test%')).toBeFalsy();
-    expect(isValidUsername('test^')).toBeFalsy();
-    expect(isValidUsername('test&')).toBeFalsy();
-    expect(isValidUsername('test*')).toBeFalsy();
-    expect(isValidUsername('test(')).toBeFalsy();
-    expect(isValidUsername('test)')).toBeFalsy();
-    expect(isValidUsername('falsy boi👌')).toBeFalsy();
+    const usernameArr = [
+      'R6S',
+      'R-J',
+      '!!!',
+      "Po' Boy",
+      'test!',
+      'test@',
+      'test#',
+      'test$',
+      'test%',
+      'test^',
+      'test&',
+      'test*',
+      'test(',
+      'test)',
+      'falsy boi👌',
+    ];
+    usernameArr.forEach(username =>
+      expect(isValidUsername(username)).toBeFalsy()
+    );
   });
 });
