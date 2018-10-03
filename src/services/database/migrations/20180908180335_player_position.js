@@ -1,4 +1,4 @@
-exports.up = function(knex, Promise) {
+exports.up = function(knex) {
   return knex.schema.table('users', table => {
     table.float('x_pos');
     table.float('y_pos');
@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
   });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function(knex) {
   return knex.schema.table('users', table => {
     table.dropColumn('x_pos');
     table.dropColumn('y_pos');

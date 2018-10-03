@@ -1,9 +1,10 @@
 const jwtAuthentication = require('./jwt-authentication');
+const { logger } = require('../services');
 
 function jwtMiddleware(req, res, next) {
-  jwtAuthentication.authenticate('jwt', (err, user, info) => {
+  jwtAuthentication.authenticate('jwt', (err, user) => {
     if (err) {
-      console.log(err);
+      logger.error(err);
       res.sendStatus(503);
       return;
     }

@@ -1,12 +1,14 @@
 const app = require('./app');
+const { logger } = require('./services');
 const PORT = process.env.PORT || 3005;
 
 const server = app.listen(PORT, () => {
-  console.log('Ready on ' + PORT);
+  logger.info('Ready on ' + PORT);
 });
 
 process.on('SIGINT', () => {
-  console.log('Caught SIGINT, bye...');
+  logger.info('Caught SIGINT, bye...');
   server.close();
+  /* eslint-disable-next-line no-process-exit */
   process.exit(0);
 });

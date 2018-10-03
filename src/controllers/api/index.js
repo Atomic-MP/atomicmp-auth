@@ -1,7 +1,7 @@
 const express = require('express');
 const hexRgb = require('hex-rgb');
 const router = express.Router();
-const db = require('../../services/database');
+const { db, logger } = require('../../services');
 const { HEADS, HAIRS, HAIR_COLORS } = require('../../utils/constants');
 
 function protectedRoute(req, res, next) {
@@ -36,8 +36,9 @@ router.get('/sample-user-data', (req, res) => {
 router.put('/save', async (req, res) => {
   const user = req.user;
   const { health, x_pos, y_pos, z_pos, inventory, money } = req.body;
-  console.log(inventory);
-  console.log(money);
+
+  logger.info(inventory);
+  logger.info(money);
 
   await db('users')
     .where('user_id', user.user_id)
@@ -63,35 +64,35 @@ router.put('/set-appearance', async (req, res) => {
     hair_color == undefined ||
     is_male == undefined
   ) {
-    console.error('[SET-APPEARANCE][ERROR] Payload contains insufficient data');
+    logger.error('[SET-APPEARANCE][ERROR] Payload contains insufficient data');
     res.sendStatus(400);
     return;
   }
   if (nickname.length > 24) {
-    console.error(`[SET-APPEARANCE][ERROR] Nickname too long`);
+    logger.error(`[SET-APPEARANCE][ERROR] Nickname too long`);
     res.sendStatus(400);
     return;
   }
   if (head < 1 > HEADS) {
-    console.error(`[SET-APPEARANCE][ERROR] Head ${head} is malformed`);
+    logger.error(`[SET-APPEARANCE][ERROR] Head ${head} is malformed`);
     res.sendStatus(400);
     return;
   }
 
   if (hair < 1 > HAIRS) {
-    console.error(`[SET-APPEARANCE][ERROR] Hair ${hair} is malformed`);
+    logger.error(`[SET-APPEARANCE][ERROR] Hair ${hair} is malformed`);
     res.sendStatus(400);
     return;
   }
   if (hair_color < 1 > HAIR_COLORS) {
-    console.error(
+    logger.error(
       `[SET-APPEARANCE][ERROR] Hair Color ${hair_color} is malformed`
     );
     res.sendStatus(400);
     return;
   }
   if (typeof is_male !== 'boolean') {
-    console.error(`[SET-APPEARANCE][ERROR] Sex ${is_male} is malformed`);
+    logger.error(`[SET-APPEARANCE][ERROR] Sex ${is_male} is malformed`);
     res.sendStatus(400);
     return;
   }
@@ -131,7 +132,7 @@ router.get('/faction-info/:id', async (req, res) => {
 
 router.get('/load', async (req, res) => {
   const user = req.user;
-  console.log(user);
+  logger.info(user);
   if (user.faction) {
     const [factionData] = await db('factions').where(
       'faction_id',

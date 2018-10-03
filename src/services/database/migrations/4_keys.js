@@ -1,4 +1,4 @@
-exports.up = (knex, Promise) => {
+exports.up = knex => {
   return knex.schema.createTable('keys', table => {
     table.increments('key_id').primary();
     table.string('key', 23).notNullable();
@@ -12,6 +12,6 @@ exports.up = (knex, Promise) => {
   });
 };
 
-exports.down = (knex, Promise) => {
+exports.down = knex => {
   return knex.schema.dropTable('keys');
 };

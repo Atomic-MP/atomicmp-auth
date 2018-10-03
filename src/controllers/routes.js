@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const first = require('lodash.first');
-const db = require('../services/database');
+const { db, logger } = require('../services');
 const { TITLE } = require('../utils/constants');
 
 /*
@@ -56,7 +55,7 @@ router.get('/faction/:id', async (req, res) => {
     const targetFactionID = req.params.id;
     const [faction] = await db('factions').where('faction_id', targetFactionID);
     if (faction) {
-      console.log(faction);
+      logger.info(faction);
       res.render('faction.pug', {
         TITLE,
         user,

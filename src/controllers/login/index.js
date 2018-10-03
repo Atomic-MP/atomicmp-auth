@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const loginStrategy = require('../../middlewares/login-strategy');
 const { TITLE } = require('../../utils/constants');
+const { logger } = require('../../services');
 const { JWT_SECRET } = process.env;
 
 router
@@ -15,7 +16,10 @@ router
     });
   })
   .post((req, res) => {
-    loginStrategy.authenticate('local', (err, user, info) => {
+    loginStrategy.authenticate('local', (err, user) => {
+      if (err) {
+        logger.error(err);
+      }
       if (user) {
         const token = jwt.sign(
           {

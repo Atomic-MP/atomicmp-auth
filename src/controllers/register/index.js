@@ -4,7 +4,7 @@ const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const db = require('../../services/database');
+const { db, logger } = require('../../services');
 const { JWT_SECRET } = process.env;
 const { TITLE, SALT_ROUNDS } = require('../../utils/constants');
 const { isValidSignupCredentials } = require('../../helpers');
@@ -21,7 +21,7 @@ router
       user,
     });
   })
-  .post(async (req, res, next) => {
+  .post(async (req, res) => {
     if (!req.body || !req.body.username || !req.body.password)
       return res.sendStatus(400);
     req.body.username = req.body.username.trim();
@@ -36,7 +36,7 @@ router
         ).rows
       );
       if (usernameExists) {
-        console.log(`User ${username} already exists`);
+        logger.warn(`User ${username} already exists`);
         return res.sendStatus(409);
       }
       const key = first(
