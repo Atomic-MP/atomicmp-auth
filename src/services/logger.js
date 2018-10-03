@@ -1,21 +1,28 @@
-const winston = require('winston');
+const { createLogger, format, transports } = require('winston');
 const { ENV } = process.env;
 
-const logger = winston.createLogger({
+const ignorePrivate = format(info => {
+  if (info.private) {
+    return false;
+  }
+  return info;
+});
+
+const logger = createLogger({
   level: 'info',
-  format: winston.format.json(),
+  format: format.combine(ignorePrivate(), format.json()),
   transports: [
-    new winston.transports.Console({
-      format: winston.format.simple(),
+    new transports.Console({
+      format: format.combine(format.colorize(), format.simple()),
     }),
     ...(ENV === 'development'
       ? []
       : [
-          new winston.transports.File({
+          new transports.File({
             filename: 'logs/errors.log',
             level: 'error',
           }),
-          new winston.transports.File({ filename: 'logs/output.log' }),
+          new transports.File({ filename: 'logs/output.log' }),
         ]),
   ],
 });
