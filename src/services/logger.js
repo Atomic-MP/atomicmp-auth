@@ -5,18 +5,17 @@ const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
   transports: [
-    ...(ENV !== 'develop'
-      ? [
-          new winston.transports.Console({
-            format: winston.format.simple(),
-          }),
-        ]
+    new winston.transports.Console({
+      format: winston.format.simple(),
+    }),
+    ...(ENV === 'development'
+      ? []
       : [
           new winston.transports.File({
-            filename: 'error.log',
+            filename: 'logs/errors.log',
             level: 'error',
           }),
-          new winston.transports.File({ filename: '../../.logs/output.log' }),
+          new winston.transports.File({ filename: 'logs/output.log' }),
         ]),
   ],
 });
