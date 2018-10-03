@@ -4,14 +4,8 @@ jobs:
     working_directory: ~/atomicmp-auth
     docker:
       - image: circleci/node:10.10.0
-      - image: postgres:9.4.1
-        environment:
-          POSTGRES_USER: root
-    environment:
-      TEST_REPORTS: /tmp/test-reports
     steps:
       - checkout
-      - add-ssh-keys
       - run:
         name: update-npm 
         command: 'sudo npm install -g npm@latest'
