@@ -1,8 +1,17 @@
-function isValidSignupCredentials(payload) {
-  return isValidUsername(payload) && isValidPassword(payload) && payload.key;
+function isValidSignupCredentials({
+  username,
+  password,
+  confirmPassword,
+  key,
+}) {
+  return (
+    isValidUsername(username) &&
+    isValidPassword({ password, confirmPassword }) &&
+    key
+  );
 }
 
-function isValidUsername({ username }) {
+function isValidUsername(username) {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
   return (
     typeof username !== 'undefined' &&
