@@ -4,15 +4,7 @@ const bcrypt = require('bcrypt');
 const db = require('../../services/database');
 const { TITLE, SALT_ROUNDS } = require('../../utils/constants');
 
-const isValidPassword = payload => {
-  const validPasswordRegex = /^([A-Za-z\d$@$!%*?&]){8,50}$/;
-  return (
-    payload.password &&
-    payload.confirmPassword &&
-    payload.password === payload.confirmPassword &&
-    validPasswordRegex.test(payload.password)
-  );
-};
+const { isValidPassword } = require('../../helpers');
 
 router
   .get('/', async (req, res) => {
@@ -70,7 +62,7 @@ router
         user_id: user.user_id,
       })
       .update({
-        hash: hash,
+        hash,
         recovery_request: '',
       });
     res.sendStatus(200);
