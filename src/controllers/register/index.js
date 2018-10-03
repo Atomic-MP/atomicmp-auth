@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../../services/database');
 const { JWT_SECRET } = process.env;
 const { TITLE, SALT_ROUNDS } = require('../../utils/constants');
-const { isValidSignupCredentials } = require('../../helpers')
+const { isValidSignupCredentials } = require('../../helpers');
 
 router
   .route('/')

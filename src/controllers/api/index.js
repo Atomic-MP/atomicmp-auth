@@ -2,12 +2,7 @@ const express = require('express');
 const hexRgb = require('hex-rgb');
 const router = express.Router();
 const db = require('../../services/database');
-const {
-  HEADS,
-  HAIRS,
-  HAIR_COLORS,
-  INVENTORY_DELIMITER,
-} = require('../../utils/constants');
+const { HEADS, HAIRS, HAIR_COLORS } = require('../../utils/constants');
 
 function protectedRoute(req, res, next) {
   if (!req.isAuthenticated()) {

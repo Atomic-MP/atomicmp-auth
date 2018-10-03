@@ -22,7 +22,9 @@ router
       res.status(400).send({ error: 'Route requires id' });
       return;
     }
-    const [resetTarget] = await db('users').where({ recovery_request: requestId });
+    const [resetTarget] = await db('users').where({
+      recovery_request: requestId,
+    });
     if (!resetTarget) {
       res.status(404).send({
         error: 'Recovery code no longer valid',
