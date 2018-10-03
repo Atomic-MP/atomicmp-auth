@@ -7,11 +7,11 @@ jobs:
     steps:
       - checkout
       - run:
-        name: update-npm 
-        command: 'sudo npm install -g npm@latest'
+          name: update-npm 
+          command: 'sudo npm install -g npm@latest'
       - run:
-        name: install-npm-deps
-        command: npm install
+          name: install-npm-deps
+          command: npm install
       - run:
-        name: test
-        command: npm test
+          name: test
+          command: npm test
