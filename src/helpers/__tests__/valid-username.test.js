@@ -7,4 +7,14 @@ describe('is valid username helper', () => {
     let username = faker.name.firstName().substring(0, 24);
     expect(isValidUsername(username));
   });
+  test('to be falsy if username starts with space', () => {
+    let username = ` ${faker.name.firstName().substring(0, 23)}`;
+    expect(isValidUsername(username));
+  });
+  test('to be falsy if username contains less than 3 letters', () => {
+    let username = `${faker.random.alphaNumeric(1)} ${faker.random.alphaNumeric(
+      1
+    )}`;
+    expect(isValidUsername(username));
+  });
 });
