@@ -11,7 +11,19 @@
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
     "lint": "eslint 'src/**/*.js' --ignore-path .gitignore ",
+    "pre-commit-lint": "lint-staged",
     "test": "ENV=test jest"
+  },
+  "pre-commit": [
+    "pre-commit-lint",
+    "test"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "npm run format",
+      "npm run lint",
+      "git add"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -47,6 +59,8 @@
     "eslint-plugin-security": "^1.4.0",
     "faker": "^4.1.0",
     "jest": "^23.6.0",
+    "lint-staged": "^7.3.0",
+    "pre-commit": "^1.2.2",
     "prettier-eslint": "^8.8.2"
   }
 }
