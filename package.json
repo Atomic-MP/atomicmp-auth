@@ -11,8 +11,7 @@
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
     "lint": "eslint 'src/**/*.js' --ignore-path .gitignore ",
-    "test": "ENV=test jest",
-    "create-admin": "node -r dotenv/config src/scripts/create-admin-account.js"
+    "test": "ENV=test jest"
   },
   "author": "",
   "license": "ISC",
