@@ -11,7 +11,7 @@
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
     "lint": "eslint {src} --ignore-path .gitignore ",
-    "test": "jest --forceExit",
+    "test": "ENV=test jest",
     "create-admin": "node -r dotenv/config src/scripts/create-admin-account.js"
   },
   "author": "",
@@ -25,7 +25,6 @@
     "express-favicon": "^2.0.1",
     "express-session": "^1.15.6",
     "hex-rgb": "^3.0.0",
-    "jest": "^23.5.0",
     "jsonwebtoken": "^8.3.0",
     "knex": "^0.15.2",
     "lodash.first": "^3.0.0",
@@ -40,6 +39,8 @@
   },
   "devDependencies": {
     "eslint": "^5.5.0",
+    "faker": "^4.1.0",
+    "jest": "^23.6.0",
     "prettier-eslint": "^8.8.2"
   }
 }
