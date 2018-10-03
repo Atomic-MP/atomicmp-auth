@@ -19,6 +19,7 @@ router
     loginStrategy.authenticate('local', (err, user) => {
       if (err) {
         logger.error(err);
+        return;
       }
       if (user) {
         const token = jwt.sign(

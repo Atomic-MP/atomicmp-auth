@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const createError = require('http-errors');
+
 const { db, logger } = require('../services');
 const { TITLE } = require('../utils/constants');
-
-/*
-Model for valid signup credentials.
-*/
 
 const apiRoutes = require('./api');
 const loginRoutes = require('./login');
@@ -62,7 +60,7 @@ router.get('/faction/:id', async (req, res) => {
         faction,
       });
     } else {
-      res.sendStatus(404);
+      res.send(createError(404, 'Faction not found'));
     }
   } else {
     res.redirect('/');
