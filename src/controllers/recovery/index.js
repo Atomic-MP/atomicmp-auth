@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const db = require('../../services/database');
+const createError = require('http-errors');
+
+const { db } = require('../../services');
 const { TITLE, SALT_ROUNDS } = require('../../utils/constants');
 
 const { isValidPassword } = require('../../helpers');
@@ -18,9 +20,7 @@ router
       recovery_request: requestId,
     });
     if (!resetTarget) {
-      res.status(404).send({
-        error: 'Recovery code no longer valid',
-      });
+      res.status(createError(404, 'Recovery code no longer valid'));
       return;
     }
 
@@ -39,9 +39,7 @@ router
       !confirmPassword ||
       !isValidPassword(req.body)
     ) {
-      res.status(400).send({
-        error: 'Malformed password reset payload',
-      });
+      res.send(createError(400, 'Malformed password reset payload'));
       return;
     }
 
@@ -49,9 +47,7 @@ router
       recovery_request: requestId,
     });
     if (!user) {
-      res.status(404).send({
-        error: 'No recovery request found',
-      });
+      res.send(createError(404, 'No recovery request found'));
       return;
     }
 

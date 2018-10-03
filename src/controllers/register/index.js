@@ -4,6 +4,7 @@ const first = require('lodash.first');
 const isEmpty = require('lodash.isempty');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const createError = require('http-errors');
 const { db, logger } = require('../../services');
 const { JWT_SECRET } = process.env;
 const { TITLE, SALT_ROUNDS } = require('../../utils/constants');
@@ -37,7 +38,7 @@ router
       );
       if (usernameExists) {
         logger.warn(`User ${username} already exists`);
-        return res.sendStatus(409);
+        return res.send(createError(409, `User ${username} already exists`));
       }
       const key = first(
         await db('keys')
@@ -46,7 +47,7 @@ router
           .andWhere('owner', null)
       );
       if (!key) {
-        return res.sendStatus(409);
+        return res.send(createError(404, `Key ${key} not found`));
       }
       const keyID = key.key_id;
       const hash = await bcrypt.hash(req.body.password, SALT_ROUNDS);

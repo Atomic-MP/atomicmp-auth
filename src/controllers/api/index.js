@@ -1,12 +1,13 @@
 const express = require('express');
 const hexRgb = require('hex-rgb');
+const createError = require('http-errors');
 const router = express.Router();
 const { db, logger } = require('../../services');
 const { HEADS, HAIRS, HAIR_COLORS } = require('../../utils/constants');
 
 function protectedRoute(req, res, next) {
   if (!req.isAuthenticated()) {
-    res.sendStatus(401);
+    res.send(createError(401, 'Not Authorized to access enpoint'));
     return;
   }
   next();
@@ -37,8 +38,7 @@ router.put('/save', async (req, res) => {
   const user = req.user;
   const { health, x_pos, y_pos, z_pos, inventory, money } = req.body;
 
-  logger.info(inventory);
-  logger.info(money);
+  logger.info(`inventory: ${inventory}, money: ${money}`);
 
   await db('users')
     .where('user_id', user.user_id)
@@ -65,35 +65,35 @@ router.put('/set-appearance', async (req, res) => {
     is_male == undefined
   ) {
     logger.error('[SET-APPEARANCE][ERROR] Payload contains insufficient data');
-    res.sendStatus(400);
+    res.send(createError(400, 'Payload contains insufficient data'));
     return;
   }
   if (nickname.length > 24) {
     logger.error(`[SET-APPEARANCE][ERROR] Nickname too long`);
-    res.sendStatus(400);
+    res.send(createError(400, 'Nickname too long'));
     return;
   }
   if (head < 1 > HEADS) {
     logger.error(`[SET-APPEARANCE][ERROR] Head ${head} is malformed`);
-    res.sendStatus(400);
+    res.send(createError(400, `Head ${head} is malformed`));
     return;
   }
 
   if (hair < 1 > HAIRS) {
     logger.error(`[SET-APPEARANCE][ERROR] Hair ${hair} is malformed`);
-    res.sendStatus(400);
+    res.send(createError(400, `Hair ${hair} is malformed`));
     return;
   }
   if (hair_color < 1 > HAIR_COLORS) {
     logger.error(
       `[SET-APPEARANCE][ERROR] Hair Color ${hair_color} is malformed`
     );
-    res.sendStatus(400);
+    res.send(createError(400, `Hair Color ${hair_color} is malformed`));
     return;
   }
   if (typeof is_male !== 'boolean') {
     logger.error(`[SET-APPEARANCE][ERROR] Sex ${is_male} is malformed`);
-    res.sendStatus(400);
+    res.send(createError(400, `Sex ${is_male} is malformed`));
     return;
   }
 
@@ -117,7 +117,7 @@ router.get('/user-info/:id', async (req, res) => {
   if (user) {
     res.json(user);
   } else {
-    res.sendStatus(404);
+    res.send(createError(404, `User ${targetUserID} not found`));
   }
 });
 router.get('/faction-info/:id', async (req, res) => {
@@ -126,7 +126,7 @@ router.get('/faction-info/:id', async (req, res) => {
   if (faction) {
     res.json(faction);
   } else {
-    res.sendStatus(404);
+    res.send(createError(404, `Faction ${targetFactionID} not found`));
   }
 });
 
