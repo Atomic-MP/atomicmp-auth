@@ -1,4 +1,9 @@
-*{
+@font-face {
+	font-family: "Overseer";
+	src: url(/Overseer.otf) format("truetype");
+}
+
+* {
 	padding:0;
 	margin:0;
 	font-family: 'Open Sans', sans-serif;
@@ -28,8 +33,13 @@ body {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-family: 'Roboto', sans-serif;
 	color: var(--header-main);
+	text-shadow: 1px 1px 1px var(--header-accent);
+	font-family: Overseer;
+}
+
+h1 {
+	font-size:60px;
 }
 
 .site-wrap {
@@ -38,6 +48,7 @@ h1,h2,h3,h4,h5,h6 {
 	padding: 20px 20px;
 	max-width: 800px;
 	color: var(--header-accent);
+	font-size: 20px;
 }
 
 .site-wrap form {
