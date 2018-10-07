@@ -15,21 +15,15 @@
 
 
 html {
-	height:calc(100% - 60px);
-	width:100%;
 	margin:0;
 	padding:0;
 }
 
 body {
-	height:100%;
-	width:100%;
 	margin:0;
 	padding:0;
-}
-body {
-	background: #211C18 url(/background1.png) top center no-repeat fixed;
-	background-size: cover;
+	background-color: var(--header-accent);
+	margin-bottom: 20px;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -45,6 +39,23 @@ h1 {
 a, a:visited {
 	color: inherit;
 	text-decoration: none;
+}
+
+#background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #211C18 url(/background1.png) top center no-repeat fixed;
+	background-size: cover;
+	width: 100%;
+	height: 100%;
+	-webkit-filter: blur(2px);
+	-moz-filter: blur(2px);
+	-o-filter: blur(2px);
+	-ms-filter: blur(2px);
+	filter: blur(2px);
+	z-index: -1;
 }
 
 .site-wrap {
