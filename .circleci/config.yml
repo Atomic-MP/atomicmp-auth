@@ -15,7 +15,6 @@ jobs:
       - run:
           name: test
           command: npm test
-
   deploy:
     working_directory: ~/atomicmp-auth
     docker:
