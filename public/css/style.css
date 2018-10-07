@@ -42,6 +42,11 @@ h1 {
 	font-size:60px;
 }
 
+a, a:visited {
+	color: inherit;
+	text-decoration: none;
+}
+
 .site-wrap {
 	background-color: #eee;
 	margin: 0px auto;
@@ -73,7 +78,7 @@ label {
 
 .site-wrap form input[type="submit"] {
 	color: white;
-	text-shadow: 1px 1px 3px black;
+	text-shadow: 1px 1px 1px var(--header-accent);
 	font-size: 18px;
 	background-color: var(--header-main);
 	border-top: 1px solid var(--header-accent);
@@ -140,13 +145,16 @@ p {
 .nav-item {
   float: left;
   display: block;
-  color: white;
   text-align: center;
   padding: 20px 16px;
   text-decoration: none;
   font-size: 17px;
 	text-shadow: 1px 1px 3px black;
 	transition: all .1s ease-in-out;
+}
+
+a.nav-item {
+	color: white;
 }
 
 .nav-item:hover {
