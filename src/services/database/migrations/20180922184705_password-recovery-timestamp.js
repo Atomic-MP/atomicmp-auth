@@ -1,10 +1,10 @@
-exports.up = function(knex) {
+exports.up = knex => {
   return knex.schema.table('users', table => {
     table.string('recovery_request');
   });
 };
 
-exports.down = function(knex) {
+exports.down = knex => {
   return knex.schema.table('users', table => {
     table.dropColumn('recovery_request');
   });
