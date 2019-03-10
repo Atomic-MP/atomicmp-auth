@@ -2,18 +2,15 @@ const express = require('express');
 const hexRgb = require('hex-rgb');
 const createError = require('http-errors');
 const router = express.Router();
+const protectedRoute = require('../../middlewares/protected-route');
 const { db, logger } = require('../../services');
 const { HEADS, HAIRS, HAIR_COLORS } = require('../../utils/constants');
 
-function protectedRoute(req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.send(createError(401, 'Not Authorized to access enpoint'));
-    return;
-  }
-  next();
-}
 router.use(protectedRoute);
 
+/**
+ * This is a sample of the user data output from user data dump
+ */
 router.get('/sample-user-data', (req, res) => {
   res.json({
     user_id: 1,
@@ -131,15 +128,40 @@ router.get('/faction-info/:id', async (req, res) => {
 });
 
 router.get('/load', async (req, res) => {
+  // Explicitly defining the data points that should be
+  // set to the client on load
+  const savestateKeys = new Set([
+    'user_id',
+    'username',
+    'role',
+    'faction',
+    'health',
+    'head',
+    'hair',
+    'hair_color',
+    'is_male',
+    'nickname',
+    'x_pos',
+    'y_pos',
+    'z_pos',
+    'inventory',
+    'money',
+  ]);
+
   const user = req.user;
-  logger.info(user);
+  for (const key in Object.keys(user)) {
+    if (!savestateKeys.has(key)) delete user[key];
+  }
+  logger.info(JSON.stringify(user));
+  // LEFT JOIN faction data
+
   if (user.faction) {
     const [factionData] = await db('factions').where(
       'faction_id',
       user.faction
     );
     const [faction_color_r, faction_color_g, faction_color_b] = hexRgb(
-      factionData.color,
+      factionData.color || '#FFFFFF',
       {
         format: 'array',
       }
