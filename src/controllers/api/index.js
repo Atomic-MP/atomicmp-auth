@@ -58,6 +58,8 @@ router.put('/save', async (req, res) => {
       inventory,
       money,
     });
+
+  logger.info(`${user.username} data saved`);
   res.sendStatus(200);
 });
 
