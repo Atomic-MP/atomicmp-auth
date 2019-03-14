@@ -21,19 +21,28 @@ router.get('/sample-user-data', (req, res) => {
     female_head: 1,
     female_hair: 1,
     hair_color: 1,
-    player_pos_x: 100,
-    player_pos_y: -201.54,
-    player_pos_z: 350,
+    x_pos: 100,
+    y_pos: -201.54,
+    z_pos: 350,
     hunger: 55.43,
     thirst: 55.43,
     health: Math.floor(Math.random() * 100 + 1),
-    caps: 587,
+    money: 587,
   });
 });
 
 router.put('/save', async (req, res) => {
   const user = req.user;
-  const { health, x_pos, y_pos, z_pos, inventory, money } = req.body;
+  const {
+    health,
+    hunger,
+    thirst,
+    x_pos,
+    y_pos,
+    z_pos,
+    inventory,
+    money,
+  } = req.body;
 
   logger.info(`inventory: ${inventory}, money: ${money}`);
 
@@ -41,12 +50,16 @@ router.put('/save', async (req, res) => {
     .where('user_id', user.user_id)
     .update({
       health,
+      hunger,
+      thirst,
       x_pos,
       y_pos,
       z_pos,
       inventory,
       money,
     });
+
+  logger.info(`${user.username} data saved`);
   res.sendStatus(200);
 });
 
@@ -136,6 +149,8 @@ router.get('/load', async (req, res) => {
     'role',
     'faction',
     'health',
+    'hunger',
+    'thirst',
     'head',
     'hair',
     'hair_color',
@@ -149,7 +164,7 @@ router.get('/load', async (req, res) => {
   ]);
 
   const user = req.user;
-  for (const key in Object.keys(user)) {
+  for (const key of Object.keys(user)) {
     if (!savestateKeys.has(key)) delete user[key];
   }
   logger.info(JSON.stringify(user));

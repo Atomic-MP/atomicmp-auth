@@ -62,6 +62,8 @@ router
             discord_id: key.discord_id,
             created_at: new Date(),
             health: 100,
+            hunger: 100,
+            thirst: 100,
           })
       );
       await db('keys')
