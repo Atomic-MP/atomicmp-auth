@@ -27,7 +27,7 @@ router.get('/sample-user-data', (req, res) => {
     hunger: 55.43,
     thirst: 55.43,
     health: Math.floor(Math.random() * 100 + 1),
-    caps: 587,
+    money: 587,
   });
 });
 
