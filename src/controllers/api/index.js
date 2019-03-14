@@ -33,7 +33,16 @@ router.get('/sample-user-data', (req, res) => {
 
 router.put('/save', async (req, res) => {
   const user = req.user;
-  const { health, x_pos, y_pos, z_pos, inventory, money } = req.body;
+  const {
+    health,
+    hunger,
+    thirst,
+    x_pos,
+    y_pos,
+    z_pos,
+    inventory,
+    money,
+  } = req.body;
 
   logger.info(`inventory: ${inventory}, money: ${money}`);
 
@@ -41,6 +50,8 @@ router.put('/save', async (req, res) => {
     .where('user_id', user.user_id)
     .update({
       health,
+      hunger,
+      thirst,
       x_pos,
       y_pos,
       z_pos,
@@ -136,6 +147,8 @@ router.get('/load', async (req, res) => {
     'role',
     'faction',
     'health',
+    'hunger',
+    'thirst',
     'head',
     'hair',
     'hair_color',
