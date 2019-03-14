@@ -149,7 +149,7 @@ router.get('/load', async (req, res) => {
   ]);
 
   const user = req.user;
-  for (const key in Object.keys(user)) {
+  for (const key of Object.keys(user)) {
     if (!savestateKeys.has(key)) delete user[key];
   }
   logger.info(JSON.stringify(user));
