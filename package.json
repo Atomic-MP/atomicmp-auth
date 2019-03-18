@@ -12,7 +12,9 @@
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
     "lint": "eslint 'src/**/*.js' --ignore-path .gitignore ",
     "pre-commit-lint": "lint-staged",
-    "test": "ENV=test jest"
+    "test": "ENV=test jest",
+    "db-pull": "docker pull postgres",
+    "db-start": "docker run --rm --name pg-docker -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_DB=$POSTGRES_DB -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres"
   },
   "pre-commit": [
     "pre-commit-lint",

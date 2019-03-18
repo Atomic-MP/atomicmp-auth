@@ -3,7 +3,7 @@ const {
   POSTGRES_HOST,
   POSTGRES_USER,
   POSTGRES_PASSWORD,
-  POSTGRES_DATABASE,
+  POSTGRES_DB,
   PROD_POSTGRES_CONNECTION,
 } = process.env;
 
@@ -12,7 +12,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       host: POSTGRES_HOST,
-      database: POSTGRES_DATABASE,
+      database: POSTGRES_DB,
       user: POSTGRES_USER,
       password: POSTGRES_PASSWORD,
     },
@@ -21,7 +21,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      tableName: POSTGRES_DATABASE,
+      tableName: POSTGRES_DB,
       directory: './src/services/database/migrations',
     },
     seeds: {
@@ -32,7 +32,7 @@ module.exports = {
   staging: {
     client: 'postgresql',
     connection: {
-      database: POSTGRES_DATABASE,
+      database: POSTGRES_DB,
       user: POSTGRES_USER,
       password: POSTGRES_PASSWORD,
     },
@@ -41,7 +41,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      tableName: POSTGRES_DATABASE,
+      tableName: POSTGRES_DB,
     },
   },
 
@@ -53,7 +53,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      tableName: POSTGRES_DATABASE,
+      tableName: POSTGRES_DB,
       directory: './src/services/database/migrations',
     },
     seeds: {
