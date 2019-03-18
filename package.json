@@ -10,7 +10,7 @@
     "start": "nodemon -r dotenv/config",
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
-    "lint": "eslint 'src/**/*.js' --ignore-path .gitignore ",
+    "lint": "eslint 'src/**/*.js' --ignore-path .gitignore",
     "pre-commit-lint": "lint-staged",
     "test": "ENV=test jest",
     "db-pull": "docker pull postgres",
@@ -30,6 +30,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^11.11.3",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
