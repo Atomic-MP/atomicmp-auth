@@ -2,7 +2,7 @@
   "name": "auth-server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "dist/server.js",
   "engines": {
     "node": "10.10.0"
   },
@@ -11,6 +11,7 @@
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
     "lint": "eslint 'src/**/*.js' --ignore-path .gitignore",
+    "build": "tsc",
     "pre-commit-lint": "lint-staged",
     "test": "ENV=test jest",
     "db-pull": "docker pull postgres",
