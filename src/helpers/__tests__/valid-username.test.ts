@@ -1,21 +1,21 @@
 /* eslint-jest */
-const faker = require('faker');
-const { isValidUsername } = require('..');
+import * as faker from 'faker';
+import { isValidUsername as fn } from '..';
 
 describe('is valid username helper', () => {
   test('to be truthy between 3 and 24 characters', () => {
-    let username = faker.name.firstName().substring(0, 24);
-    expect(isValidUsername(username)).toBeTruthy();
+    const username = faker.name.firstName().substring(0, 24);
+    expect(fn(username)).toBeTruthy();
   });
   test('to be falsy if username starts with space', () => {
-    let username = ` ${faker.name.firstName().substring(0, 23)}`;
-    expect(isValidUsername(username)).toBeFalsy();
+    const username = ` ${faker.name.firstName().substring(0, 23)}`;
+    expect(fn(username)).toBeFalsy();
   });
   test('to be falsy if username contains less than 3 letters', () => {
-    let username = `${faker.random.alphaNumeric(1)} ${faker.random.alphaNumeric(
+    const username = `${faker.random.alphaNumeric(
       1
-    )}`;
-    expect(isValidUsername(username)).toBeFalsy();
+    )} ${faker.random.alphaNumeric(1)}`;
+    expect(fn(username)).toBeFalsy();
   });
   test('to be falsy on non-alphabetical characters', () => {
     const usernameArr = [
@@ -35,8 +35,6 @@ describe('is valid username helper', () => {
       'test)',
       'falsy boi👌',
     ];
-    usernameArr.forEach(username =>
-      expect(isValidUsername(username)).toBeFalsy()
-    );
+    usernameArr.forEach(username => expect(fn(username)).toBeFalsy());
   });
 });

@@ -11,7 +11,7 @@ function isValidSignupCredentials({
   );
 }
 
-function isValidUsername(username) {
+function isValidUsername(username: string) {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
   return (
     typeof username !== 'undefined' &&
@@ -31,8 +31,4 @@ function isValidPassword({ password, confirmPassword }) {
   );
 }
 
-module.exports = {
-  isValidSignupCredentials,
-  isValidUsername,
-  isValidPassword,
-};
+export { isValidSignupCredentials, isValidUsername, isValidPassword };

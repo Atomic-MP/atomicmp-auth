@@ -1,6 +1,6 @@
 /* eslint-jest */
-const faker = require('faker');
-const { isValidPassword: fn } = require('..');
+import * as faker from 'faker';
+import { isValidPassword as fn } from '..';
 
 const validPayload = password => ({ password, confirmPassword: password });
 
