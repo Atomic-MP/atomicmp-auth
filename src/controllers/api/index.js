@@ -4,7 +4,12 @@ const createError = require('http-errors');
 const router = express.Router();
 const protectedRoute = require('../../middlewares/protected-route');
 const { db, logger } = require('../../services');
-const { HEADS, HAIRS, HAIR_COLORS } = require('../../utils/constants');
+const {
+  HEADS,
+  HAIRS,
+  HAIR_COLORS,
+  STARTING_COORDS,
+} = require('../../utils/constants');
 
 router.use(protectedRoute);
 
@@ -33,7 +38,7 @@ router.get('/sample-user-data', (req, res) => {
 
 router.put('/save', async (req, res) => {
   const user = req.user;
-  const {
+  let {
     health,
     hunger,
     thirst,
@@ -44,6 +49,45 @@ router.put('/save', async (req, res) => {
     money,
   } = req.body;
 
+  /**
+   * Save state transactions are **super fragile**
+   * Instead of dropping a malformed payload, massage into
+   * default values.
+   * This *probably* won't be abused, since the default values are shite
+   * ex: 0 money, 0 items, 0 food and water.
+   * No one would want this.
+   */
+  if (typeof health !== 'number' || health < 0 || health > 100) {
+    logger.debug('[SAVE] malformed field health:' + health);
+    health = 1;
+  }
+  if (typeof hunger !== 'number' || hunger < 0 || hunger > 100) {
+    logger.debug('[SAVE] malformed field hunger:' + hunger);
+    hunger = 0;
+  }
+  if (typeof thirst !== 'number' || thirst < 0 || thirst > 100) {
+    logger.debug('[SAVE] malformed field thirst:' + thirst);
+    thirst = 0;
+  }
+  if (typeof x_pos !== 'number') {
+    logger.debug('[SAVE] malformed field x_pos:' + x_pos);
+    x_pos = STARTING_COORDS.x;
+  }
+  if (typeof y_pos !== 'number') {
+    logger.debug('[SAVE] malformed field y_pos:' + y_pos);
+    y_pos = STARTING_COORDS.y;
+  }
+  if (typeof z_pos !== 'number') {
+    logger.debug('[SAVE] malformed field z_pos:' + z_pos);
+    z_pos = STARTING_COORDS.z;
+  }
+  if (!Array.isArray(inventory)) {
+    logger.debug('[SAVE] malformed field inventory:' + inventory);
+    inventory = [];
+  }
+  if (typeof money !== 'number' || money < 0) {
+    money = 0;
+  }
   logger.info(`inventory: ${inventory}, money: ${money}`);
 
   await db('users')

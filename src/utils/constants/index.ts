@@ -29,9 +29,11 @@ const constants = {
     },
   ],
   ITEMS,
-  INVENTORY_DELIMITER: '|',
+  STARTING_COORDS: {
+    x: 69449.953125,
+    y: -26285.0,
+    z: -5968.092285,
+  },
 };
-
-console.log(constants);
 
 export default constants;
