@@ -32,13 +32,12 @@ router
     if (isValidSignupCredentials(req.body)) {
       const username = req.body.username;
       // Check if username exists; case insensitive
-      const usernameExists = !isEmpty(
-        await db.raw(
-          `SELECT * FROM users WHERE LOWER(username)=LOWER('${
-            req.body.username
-          }')`,
-        ).rows,
-      );
+
+      const usernameExists = !isEmpty((await db.raw(
+        `SELECT * FROM users WHERE LOWER(username)=LOWER('${
+        req.body.username
+        }')`,
+      )).rows);
       if (usernameExists) {
         logger.warn(`User ${username} already exists`);
         return res.send(createError(409, `User ${username} already exists`));
