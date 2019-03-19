@@ -1,5 +1,5 @@
 /* eslint-jest */
-import * as faker from "faker";
+import faker from "faker";
 import { isValidUsername as fn } from "..";
 
 describe("is valid username helper", () => {

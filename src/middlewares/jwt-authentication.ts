@@ -1,13 +1,12 @@
-import * as passport from 'passport';
-import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
-import { db } from '../services';
+import passport from "passport";
+import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
+import { db } from "../services";
 
 const { JWT_SECRET } = process.env;
 
 const opts: object = {
-  secretOrKey: JWT_SECRET,
   jwtFromRequest: ExtractJwt.fromExtractors([
-    req => {
+    (req) => {
       let token = null;
       if (req && req.cookies) {
         token = req.cookies.jwt;
@@ -15,13 +14,14 @@ const opts: object = {
       return token;
     },
   ]),
+  secretOrKey: JWT_SECRET,
 };
 
 passport.use(
-  new JwtStrategy(opts, async (jwt_payload, done) => {
+  new JwtStrategy(opts, async (jwtPayload, done) => {
     try {
-      const targetUserID = jwt_payload.userId;
-      const [user] = await db('users').where('user_id', targetUserID);
+      const targetUserID = jwtPayload.userId;
+      const [user] = await db("users").where("user_id", targetUserID);
 
       if (user) {
         const userData = Object.assign({}, user);
@@ -38,7 +38,7 @@ passport.use(
     } catch (err) {
       return done(err, false);
     }
-  })
+  }),
 );
 
 export default passport;

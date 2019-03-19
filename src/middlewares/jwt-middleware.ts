@@ -1,5 +1,5 @@
 import { logger } from "../services";
-import { default as jwtAuthentication } from "./jwt-authentication";
+import jwtAuthentication from "./jwt-authentication";
 
 function jwtMiddleware(req, res, next) {
   jwtAuthentication.authenticate("jwt", (err, user) => {

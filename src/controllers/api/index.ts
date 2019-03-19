@@ -1,20 +1,20 @@
-const express = require("express");
-const hexRgb = require("hex-rgb");
-const createError = require("http-errors");
-const router = express.Router();
-const protectedRoute = require("../../middlewares/protected-route");
-const { db, logger } = require("../../services");
-const {
-  HEADS,
-  HAIRS,
+import { Router } from "express";
+import hexRgb from "hex-rgb";
+import createError from "http-errors";
+import protectedRoute from "../../middlewares/protected-route";
+import { db, logger } from "../../services";
+import {
   HAIR_COLORS,
+  HAIRS,
+  HEADS,
   ITEMS,
-} = require("../../utils/constants/index");
+} from "../../utils/constants";
 const STARTING_COORDS = {
   x: 69449.953125,
   y: -26285.0,
   z: -5968.092285,
 };
+const router = Router();
 router.use(protectedRoute);
 
 /**
@@ -22,21 +22,21 @@ router.use(protectedRoute);
  */
 router.get("/sample-user-data", (req, res) => {
   res.json({
-    user_id: 1,
+    female_hair: 1,
+    female_head: 1,
+    hair_color: 1,
+    health: Math.floor(Math.random() * 100 + 1),
+    hunger: 55.43,
     is_admin: false,
     is_male: true,
-    male_head: 1,
     male_hair: 1,
-    female_head: 1,
-    female_hair: 1,
-    hair_color: 1,
+    male_head: 1,
+    money: 587,
+    thirst: 55.43,
+    user_id: 1,
     x_pos: 100,
     y_pos: -201.54,
     z_pos: 350,
-    hunger: 55.43,
-    thirst: 55.43,
-    health: Math.floor(Math.random() * 100 + 1),
-    money: 587,
   });
 });
 
@@ -108,12 +108,12 @@ router.put("/save", async (req, res) => {
     .update({
       health,
       hunger,
+      inventory: JSON.stringify(inventory),
+      money,
       thirst,
       x_pos,
       y_pos,
       z_pos,
-      inventory: JSON.stringify(inventory),
-      money,
     });
 
   logger.info(`${user.username} data saved`);
@@ -125,11 +125,11 @@ router.put("/set-appearance", async (req, res) => {
   const { nickname, head, hair, hair_color, is_male } = req.body;
 
   if (
-    nickname == undefined ||
-    head == undefined ||
-    hair == undefined ||
-    hair_color == undefined ||
-    is_male == undefined
+    nickname === undefined ||
+    head === undefined ||
+    hair === undefined ||
+    hair_color === undefined ||
+    is_male === undefined
   ) {
     logger.error("[SET-APPEARANCE][ERROR] Payload contains insufficient data");
     res.send(createError(400, "Payload contains insufficient data"));
@@ -167,11 +167,11 @@ router.put("/set-appearance", async (req, res) => {
   await db("users")
     .where("user_id", user.user_id)
     .update({
-      nickname,
-      head,
       hair,
       hair_color,
+      head,
       is_male,
+      nickname,
     });
   res.sendStatus(200);
 });
@@ -233,6 +233,7 @@ router.get("/load", async (req, res) => {
       "faction_id",
       user.faction,
     );
+    // tslint:disable-next-line: variable-name
     const [faction_color_r, faction_color_g, faction_color_b] = hexRgb(
       factionData.color || "#FFFFFF",
       {
@@ -247,4 +248,4 @@ router.get("/load", async (req, res) => {
   res.json(user);
 });
 
-module.exports = router;
+export default router;

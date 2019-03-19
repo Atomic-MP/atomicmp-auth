@@ -1,4 +1,4 @@
-const { createLogger, format, transports } = require("winston");
+import { createLogger, format, transports } from "winston";
 const { ENV } = process.env;
 
 const ignorePrivate = format((info) => {
@@ -9,8 +9,8 @@ const ignorePrivate = format((info) => {
 });
 
 const logger = createLogger({
-  level: "info",
   format: format.combine(ignorePrivate(), format.json()),
+  level: "info",
   transports: [
     new transports.Console({
       format: format.combine(format.colorize(), format.simple()),

@@ -1,14 +1,14 @@
-import * as bcrypt from "bcrypt";
-import * as first from "lodash.first";
-import * as passport from "passport";
+import bcrypt from "bcrypt";
+import first from "lodash.first";
+import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { db } from "../services";
 
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "username",
       passwordField: "password",
+      usernameField: "username",
     },
     async (username, password, done) => {
       const user = first(
@@ -33,7 +33,9 @@ passport.use(
 
       // Always use hashed passwords and fixed time comparison
       bcrypt.compare(password, user.hash.toString("utf-8"), (err, isValid) => {
-        if (err) { return done(err); }
+        if (err) {
+          return done(err);
+        }
         return done(null, !isValid ? null : user);
       });
     },

@@ -1,12 +1,11 @@
 import { items } from "./items";
 
-const constants = {
-  TITLE: "Atomic MP - A Multiplayer Fallout Roleplay Experience",
-  SALT_ROUNDS: 10,
-  HEADS: 10,
-  HAIRS: 24,
-  HAIR_COLORS: 7,
-  ROLES: [
+const TITLE = "Atomic MP - A Multiplayer Fallout Roleplay Experience";
+const SALT_ROUNDS = 10;
+const HEADS = 10;
+const HAIRS = 24;
+const HAIR_COLORS = 7;
+const ROLES = [
     {
       role_id: 1,
       role_name: "banned",
@@ -27,8 +26,15 @@ const constants = {
       role_id: 5,
       role_name: "admin",
     },
-  ],
-  ITEMS: items,
-};
+  ];
+const ITEMS = items;
 
-export default constants;
+export {
+  TITLE,
+  SALT_ROUNDS,
+  HEADS,
+  HAIRS,
+  HAIR_COLORS,
+  ROLES,
+  ITEMS,
+};

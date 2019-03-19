@@ -1,13 +1,13 @@
 "use strict";
 
-import * as bodyParser from "body-parser";
-import * as cookieParser from "cookie-parser";
-import * as express from "express";
-import * as favicon from "express-favicon";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import express from "express";
+import favicon from "express-favicon";
 import * as moment from "moment";
 import * as path from "path";
-import * as jwtMiddleware from "./middlewares/jwt-middleware";
-const router = require("./controllers/routes");
+import router from "./controllers/routes";
+import jwtMiddleware from "./middlewares/jwt-middleware";
 const app = express();
 moment().format();
 

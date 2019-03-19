@@ -1,5 +1,5 @@
 /* eslint-jest */
-import * as faker from "faker";
+import faker from "faker";
 import { isValidPassword as fn } from "..";
 
 const validPayload = (password) => ({ password, confirmPassword: password });
