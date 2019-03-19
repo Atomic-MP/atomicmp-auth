@@ -4,13 +4,12 @@ const createError = require('http-errors');
 const router = express.Router();
 const protectedRoute = require('../../middlewares/protected-route');
 const { db, logger } = require('../../services');
-const {
-  HEADS,
-  HAIRS,
-  HAIR_COLORS,
-  STARTING_COORDS,
-} = require('../../utils/constants');
-
+const { HEADS, HAIRS, HAIR_COLORS } = require('../../utils/constants/index');
+const STARTING_COORDS = {
+  x: 69449.953125,
+  y: -26285.0,
+  z: -5968.092285,
+};
 router.use(protectedRoute);
 
 /**
