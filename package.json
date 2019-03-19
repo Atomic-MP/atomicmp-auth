@@ -11,7 +11,7 @@
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
     "lint:js": "eslint 'src/**/*.js' --ignore-path .gitignore",
-    "lint:ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint:ts": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
     "compile": "tsc",
     "pre-commit-lint": "lint-staged",
     "test": "ENV=test jest",

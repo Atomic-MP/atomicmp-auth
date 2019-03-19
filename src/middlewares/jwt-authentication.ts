@@ -1,5 +1,5 @@
 import * as passport from 'passport';
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { db } from '../services';
 
 const { JWT_SECRET } = process.env;
@@ -10,7 +10,7 @@ const opts: object = {
     req => {
       let token = null;
       if (req && req.cookies) {
-        token = req.cookies['jwt'];
+        token = req.cookies.jwt;
       }
       return token;
     },
@@ -28,7 +28,9 @@ passport.use(
         // None of our views or APIs will require user hashes... Removing for security
         // Consider abstracting hashes to a different table.
         delete userData.hash;
-        if (user.inventory) userData.inventory = user.inventory;
+        if (user.inventory) {
+          userData.inventory = user.inventory;
+        }
         return done(null, userData);
       } else {
         return done(null, false);

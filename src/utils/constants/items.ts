@@ -1,27 +1,27 @@
 // A Map data structure
 
-import * as itemsFile from './items.json';
+import * as itemsFile from "./items.json";
 
 /**
  * @class Item
  */
 class Item {
-  readonly ID: string;
-  readonly Icon: string;
-  readonly Name: string;
-  readonly Description: string;
-  readonly Quality: string;
-  readonly ItemType: string;
-  readonly Amount: number = 0;
-  readonly IsStackable: boolean = false;
-  readonly MaxStackSize: number = 0;
-  readonly IsDroppable: boolean = true;
-  readonly WorldMesh: string;
-  readonly Value: number = 0;
-  readonly Weight: number = 0;
-  readonly BuyPrice: number = 0;
-  readonly SalePrice: number = 0;
-  readonly ShopCategory: string;
+  public readonly ID: string;
+  public readonly Icon: string;
+  public readonly Name: string;
+  public readonly Description: string;
+  public readonly Quality: string;
+  public readonly ItemType: string;
+  public readonly Amount: number = 0;
+  public readonly IsStackable: boolean = false;
+  public readonly MaxStackSize: number = 0;
+  public readonly IsDroppable: boolean = true;
+  public readonly WorldMesh: string;
+  public readonly Value: number = 0;
+  public readonly Weight: number = 0;
+  public readonly BuyPrice: number = 0;
+  public readonly SalePrice: number = 0;
+  public readonly ShopCategory: string;
 
   constructor(item) {
     this.ID = item.ID;
@@ -44,10 +44,10 @@ class Item {
 }
 
 class Consumable extends Item {
-  readonly Health: number = 0;
-  readonly Duration: number = 0;
-  readonly Hunger: number = 0;
-  readonly Thirst: number = 0;
+  public readonly Health: number = 0;
+  public readonly Duration: number = 0;
+  public readonly Hunger: number = 0;
+  public readonly Thirst: number = 0;
   constructor(item) {
     super(item);
     this.Health = item.Health;
@@ -62,36 +62,36 @@ class Consumable extends Item {
  * @returns Armor, Hats, etc
  */
 class Equipment extends Item {
-  readonly Strength: number = 0;
-  readonly Perception: number = 0;
-  readonly Endurance: number = 0;
-  readonly Charisma: number = 0;
-  readonly Intelligence: number = 0;
-  readonly Agility: number = 0;
-  readonly Luck: number = 0;
-  readonly EquipmentMesh: string;
-  readonly EquipmentType: string;
-  readonly EquipmentSlot: string;
-  readonly '1PEquipmentMesh': string;
-  readonly FemaleEquipmentMesh: string;
-  readonly Female1PEquipmentMesh: string;
-  readonly Armor_Head: number = 0;
-  readonly Armor_Outfit: number = 0;
-  readonly Armor_Chest: number = 0;
-  readonly Armor_LeftLeg: number = 0;
-  readonly Armor_RightLeg: number = 0;
-  readonly Armor_LeftArm: number = 0;
-  readonly Armor_RightArm: number = 0;
-  readonly 'Fill_Head?': boolean = false;
-  readonly 'Fill_Eyewear?': boolean = false;
-  readonly 'Fill_Chest?': boolean = false;
-  readonly 'Fill_Outfit?': boolean = false;
-  readonly 'Fill_RArm?': boolean = false;
-  readonly 'Fill_LArm?': boolean = false;
-  readonly 'Fill_RLeg?': boolean = false;
-  readonly 'Fill_LLeg?': boolean = false;
-  readonly 'HideHair?': boolean = false;
-  readonly 'HideHairline?': boolean = false;
+  public readonly Strength: number = 0;
+  public readonly Perception: number = 0;
+  public readonly Endurance: number = 0;
+  public readonly Charisma: number = 0;
+  public readonly Intelligence: number = 0;
+  public readonly Agility: number = 0;
+  public readonly Luck: number = 0;
+  public readonly EquipmentMesh: string;
+  public readonly EquipmentType: string;
+  public readonly EquipmentSlot: string;
+  public readonly "1PEquipmentMesh": string;
+  public readonly FemaleEquipmentMesh: string;
+  public readonly Female1PEquipmentMesh: string;
+  public readonly Armor_Head: number = 0;
+  public readonly Armor_Outfit: number = 0;
+  public readonly Armor_Chest: number = 0;
+  public readonly Armor_LeftLeg: number = 0;
+  public readonly Armor_RightLeg: number = 0;
+  public readonly Armor_LeftArm: number = 0;
+  public readonly Armor_RightArm: number = 0;
+  public readonly "Fill_Head?": boolean = false;
+  public readonly "Fill_Eyewear?": boolean = false;
+  public readonly "Fill_Chest?": boolean = false;
+  public readonly "Fill_Outfit?": boolean = false;
+  public readonly "Fill_RArm?": boolean = false;
+  public readonly "Fill_LArm?": boolean = false;
+  public readonly "Fill_RLeg?": boolean = false;
+  public readonly "Fill_LLeg?": boolean = false;
+  public readonly "HideHair?": boolean = false;
+  public readonly "HideHairline?": boolean = false;
 
   constructor(item) {
     super(item);
@@ -105,7 +105,7 @@ class Equipment extends Item {
     this.EquipmentMesh = item.EquipmentMesh;
     this.EquipmentType = item.EquipmentType;
     this.EquipmentSlot = item.EquipmentSlot;
-    this['1PEquipmentMesh'] = item['1PEquipmentMesh'];
+    this["1PEquipmentMesh"] = item["1PEquipmentMesh"];
     this.FemaleEquipmentMesh = item.FemaleEquipmentMesh;
     this.Female1PEquipmentMesh = item.Female1PEquipmentMesh;
     this.Armor_Head = item.Armor_Head;
@@ -115,16 +115,16 @@ class Equipment extends Item {
     this.Armor_RightLeg = item.Armor_RightLeg;
     this.Armor_LeftArm = item.Armor_LeftArm;
     this.Armor_RightArm = item.Armor_RightArm;
-    this['Fill_Head?'] = item['Fill_Head?'];
-    this['Fill_Eyewear?'] = item['Fill_Eyewear?'];
-    this['Fill_Chest?'] = item['Fill_Chest?'];
-    this['Fill_Outfit?'] = item['Fill_Outfit?'];
-    this['Fill_RArm?'] = item['Fill_RArm?'];
-    this['Fill_LArm?'] = item['Fill_LArm?'];
-    this['Fill_RLeg?'] = item['Fill_RLeg?'];
-    this['Fill_LLeg?'] = item['Fill_LLeg?'];
-    this['HideHair?'] = item['HideHair?'];
-    this['HideHairline?'] = item['HideHairline?'];
+    this["Fill_Head?"] = item["Fill_Head?"];
+    this["Fill_Eyewear?"] = item["Fill_Eyewear?"];
+    this["Fill_Chest?"] = item["Fill_Chest?"];
+    this["Fill_Outfit?"] = item["Fill_Outfit?"];
+    this["Fill_RArm?"] = item["Fill_RArm?"];
+    this["Fill_LArm?"] = item["Fill_LArm?"];
+    this["Fill_RLeg?"] = item["Fill_RLeg?"];
+    this["Fill_LLeg?"] = item["Fill_LLeg?"];
+    this["HideHair?"] = item["HideHair?"];
+    this["HideHairline?"] = item["HideHairline?"];
   }
 }
 
@@ -132,19 +132,19 @@ class Equipment extends Item {
  * @class Weapon
  */
 class Weapon extends Item {
-  readonly WeaponActorClass: string;
-  readonly WeaponType: string;
-  readonly AmmoType: string;
-  readonly AimedFOV: number;
-  readonly ZoomedFOV: number;
-  readonly 'ZRecoilMIn/Max': number[];
-  readonly 'YRecoilMin/Max': number[];
-  readonly 'Up/DownSpreadMin': number[];
-  readonly 'Right/LeftSpreadMin': number[];
-  readonly 'AimedUp/DownSpread': number[];
-  readonly 'AimedRight/LeftSpread': number[];
-  readonly DefaultMagFull: number;
-  readonly MagAmount: number;
+  public readonly WeaponActorClass: string;
+  public readonly WeaponType: string;
+  public readonly AmmoType: string;
+  public readonly AimedFOV: number;
+  public readonly ZoomedFOV: number;
+  public readonly "ZRecoilMIn/Max": number[];
+  public readonly "YRecoilMin/Max": number[];
+  public readonly "Up/DownSpreadMin": number[];
+  public readonly "Right/LeftSpreadMin": number[];
+  public readonly "AimedUp/DownSpread": number[];
+  public readonly "AimedRight/LeftSpread": number[];
+  public readonly DefaultMagFull: number;
+  public readonly MagAmount: number;
   constructor(item) {
     super(item);
     this.WeaponActorClass = item.WeaponActorClass;
@@ -152,12 +152,12 @@ class Weapon extends Item {
     this.AmmoType = item.AmmoType;
     this.AimedFOV = item.AimedFOV;
     this.ZoomedFOV = item.ZoomedFOV;
-    this['ZRecoilMIn/Max'] = item['ZRecoilMIn/Max'];
-    this['YRecoilMin/Max'] = item['YRecoilMin/Max'];
-    this['Up/DownSpreadMin'] = item['Up/DownSpreadMin'];
-    this['Right/LeftSpreadMin'] = item['Right/LeftSpreadMin'];
-    this['AimedUp/DownSpread'] = item['AimedUp/DownSpread'];
-    this['AimedRight/LeftSpread'] = item['AimedRight/LeftSpread'];
+    this["ZRecoilMIn/Max"] = item["ZRecoilMIn/Max"];
+    this["YRecoilMin/Max"] = item["YRecoilMin/Max"];
+    this["Up/DownSpreadMin"] = item["Up/DownSpreadMin"];
+    this["Right/LeftSpreadMin"] = item["Right/LeftSpreadMin"];
+    this["AimedUp/DownSpread"] = item["AimedUp/DownSpread"];
+    this["AimedRight/LeftSpread"] = item["AimedRight/LeftSpread"];
     this.DefaultMagFull = item.DefaultMagFull;
     this.MagAmount = item.MagAmount;
   }
@@ -167,7 +167,7 @@ class Weapon extends Item {
  * @class Ammo
  */
 class Ammo extends Item {
-  readonly AmmoType: string;
+  public readonly AmmoType: string;
 
   constructor(item) {
     super(item);
@@ -195,33 +195,33 @@ const itemsMap = new Map<
   Weapon | Equipment | Consumable | Item | Ammo | Currency
 >();
 
-itemsFile.forEach(item => {
+itemsFile.forEach((item) => {
   let entity;
   /**
    * I tried to clean this up but TS break the logic...
    * This is functional but fugly
    */
   // Take the item and turn it into the appropriate class
-  if (item.ItemType === 'Consumable') {
+  if (item.ItemType === "Consumable") {
     entity = new Consumable(item);
     consumables.set(item.ID, entity);
-  } else if (item.ItemType === 'Miscellaneous') {
+  } else if (item.ItemType === "Miscellaneous") {
     entity = new Item(item);
     miscellaneous.set(item.ID, entity);
-  } else if (item.ItemType === 'Equipment') {
+  } else if (item.ItemType === "Equipment") {
     entity = new Equipment(item);
     equipment.set(item.ID, entity);
-  } else if (item.ItemType === 'Weapon') {
+  } else if (item.ItemType === "Weapon") {
     entity = new Weapon(item);
     weapons.set(item.ID, entity);
-  } else if (item.ItemType === 'Ammo') {
+  } else if (item.ItemType === "Ammo") {
     entity = new Ammo(item);
     ammo.set(item.ID, entity);
-  } else if (item.ItemType === 'Currency') {
+  } else if (item.ItemType === "Currency") {
     entity = new Currency(item);
     currency.set(item.ID, entity);
   } else {
-    throw Error('Unknown item type ' + item.ItemType);
+    throw Error("Unknown item type " + item.ItemType);
   }
   itemsMap.set(item.ID, entity);
 });

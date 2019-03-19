@@ -5,8 +5,8 @@ const {
   POSTGRES_DB,
 } = process.env;
 
-const knex = require('knex')({
-  client: 'pg',
+const knex = require("knex")({
+  client: "pg",
   connection: {
     host: POSTGRES_HOST,
     user: POSTGRES_USER,
