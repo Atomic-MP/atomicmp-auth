@@ -1,7 +1,4 @@
-import db from './database';
-import logger from './logger';
+import { default as db } from './database';
+import { default as logger } from './logger';
 
-module.exports = {
-  db,
-  logger,
-};
+export { db, logger };
