@@ -1,5 +1,5 @@
-const jwtAuthentication = require('./jwt-authentication');
-const { logger } = require('../services');
+import { default as jwtAuthentication } from './jwt-authentication';
+import { logger } from '../services';
 
 function jwtMiddleware(req, res, next) {
   jwtAuthentication.authenticate('jwt', (err, user) => {
@@ -14,4 +14,4 @@ function jwtMiddleware(req, res, next) {
   })(req, res);
 }
 
-module.exports = jwtMiddleware;
+export default jwtMiddleware;

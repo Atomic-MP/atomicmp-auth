@@ -1,8 +1,8 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const first = require('lodash.first');
-const db = require('../services/database');
-const bcrypt = require('bcrypt');
+import * as passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import * as first from 'lodash.first';
+import { db } from '../services';
+import * as bcrypt from 'bcrypt';
 
 passport.use(
   new LocalStrategy(
@@ -40,4 +40,4 @@ passport.use(
   )
 );
 
-module.exports = passport;
+export default passport;

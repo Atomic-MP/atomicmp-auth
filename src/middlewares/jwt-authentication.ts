@@ -1,21 +1,21 @@
-const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const db = require('../services/database');
+import * as passport from 'passport';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { db } from '../services';
 
 const { JWT_SECRET } = process.env;
 
-const opts = {};
-opts.secretOrKey = JWT_SECRET;
-opts.jwtFromRequest = ExtractJwt.fromExtractors([
-  req => {
-    let token = null;
-    if (req && req.cookies) {
-      token = req.cookies['jwt'];
-    }
-    return token;
-  },
-]);
+const opts: object = {
+  secretOrKey: JWT_SECRET,
+  jwtFromRequest: ExtractJwt.fromExtractors([
+    req => {
+      let token = null;
+      if (req && req.cookies) {
+        token = req.cookies['jwt'];
+      }
+      return token;
+    },
+  ]),
+};
 
 passport.use(
   new JwtStrategy(opts, async (jwt_payload, done) => {
@@ -39,4 +39,4 @@ passport.use(
   })
 );
 
-module.exports = passport;
+export default passport;
