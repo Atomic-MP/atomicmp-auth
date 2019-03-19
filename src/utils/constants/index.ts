@@ -1,4 +1,4 @@
-const ITEMS = require('./items');
+import { items } from './items';
 
 const constants = {
   TITLE: 'Atomic MP - A Multiplayer Fallout Roleplay Experience',
@@ -28,12 +28,7 @@ const constants = {
       role_name: 'admin',
     },
   ],
-  ITEMS,
-  STARTING_COORDS: {
-    x: 69449.953125,
-    y: -26285.0,
-    z: -5968.092285,
-  },
+  ITEMS: items,
 };
 
 export default constants;
