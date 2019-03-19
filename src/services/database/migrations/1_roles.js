@@ -16,5 +16,5 @@ exports.up = knex => {
 };
 
 exports.down = knex => {
-  return knex.schema.dropTable('roles');
+  return knex.schema.dropTableIfExists('roles');
 };
