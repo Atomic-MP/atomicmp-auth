@@ -10,8 +10,9 @@
     "start": "nodemon -r dotenv/config",
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
-    "lint": "eslint 'src/**/*.js' --ignore-path .gitignore",
-    "build": "tsc",
+    "lint:js": "eslint 'src/**/*.js' --ignore-path .gitignore",
+    "lint:ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "compile": "tsc",
     "pre-commit-lint": "lint-staged",
     "test": "ENV=test jest",
     "db-pull": "docker pull postgres",
@@ -24,13 +25,15 @@
   "lint-staged": {
     "*.js": [
       "npm run format",
-      "npm run lint",
+      "npm run lint:js",
       "git add"
-    ]
+    ],
+    "*.ts": []
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^24.0.11",
     "@types/node": "^11.11.3",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
@@ -62,11 +65,13 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-security": "^1.4.0",
-    "typescript-eslint-parser": "^22.0.0",
     "faker": "^4.1.0",
     "jest": "^24.1.0",
     "lint-staged": "^8.1.4",
     "pre-commit": "^1.2.2",
-    "prettier-eslint": "^8.8.2"
+    "prettier-eslint": "^8.8.2",
+    "ts-jest": "^24.0.0",
+    "tslint": "^5.14.0",
+    "typescript-eslint-parser": "^22.0.0"
   }
 }
