@@ -19,7 +19,7 @@ router
       recovery_request: requestId,
     });
     if (!resetTarget) {
-      res.status(createError(404, "Recovery code no longer valid"));
+      res.send(createError(404, "Recovery code no longer valid"));
       return;
     }
 
