@@ -1,17 +1,16 @@
 import * as passport from "passport";
-import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
+import { ExtractJwt, Strategy as JwtStrategy, StrategyOptions } from "passport-jwt";
 import { db } from "../services";
 
-const { JWT_SECRET } = process.env;
+const JWT_SECRET = process.env.JWT_SECRET || "";
 
-const opts: object = {
+const opts: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromExtractors([
-    (req: {cookies: {jwt: string}}) => {
-      let token: null | string = null;
-      if (req && req.cookies) {
-        token = req.cookies.jwt;
+    (req) => {
+      if (req.cookies) {
+        return req.cookies.jwt || "";
       }
-      return token;
+      return "";
     },
   ]),
   secretOrKey: JWT_SECRET,
