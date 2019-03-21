@@ -11,12 +11,12 @@ function isValidSignupCredentials({
   );
 }
 
-function isValidUsername(username) {
+function isValidUsername(username: string) {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
   return (
-    typeof username !== 'undefined' &&
-    username.replace(/ /g, '').length >= 3 &&
-    !username.startsWith(' ') &&
+    typeof username !== "undefined" &&
+    username.replace(/ /g, "").length >= 3 &&
+    !username.startsWith(" ") &&
     validUsernameRegex.test(username)
   );
 }
@@ -24,15 +24,11 @@ function isValidUsername(username) {
 function isValidPassword({ password, confirmPassword }) {
   const validPasswordRegex = /^([A-Za-z\d$@$!%*?&]){8,50}$/;
   return (
-    typeof password !== 'undefined' &&
-    typeof confirmPassword !== 'undefined' &&
+    typeof password !== "undefined" &&
+    typeof confirmPassword !== "undefined" &&
     password === confirmPassword &&
     validPasswordRegex.test(password)
   );
 }
 
-module.exports = {
-  isValidSignupCredentials,
-  isValidUsername,
-  isValidPassword,
-};
+export { isValidSignupCredentials, isValidUsername, isValidPassword };

@@ -1,22 +1,22 @@
-const express = require('express');
-const router = express.Router();
-const jwt = require('jsonwebtoken');
-const loginStrategy = require('../../middlewares/login-strategy');
-const { TITLE } = require('../../utils/constants');
-const { logger } = require('../../services');
-const { JWT_SECRET } = process.env;
+import { Router } from "express";
+import jwt from "jsonwebtoken";
+import loginStrategy from "../../middlewares/login-strategy";
+import { logger } from "../../services";
+import { TITLE } from "../../utils/constants";
+const JWT_SECRET = process.env.JWT_SECRET || "";
+const router = Router();
 
 router
-  .route('/')
+  .route("/")
   .get((req, res) => {
     const user = req.user;
-    res.render('login.pug', {
+    res.render("login.pug", {
       TITLE,
       user,
     });
   })
   .post((req, res) => {
-    loginStrategy.authenticate('local', (err, user) => {
+    loginStrategy.authenticate("local", (err, user) => {
       if (err) {
         logger.error(err);
         res.send(err);
@@ -28,7 +28,7 @@ router
             userId: user.user_id,
             username: user.username,
           },
-          JWT_SECRET
+          JWT_SECRET,
         );
         res.json({ token });
       } else {
@@ -37,4 +37,4 @@ router
     })(req, res);
   });
 
-module.exports = router;
+export default router;

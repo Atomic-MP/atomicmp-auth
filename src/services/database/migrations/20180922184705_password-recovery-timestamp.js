@@ -1,6 +1,10 @@
 exports.up = knex => {
-  return knex.schema.table('users', table => {
-    table.string('recovery_request');
+  return knex.schema.hasColumn('users', 'recovery_request').then(exists => {
+    if (!exists) {
+      return knex.schema.table('users', table => {
+        table.string('recovery_request');
+      });
+    }
   });
 };
 

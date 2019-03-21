@@ -1,3 +1,5 @@
+import knex from "knex";
+
 const {
   POSTGRES_HOST,
   POSTGRES_USER,
@@ -5,14 +7,14 @@ const {
   POSTGRES_DB,
 } = process.env;
 
-const knex = require('knex')({
-  client: 'pg',
+const db = knex({
+  client: "pg",
   connection: {
-    host: POSTGRES_HOST,
-    user: POSTGRES_USER,
-    password: POSTGRES_PASSWORD,
     database: POSTGRES_DB,
+    host: POSTGRES_HOST,
+    password: POSTGRES_PASSWORD,
+    user: POSTGRES_USER,
   },
 });
 
-module.exports = knex;
+export default db;

@@ -1,6 +1,10 @@
 exports.up = knex => {
-  return knex.schema.table('users', table => {
-    table.integer('money');
+  return knex.schema.hasColumn('users', 'money').then(exists => {
+    if (!exists) {
+      return knex.schema.table('users', table => {
+        table.integer('money');
+      });
+    }
   });
 };
 
