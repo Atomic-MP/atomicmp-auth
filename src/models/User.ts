@@ -1,5 +1,6 @@
-class User {
+
   // tslint:disable: variable-name
+class User {
   public user_id: number;
   public username: string;
   public role: number;
@@ -18,7 +19,6 @@ class User {
   public inventory: any[];
   public money: number;
   public hash: Buffer;
-  // tslint:enable: variable-name
   constructor(obj: any) {
     Object.assign(this, obj);
   }

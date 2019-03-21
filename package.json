@@ -41,6 +41,7 @@
     "@types/faker": "^4.1.5",
     "@types/http-errors": "^1.6.1",
     "@types/jest": "^24.0.11",
+    "@types/jsonwebtoken": "^8.3.2",
     "@types/knex": "^0.15.2",
     "@types/lodash.first": "^3.0.6",
     "@types/node": "^11.11.3",

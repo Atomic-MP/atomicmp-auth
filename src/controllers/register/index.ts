@@ -5,10 +5,11 @@ import jwt from "jsonwebtoken";
 import first from "lodash.first";
 import isEmpty from "lodash.isempty";
 import { isValidSignupCredentials } from "../../helpers";
+import Key from "../../models/Key";
 import { db, logger } from "../../services";
 import { SALT_ROUNDS, TITLE } from "../../utils/constants";
 
-const { JWT_SECRET } = process.env;
+const JWT_SECRET = process.env.JWT_SECRET || "";
 
 const router = Router();
 
@@ -25,15 +26,15 @@ router
     });
   })
   .post(async (req, res) => {
+
     if (!req.body || !req.body.username || !req.body.password) {
       return res.sendStatus(400);
     }
-    req.body.username = req.body.username.trim();
     if (isValidSignupCredentials(req.body)) {
-      const username = req.body.username;
+      const username: string = req.body.username.trim();
       // Check if username exists; case insensitive
 
-      const usernameExists = !isEmpty((await db.raw(
+      const usernameExists: boolean = !isEmpty((await db.raw(
         `SELECT * FROM users WHERE LOWER(username)=LOWER('${
         req.body.username
         }')`,
@@ -42,18 +43,18 @@ router
         logger.warn(`User ${username} already exists`);
         return res.send(createError(409, `User ${username} already exists`));
       }
-      const key = first(
+      const key = new Key(first(
         await db("keys")
           .select("key_id", "discord_id")
           .where("key", req.body.key)
-          .andWhere("owner", null),
-      );
+          .andWhere("owner", null)
+      ));
       if (!key) {
         return res.send(createError(404, `Key ${key} not found`));
       }
       const keyID = key.key_id;
       const hash = await bcrypt.hash(req.body.password, SALT_ROUNDS);
-      const userId = first(
+      const userId: number = first(
         await db("users")
           .returning("user_id")
           .insert({
@@ -67,7 +68,7 @@ router
             thirst: 100,
             username,
           }),
-      );
+      ) || 1;
       await db("keys")
         .where("key_id", keyID)
         .update("owner", userId);
