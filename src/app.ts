@@ -39,22 +39,22 @@ class App {
     this.app.use(
       express.static(path.join(__dirname, "../public/images"), {
         maxAge: "48h",
-      })
+      }),
     );
     this.app.use(
       express.static(path.join(__dirname, "../public/js"), {
         maxAge: "48h",
-      })
+      }),
     );
     this.app.use(
       express.static(path.join(__dirname, "../public/css"), {
         maxAge: "48h",
-      })
+      }),
     );
     this.app.use(
       express.static(path.join(__dirname, "../public/fonts"), {
         maxAge: "48h",
-      })
+      }),
     );
     this.app.use(favicon(path.join(__dirname, "../public/favicon.png")));
   }

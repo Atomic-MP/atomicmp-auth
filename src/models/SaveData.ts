@@ -1,6 +1,6 @@
 // tslint:disable: variable-name
 
-import { ITEMS } from "../../utils/constants";
+import { ITEMS } from "../utils/constants";
 const STARTING_COORDS = {
   x: 69449.953125,
   y: -26285.0,

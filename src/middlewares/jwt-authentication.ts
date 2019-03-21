@@ -6,8 +6,8 @@ const { JWT_SECRET } = process.env;
 
 const opts: object = {
   jwtFromRequest: ExtractJwt.fromExtractors([
-    (req) => {
-      let token = null;
+    (req: {cookies: {jwt: string}}) => {
+      let token: null | string = null;
       if (req && req.cookies) {
         token = req.cookies.jwt;
       }
@@ -18,9 +18,9 @@ const opts: object = {
 };
 
 passport.use(
-  new JwtStrategy(opts, async (jwtPayload, done) => {
+  new JwtStrategy(opts, async (jwtPayload: {userId: string}, done) => {
     try {
-      const targetUserID = jwtPayload.userId;
+      const targetUserID: string = jwtPayload.userId;
       const [user] = await db("users").where("user_id", targetUserID);
 
       if (user) {

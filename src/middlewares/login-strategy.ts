@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import first from "lodash.first";
 import * as passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import User from "../models/User";
 import { db } from "../services";
 
 passport.use(
@@ -11,11 +12,11 @@ passport.use(
       usernameField: "username",
     },
     async (username: string, password: string, done) => {
-      const user = first(
+      const user: User = new User(first(
         await db("users")
           .select()
           .where("username", username),
-      );
+      ));
       // User not found
       if (!user) {
         // Do not send specific error to prevent user enumeration

@@ -2,6 +2,7 @@ import { Router } from "express";
 import hexRgb from "hex-rgb";
 import createError from "http-errors";
 import protectedRoute from "../../middlewares/protected-route";
+import SaveData from "../../models/SaveData";
 import { db, logger } from "../../services";
 import {
   HAIR_COLORS,
@@ -9,7 +10,6 @@ import {
   HEADS,
   ITEMS,
 } from "../../utils/constants";
-import SaveData from "./SaveData";
 const router = Router();
 router.use(protectedRoute);
 
