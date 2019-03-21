@@ -1,17 +1,16 @@
-import dotenv from "dotenv";
-dotenv.config();
+import {config as dotenv} from "dotenv";
+dotenv();
 
-import app from "./app";
+import App from "./app";
 import { logger } from "./services";
-const PORT = process.env.PORT || 3005;
+const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3005;
 
-const server = app.listen(PORT, () => {
-  logger.info("Ready on " + PORT);
-});
+const server = new App(PORT);
+
+server.listen();
 
 process.on("SIGINT", () => {
-  logger.info("Caught SIGINT, bye...");
-  server.close();
+  logger.info("Sutting down");
   /* eslint-disable-next-line no-process-exit */
   process.exit(0);
 });
