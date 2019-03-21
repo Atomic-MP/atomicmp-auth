@@ -5,7 +5,7 @@ import Consumable from "./Consumable";
 import Currency from "./Currency";
 import Equipment from "./Equipment";
 import Item from "./Item";
-import * as itemsFile from "./items.json";
+import itemsFile from "./items.json";
 import Weapon from "./Weapon";
 
 const weapons = new Map<string, Weapon>();
