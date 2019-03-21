@@ -8,7 +8,7 @@ class Key {
   public discord_id: string;
 
   constructor(obj) {
-    Object.assign(this, obj)
+    Object.assign(this, obj);
   }
 
 }

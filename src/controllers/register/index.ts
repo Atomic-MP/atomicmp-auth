@@ -47,7 +47,7 @@ router
         await db("keys")
           .select("key_id", "discord_id")
           .where("key", req.body.key)
-          .andWhere("owner", null)
+          .andWhere("owner", null),
       ));
       if (!key) {
         return res.send(createError(404, `Key ${key} not found`));
