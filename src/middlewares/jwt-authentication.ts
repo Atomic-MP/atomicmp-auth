@@ -1,4 +1,4 @@
-import passport from "passport";
+import * as passport from "passport";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import { db } from "../services";
 
