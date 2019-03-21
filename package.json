@@ -7,7 +7,7 @@
     "node": "10.10.0"
   },
   "scripts": {
-    "start": "npm run compile && node -r dotenv/config ./dist/server.ts",
+    "start": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
     "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
