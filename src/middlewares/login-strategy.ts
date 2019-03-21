@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import first from "lodash.first";
-import * as passport from "passport";
+import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import User from "../models/User";
 import { db } from "../services";

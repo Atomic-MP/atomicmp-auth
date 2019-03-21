@@ -3,9 +3,9 @@
 import * as bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import express from "express";
-import * as favicon from "express-favicon";
 import moment from "moment";
 import * as path from "path";
+import favicon from "serve-favicon";
 import router from "./controllers/routes";
 import jwtMiddleware from "./middlewares/jwt-middleware";
 import { logger } from "./services";
