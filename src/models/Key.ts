@@ -1,16 +1,12 @@
 // tslint:disable: variable-name
 
-class Key {
-  public key_id: string;
-  public key: string;
-  public owner: string;
-  public generator_discord_id: string;
-  public discord_id: string;
-
-  constructor(obj) {
-    Object.assign(this, obj);
-  }
-
+// tslint:disable-next-line: interface-name
+interface Key {
+  key_id: string;
+  key: string;
+  owner: string;
+  generator_discord_id: string;
+  discord_id: string;
 }
 
 export default Key;

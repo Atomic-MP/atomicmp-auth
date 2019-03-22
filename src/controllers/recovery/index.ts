@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { Router } from "express";
 import createError from "http-errors";
+import User from "../../models/User";
 import { db } from "../../services";
 import { SALT_ROUNDS, TITLE } from "../../utils/constants";
 
@@ -9,7 +10,7 @@ const router = Router();
 
 router
   .get("/", async (req, res) => {
-    const user = req.user;
+    const user: User = req.user;
     const requestId = req.query.id;
     if (!requestId) {
       res.status(400).send({ error: "Route requires id" });

@@ -12,11 +12,11 @@ passport.use(
       usernameField: "username",
     },
     async (username: string, password: string, done) => {
-      const user: User = new User(first(
+      const user: User | undefined = first(
         await db("users")
           .select()
           .where("username", username),
-      ));
+      );
       // User not found
       if (!user) {
         // Do not send specific error to prevent user enumeration

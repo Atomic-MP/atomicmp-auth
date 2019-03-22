@@ -14,7 +14,7 @@ class SaveData {
   public readonly x_pos: number = STARTING_COORDS.x;
   public readonly y_pos: number = STARTING_COORDS.y;
   public readonly z_pos: number = STARTING_COORDS.z;
-  public readonly inventory: object[] = [];
+  public readonly inventory: any[];
   public readonly money: number = 0;
   constructor({
     health,
@@ -25,6 +25,15 @@ class SaveData {
     z_pos,
     inventory,
     money,
+  }: {
+    health: number;
+    hunger: number;
+    thirst: number;
+    x_pos: number;
+    y_pos: number;
+    z_pos: number;
+    inventory: any[];
+    money: number;
   }) {
     /**
      * Save state transactions are **super fragile**
@@ -40,7 +49,8 @@ class SaveData {
     this.x_pos = x_pos;
     this.y_pos = y_pos;
     this.z_pos = z_pos;
-    this.inventory = inventory.map((item: { id: string; quantity: number; }) => {
+    this.inventory = inventory
+      .map((item: { id: string; quantity: number }) => {
         if (ITEMS.has(item.id)) {
           return item;
         }

@@ -1,8 +1,10 @@
 import { Router } from "express";
 import hexRgb from "hex-rgb";
 import createError from "http-errors";
+import first from "lodash.first";
 import protectedRoute from "../../middlewares/protected-route";
 import SaveData from "../../models/SaveData";
+import User from "../../models/User";
 import { db, logger } from "../../services";
 import {
   HAIR_COLORS,
@@ -37,7 +39,7 @@ router.get("/sample-user-data", (req, res) => {
 });
 
 router.put("/save", async (req, res) => {
-  const user = req.user;
+  const user: User = req.user;
   const {
     health,
     hunger,
@@ -72,7 +74,7 @@ router.put("/save", async (req, res) => {
 });
 
 router.put("/set-appearance", async (req, res) => {
-  const user = req.user;
+  const user: User = req.user;
   const { nickname, head, hair, hair_color, is_male } = req.body;
 
   if (
@@ -129,9 +131,9 @@ router.put("/set-appearance", async (req, res) => {
 
 router.get("/user-info/:id", async (req, res) => {
   const targetUserID = req.params.id;
-  const [user] = await db("users")
+  const user: User | undefined = first(await db("users")
     .where("user_id", targetUserID)
-    .select("username", "health", "discord_id");
+    .select("username", "health", "discord_id"));
   if (user) {
     res.json(user);
   } else {

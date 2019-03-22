@@ -2,7 +2,7 @@
 import * as faker from "faker";
 import { isValidPassword as fn } from "..";
 
-const validPayload = (password) => ({ password, confirmPassword: password });
+const validPayload = (password: string) => ({ password, confirmPassword: password });
 
 describe("Password validation helper", () => {
   test("should be falsy if no password provided", () => {

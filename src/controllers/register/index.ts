@@ -34,21 +34,21 @@ router
       const username: string = req.body.username.trim();
       // Check if username exists; case insensitive
 
-      const usernameExists: boolean = !isEmpty((await db.raw(
-        `SELECT * FROM users WHERE LOWER(username)=LOWER('${
-        req.body.username
-        }')`,
-      )).rows);
+      const usernameExists: boolean = !isEmpty(
+        (await db.raw(
+          `SELECT * FROM users WHERE LOWER(username)=LOWER('${username}')`
+        )).rows,
+      );
       if (usernameExists) {
         logger.warn(`User ${username} already exists`);
         return res.send(createError(409, `User ${username} already exists`));
       }
-      const key = new Key(first(
+      const key: Key | undefined = first(
         await db("keys")
           .select("key_id", "discord_id")
           .where("key", req.body.key)
           .andWhere("owner", null),
-      ));
+      );
       if (!key) {
         return res.send(createError(404, `Key ${key} not found`));
       }

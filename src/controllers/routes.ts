@@ -1,6 +1,8 @@
 import { Router } from "express";
 import createError from "http-errors";
+import first from "lodash.first";
 
+import User from "../models/User";
 import { db, logger } from "../services";
 import { TITLE } from "../utils/constants";
 
@@ -31,12 +33,12 @@ router.get("/", (req, res) => {
 
 router.get("/user/:id", async (req, res) => {
   if (req.isAuthenticated()) {
-    const user = req.user;
+    const user: User = req.user;
     const targetUserID = req.params.id;
-    const [targetUser] = await db("users")
+    const targetUser: User | undefined = first(await db("users")
       .join("roles", "users.role", "=", "roles.role_id")
       .select("user_id", "username", "role_name", "faction", "created_at")
-      .where("user_id", targetUserID);
+      .where("user_id", targetUserID));
 
     res.render("user.pug", {
       TITLE,
@@ -50,9 +52,9 @@ router.get("/user/:id", async (req, res) => {
 
 router.get("/faction/:id", async (req, res) => {
   if (req.isAuthenticated()) {
-    const user = req.user;
-    const targetFactionID = req.params.id;
-    const [faction] = await db("factions").where("faction_id", targetFactionID);
+    const user: User = req.user;
+    const targetFactionID: number = req.params.id;
+    const faction = first(await db("factions").where("faction_id", targetFactionID));
     if (faction) {
       logger.info(faction);
       res.render("faction.pug", {

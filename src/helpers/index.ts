@@ -3,6 +3,11 @@ function isValidSignupCredentials({
   password,
   confirmPassword,
   key,
+}: {
+  username: string | undefined,
+  password: string | undefined,
+  confirmPassword: string | undefined,
+  key: string | undefined,
 }) {
   return (
     isValidUsername(username) &&
@@ -11,7 +16,7 @@ function isValidSignupCredentials({
   );
 }
 
-function isValidUsername(username: string) {
+function isValidUsername(username: string | undefined) {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
   return (
     typeof username !== "undefined" &&
@@ -21,7 +26,11 @@ function isValidUsername(username: string) {
   );
 }
 
-function isValidPassword({ password, confirmPassword }) {
+function isValidPassword({ password, confirmPassword }:
+  {
+    password: string | undefined,
+    confirmPassword: string | undefined,
+  }) {
   const validPasswordRegex = /^([A-Za-z\d$@$!%*?&]){8,50}$/;
   return (
     typeof password !== "undefined" &&
