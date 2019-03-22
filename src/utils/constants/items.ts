@@ -1,12 +1,12 @@
 // A Map data structure
 
-import Ammo from "./Ammo";
-import Consumable from "./Consumable";
-import Currency from "./Currency";
-import Equipment from "./Equipment";
-import Item from "./Item";
+import Ammo from "../../models/Ammo";
+import Consumable from "../../models/Consumable";
+import Currency from "../../models/Currency";
+import Equipment from "../../models/Equipment";
+import Item from "../../models/Item";
+import Weapon from "../../models/Weapon";
 import itemsFile from "./items.json";
-import Weapon from "./Weapon";
 
 const weapons = new Map<string, Weapon>();
 const equipment = new Map<string, Equipment>();
