@@ -179,7 +179,11 @@ router.get("/load", async (req, res) => {
   }
   // LEFT JOIN faction data
 
-  user.inventory = JSON.parse(user.inventory);
+  try {
+    user.inventory = JSON.parse(user.inventory);
+  } catch (e) {
+    user.inventory = [];
+  }
 
   if (user.faction) {
     const [factionData] = await db("factions").where(
