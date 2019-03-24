@@ -177,13 +177,8 @@ router.get("/load", async (req, res) => {
   for (const key of Object.keys(user)) {
     if (!savestateKeys.has(key)) { delete user[key]; }
   }
-  // LEFT JOIN faction data
 
-  try {
-    user.inventory = JSON.parse(user.inventory);
-  } catch (e) {
-    user.inventory = [];
-  }
+  user.inventory = (Array.isArray(user.inventory)) ? user.inventory : [];
 
   if (user.faction) {
     const [factionData] = await db("factions").where(
