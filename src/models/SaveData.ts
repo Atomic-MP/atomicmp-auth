@@ -49,13 +49,13 @@ class SaveData {
     this.x_pos = x_pos;
     this.y_pos = y_pos;
     this.z_pos = z_pos;
-    this.inventory = inventory
-      .map((item: { id: string; quantity: number }) => {
-        if (ITEMS.has(item.id)) {
-          return item;
-        }
-      })
-      .filter(Boolean);
+    this.inventory = inventory;
+      // .map((item: { id: string; quantity: number }) => {
+      //   if (ITEMS.has(item.id)) {
+      //     return item;
+      //   }
+      // })
+      // .filter(Boolean);
     this.money = money;
   }
 }
