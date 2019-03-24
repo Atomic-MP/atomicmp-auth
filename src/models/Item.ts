@@ -20,7 +20,7 @@ class Item {
   public readonly SalePrice: number = 0;
   public readonly ShopCategory: string;
 
-  constructor(item) {
+  constructor(item: any) {
     this.ID = item.ID;
     this.Icon = item.Icon;
     this.Name = item.Name;

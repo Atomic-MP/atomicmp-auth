@@ -5,7 +5,7 @@ import Item from "./Item";
  * @class Currency
  */
 class Currency extends Item {
-  constructor(item) {
+  constructor(item: any) {
     super(item);
   }
 }

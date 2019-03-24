@@ -6,7 +6,7 @@ import Item from "./Item";
 class Ammo extends Item {
   public readonly AmmoType: string;
 
-  constructor(item) {
+  constructor(item: any) {
     super(item);
     this.AmmoType = item.AmmoType;
   }

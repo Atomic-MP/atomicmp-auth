@@ -18,7 +18,7 @@ class Weapon extends Item {
   public readonly "AimedRight/LeftSpread": number[];
   public readonly DefaultMagFull: number;
   public readonly MagAmount: number;
-  constructor(item) {
+  constructor(item: any) {
     super(item);
     this.WeaponActorClass = item.WeaponActorClass;
     this.WeaponType = item.WeaponType;

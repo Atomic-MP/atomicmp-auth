@@ -37,7 +37,7 @@ class Equipment extends Item {
   public readonly "HideHair?": boolean = false;
   public readonly "HideHairline?": boolean = false;
 
-  constructor(item) {
+  constructor(item: any) {
     super(item);
     this.Strength = item.Strength;
     this.Perception = item.Perception;
