@@ -7,6 +7,11 @@ const STARTING_COORDS = {
   z: -5968.092285,
 };
 
+interface IIncomingItem {
+  id: string;
+  quantity: number;
+}
+
 class SaveData {
   public readonly health: number = 1;
   public readonly hunger: number = 0;
@@ -32,7 +37,7 @@ class SaveData {
     x_pos: number;
     y_pos: number;
     z_pos: number;
-    inventory: any[];
+    inventory: IIncomingItem[];
     money: number;
   }) {
     /**
@@ -49,13 +54,14 @@ class SaveData {
     this.x_pos = x_pos;
     this.y_pos = y_pos;
     this.z_pos = z_pos;
-    this.inventory = inventory;
-      // .map((item: { id: string; quantity: number }) => {
-      //   if (ITEMS.has(item.id)) {
-      //     return item;
-      //   }
-      // })
-      // .filter(Boolean);
+
+    this.inventory = inventory
+      .map((item: IIncomingItem) => {
+        if (item.quantity > 0 && item.id) {
+          return item;
+        }
+      })
+      .filter(Boolean);
     this.money = money;
   }
 }
