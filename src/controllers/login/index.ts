@@ -10,7 +10,7 @@ const router = Router();
 router
   .route("/")
   .get((req, res) => {
-    const user: User = req.user;
+    const user = req.user;
     res.render("login.pug", {
       TITLE,
       user,

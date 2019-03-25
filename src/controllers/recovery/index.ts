@@ -10,7 +10,7 @@ const router = Router();
 
 router
   .get("/", async (req, res) => {
-    const user: User = req.user;
+    const user = req.user;
     const requestId = req.query.id;
     if (!requestId) {
       res.status(400).send({ error: "Route requires id" });
