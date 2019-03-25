@@ -3,15 +3,10 @@ import hexRgb from "hex-rgb";
 import createError from "http-errors";
 import first from "lodash.first";
 import protectedRoute from "../../middlewares/protected-route";
+import Appearance from "../../models/Appearance";
 import SaveData from "../../models/SaveData";
 import User from "../../models/User";
 import { db, logger } from "../../services";
-import {
-  HAIR_COLORS,
-  HAIRS,
-  HEADS,
-  ITEMS,
-} from "../../utils/constants";
 const router = Router();
 router.use(protectedRoute);
 
@@ -75,58 +70,24 @@ router.put("/save", async (req, res) => {
 
 router.put("/set-appearance", async (req, res) => {
   const user: User = req.user;
-  const { nickname, head, hair, hair_color, is_male } = req.body;
 
-  if (
-    nickname === undefined ||
-    head === undefined ||
-    hair === undefined ||
-    hair_color === undefined ||
-    is_male === undefined
-  ) {
-    logger.error("[SET-APPEARANCE][ERROR] Payload contains insufficient data");
-    res.send(createError(400, "Payload contains insufficient data"));
-    return;
-  }
-  if (nickname.length > 24) {
-    logger.error(`[SET-APPEARANCE][ERROR] Nickname too long`);
-    res.send(createError(400, "Nickname too long"));
-    return;
-  }
-  if (head < 1 || head > HEADS) {
-    logger.error(`[SET-APPEARANCE][ERROR] Head ${head} is malformed`);
-    res.send(createError(400, `Head ${head} is malformed`));
-    return;
-  }
+  try {
+    const { nickname, head, hair, hair_color, is_male } = new Appearance(req.body);
 
-  if (hair < 1 || hair > HAIRS) {
-    logger.error(`[SET-APPEARANCE][ERROR] Hair ${hair} is malformed`);
-    res.send(createError(400, `Hair ${hair} is malformed`));
-    return;
+    await db("users")
+      .where("user_id", user.user_id)
+      .update({
+        hair,
+        hair_color,
+        head,
+        is_male,
+        nickname,
+      });
+    res.sendStatus(200);
+  } catch (e) {
+    logger.error("[SET-APPEARANCE][ERROR] " + e.message);
+    res.send(createError(400, e.message));
   }
-  if (hair_color < 1 || hair_color > HAIR_COLORS) {
-    logger.error(
-      `[SET-APPEARANCE][ERROR] Hair Color ${hair_color} is malformed`,
-    );
-    res.send(createError(400, `Hair Color ${hair_color} is malformed`));
-    return;
-  }
-  if (typeof is_male !== "boolean") {
-    logger.error(`[SET-APPEARANCE][ERROR] Sex ${is_male} is malformed`);
-    res.send(createError(400, `Sex ${is_male} is malformed`));
-    return;
-  }
-
-  await db("users")
-    .where("user_id", user.user_id)
-    .update({
-      hair,
-      hair_color,
-      head,
-      is_male,
-      nickname,
-    });
-  res.sendStatus(200);
 });
 
 router.get("/user-info/:id", async (req, res) => {
