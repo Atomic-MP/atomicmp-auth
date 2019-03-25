@@ -11,7 +11,7 @@ const router = Router();
 router.use(protectedRoute);
 
 router.put("/save", async (req, res) => {
-  const user: User = req.user;
+  const user = req.user;
   const {
     health,
     hunger,
@@ -42,7 +42,7 @@ router.put("/save", async (req, res) => {
 });
 
 router.put("/set-appearance", async (req, res) => {
-  const user: User = req.user;
+  const user = req.user;
 
   try {
     const { nickname, head, hair, hair_color, is_male } = new Appearance(req.body);

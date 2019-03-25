@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
 
 router.get("/user/:id", async (req, res) => {
   if (req.isAuthenticated()) {
-    const user: User = req.user;
+    const user = req.user;
     const targetUserID = req.params.id;
     const targetUser: User | undefined = first(await db("users")
       .join("roles", "users.role", "=", "roles.role_id")
@@ -52,7 +52,7 @@ router.get("/user/:id", async (req, res) => {
 
 router.get("/faction/:id", async (req, res) => {
   if (req.isAuthenticated()) {
-    const user: User = req.user;
+    const user = req.user;
     const targetFactionID: number = req.params.id;
     const faction = first(await db("factions").where("faction_id", targetFactionID));
     if (faction) {
