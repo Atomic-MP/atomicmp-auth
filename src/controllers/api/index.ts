@@ -10,29 +10,6 @@ import { db, logger } from "../../services";
 const router = Router();
 router.use(protectedRoute);
 
-/**
- * This is a sample of the user data output from user data dump
- */
-router.get("/sample-user-data", (req, res) => {
-  res.json({
-    female_hair: 1,
-    female_head: 1,
-    hair_color: 1,
-    health: Math.floor(Math.random() * 100 + 1),
-    hunger: 55.43,
-    is_admin: false,
-    is_male: true,
-    male_hair: 1,
-    male_head: 1,
-    money: 587,
-    thirst: 55.43,
-    user_id: 1,
-    x_pos: 100,
-    y_pos: -201.54,
-    z_pos: 350,
-  });
-});
-
 router.put("/save", async (req, res) => {
   const user: User = req.user;
   const {
@@ -43,10 +20,9 @@ router.put("/save", async (req, res) => {
     y_pos,
     z_pos,
     inventory,
-    money,
   } = new SaveData(req.body);
 
-  logger.info(`inventory: ${JSON.stringify(inventory)}, money: ${money}`);
+  logger.info(`inventory: ${JSON.stringify(inventory)}`);
 
   await db("users")
     .where("user_id", user.user_id)
@@ -54,7 +30,6 @@ router.put("/save", async (req, res) => {
       health,
       hunger,
       inventory: JSON.stringify(inventory),
-      money,
       thirst,
       x_pos,
       y_pos,
@@ -62,9 +37,7 @@ router.put("/save", async (req, res) => {
     });
 
   logger.info(`${user.username} data saved:
-  ${JSON.stringify(inventory)}
-  ${money}
-  `);
+  ${JSON.stringify(inventory)}`);
   res.sendStatus(200);
 });
 
@@ -131,7 +104,6 @@ router.get("/load", async (req, res) => {
     "y_pos",
     "z_pos",
     "inventory",
-    "money",
   ]);
 
   const user = req.user;

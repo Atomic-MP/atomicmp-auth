@@ -19,7 +19,6 @@ interface User {
   y_pos: number;
   z_pos: number;
   inventory: any[];
-  money: number;
   hash: Buffer;
 }
 

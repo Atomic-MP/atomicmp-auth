@@ -15,7 +15,6 @@ class SaveData {
   public readonly y_pos: number = STARTING_COORDS.y;
   public readonly z_pos: number = STARTING_COORDS.z;
   public readonly inventory: any[];
-  public readonly money: number = 0;
   constructor({
     health,
     hunger,
@@ -24,7 +23,6 @@ class SaveData {
     y_pos,
     z_pos,
     inventory,
-    money,
   }: {
     health: number;
     hunger: number;
@@ -33,7 +31,6 @@ class SaveData {
     y_pos: number;
     z_pos: number;
     inventory: any[];
-    money: number;
   }) {
     /**
      * Save state transactions are **super fragile**
@@ -57,7 +54,6 @@ class SaveData {
         }
       })
       .filter(Boolean);
-    this.money = money;
   }
 }
 
