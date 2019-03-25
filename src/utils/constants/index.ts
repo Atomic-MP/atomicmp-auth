@@ -1,11 +1,16 @@
 import { items } from "./items";
 
+interface IRole {
+  role_id: number;
+  role_name: string;
+}
+
 const TITLE = "Atomic MP - A Multiplayer Fallout Roleplay Experience";
 const SALT_ROUNDS = 10;
 const HEADS = 10;
 const HAIRS = 24;
 const HAIR_COLORS = 7;
-const ROLES = [
+const ROLES: IRole[] = [
     {
       role_id: 1,
       role_name: "banned",
