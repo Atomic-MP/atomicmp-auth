@@ -57,7 +57,7 @@ class SaveData {
 
     this.inventory = inventory
       .map((item: IIncomingItem) => {
-        if (item.quantity > 0 && item.id) {
+        if (item.quantity > 0 && item.id && ITEMS.has(item.id)) {
           return item;
         }
       })

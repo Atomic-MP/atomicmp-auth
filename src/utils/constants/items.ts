@@ -6,7 +6,7 @@ import Currency from "../../models/Currency";
 import Equipment from "../../models/Equipment";
 import Item from "../../models/Item";
 import Weapon from "../../models/Weapon";
-import itemsFile from "./items.json";
+import itemsFile from "./items-file.json";
 
 const weapons = new Map<string, Weapon>();
 const equipment = new Map<string, Equipment>();
