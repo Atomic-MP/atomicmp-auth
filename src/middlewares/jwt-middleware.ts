@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import User from "../models/User";
 import { logger } from "../services";
 import jwtAuthentication from "./jwt-authentication";
 
@@ -9,7 +10,9 @@ function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
       res.sendStatus(503);
       return;
     }
-    req.user = user;
+    if (user) {
+      req.user = new User(user);
+    }
 
     next();
   })(req, res);
