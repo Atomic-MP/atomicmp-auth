@@ -12,6 +12,7 @@ router.use(protectedRoute);
 
 router.put("/save", async (req, res) => {
   const user = req.user;
+  const saveData = new SaveData(req.body)
   const {
     health,
     hunger,
@@ -20,7 +21,7 @@ router.put("/save", async (req, res) => {
     y_pos,
     z_pos,
     inventory,
-  } = new SaveData(req.body);
+  } = saveData;
 
   logger.info(`inventory: ${JSON.stringify(inventory)}`);
 
@@ -36,8 +37,7 @@ router.put("/save", async (req, res) => {
       z_pos,
     });
 
-  logger.info(`${user.username} data saved:
-  ${JSON.stringify(inventory)}`);
+  logger.info("[SAVE]", JSON.stringify(saveData));
   res.sendStatus(200);
 });
 
@@ -45,7 +45,9 @@ router.put("/set-appearance", async (req, res) => {
   const user = req.user;
 
   try {
-    const { nickname, head, hair, hair_color, is_male } = new Appearance(req.body);
+    const appearance = new Appearance(req.body);
+    logger.info("[APPE] " + JSON.stringify(appearance));
+    const { nickname, head, hair, hair_color, is_male } = appearance;
 
     await db("users")
       .where("user_id", user.user_id)
@@ -110,6 +112,8 @@ router.get("/load", async (req, res) => {
   for (const key of Object.keys(user)) {
     if (!savestateKeys.has(key)) { delete user[key]; }
   }
+
+  logger.info("[LOAD] " + JSON.stringify(user))
 
   user.inventory = (Array.isArray(user.inventory)) ? user.inventory : [];
 

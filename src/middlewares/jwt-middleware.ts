@@ -10,7 +10,9 @@ function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
       res.sendStatus(503);
       return;
     }
-    req.user = new User(user);
+    if (user) {
+      req.user = new User(user);
+    }
 
     next();
   })(req, res);
