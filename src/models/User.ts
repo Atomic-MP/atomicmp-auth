@@ -42,78 +42,78 @@ class User {
   public hash: Buffer;
 
   constructor(obj: IUser) {
-    if (!obj.user_id) {
+    if (obj.user_id === undefined) {
       throw Error("user_id required");
     }
     this.user_id = obj.user_id;
 
-    if (!obj.username) {
+    if (obj.username === undefined) {
       throw Error("username required");
     }
     this.username = obj.username;
 
-    if (!obj.role) {
+    if (obj.role === undefined) {
       throw Error("role required");
     }
     this.role = obj.role;
 
-    if (!obj.faction) {
+    if (obj.faction === undefined) {
       throw Error("faction required");
     }
     this.faction = obj.faction;
 
-    if (!obj.health) {
+    if (obj.health === undefined) {
       throw Error("health required");
     }
     this.health = obj.health;
 
-    if (!obj.hunger) {
+    if (obj.hunger === undefined) {
       throw Error("hunger required");
     }
     this.hunger = obj.hunger;
 
-    if (!obj.thirst) {
+    if (obj.thirst === undefined) {
       throw Error("thirst required");
     }
     this.thirst = obj.thirst;
 
-    if (!obj.head) {
+    if (obj.head === undefined) {
       throw Error("head required");
     }
     this.head = obj.head;
 
-    if (!obj.hair) {
+    if (obj.hair === undefined) {
       throw Error("hair required");
     }
     this.hair = obj.hair;
 
-    if (!obj.hair_color) {
+    if (obj.hair_color === undefined) {
       throw Error("hair_color required");
     }
     this.hair_color = obj.hair_color;
 
-    this.is_male = obj.is_male || true;
+    this.is_male = (obj.is_male !== undefined) ? obj.is_male : true;
 
-    if (!obj.nickname) {
+    if (obj.nickname === undefined) {
       throw Error("nickname required");
     }
     this.nickname = obj.nickname;
 
-    if (!obj.x_pos) {
+    if (obj.x_pos === undefined) {
       throw Error("x_pos required");
     }
     this.x_pos = obj.x_pos;
-    if (!obj.y_pos) {
+    if (obj.y_pos === undefined) {
       throw Error("y_pos required");
     }
     this.y_pos = obj.y_pos;
 
-    if (!obj.z_pos) {
+    if (obj.z_pos === undefined) {
       throw Error("z_pos required");
     }
     this.z_pos = obj.z_pos;
 
-    if (!obj.inventory) {
+    if (obj.inventory === undefined) {
       throw Error("inventory required");
     }
     this.inventory = obj.inventory;
