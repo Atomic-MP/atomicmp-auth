@@ -5,8 +5,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import moment from "moment";
-import * as path from "path";
-import favicon from "serve-favicon";
 import router from "./controllers/routes";
 import jwtMiddleware from "./middlewares/jwt-middleware";
 import { logger } from "./services";
@@ -19,8 +17,6 @@ class App {
   constructor(port: number) {
     this.app = express();
     this.port = port;
-    this.initializeViewEngine();
-    this.initializeStaticRoutes();
     this.initializeMiddlewares();
     this.initializeRoutes();
   }
@@ -29,35 +25,6 @@ class App {
     this.app.listen(this.port, () => {
       logger.info("Ready on " + this.port);
     });
-  }
-
-  private initializeViewEngine() {
-    this.app.set("view engine", "pug");
-    this.app.set("views", path.join(__dirname, "../public/views"));
-  }
-
-  private initializeStaticRoutes() {
-    this.app.use(
-      express.static(path.join(__dirname, "../public/images"), {
-        maxAge: "48h",
-      }),
-    );
-    this.app.use(
-      express.static(path.join(__dirname, "../public/js"), {
-        maxAge: "48h",
-      }),
-    );
-    this.app.use(
-      express.static(path.join(__dirname, "../public/css"), {
-        maxAge: "48h",
-      }),
-    );
-    this.app.use(
-      express.static(path.join(__dirname, "../public/fonts"), {
-        maxAge: "48h",
-      }),
-    );
-    this.app.use(favicon(path.join(__dirname, "../public/favicon.png")));
   }
 
   private initializeMiddlewares() {
