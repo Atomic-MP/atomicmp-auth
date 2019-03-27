@@ -2,6 +2,7 @@
 
 import * as bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import express from "express";
 import moment from "moment";
 import * as path from "path";
@@ -64,6 +65,7 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(jwtMiddleware);
+    this.app.use(cors());
   }
 
   private initializeRoutes() {
