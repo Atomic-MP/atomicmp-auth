@@ -9,14 +9,7 @@ const router = Router();
 
 router
   .route("/")
-  .get((req, res) => {
-    const user = req.user;
-    res.render("login.pug", {
-      TITLE,
-      user,
-    });
-  })
-  .post((req, res) => {
+  .post(async (req, res) => {
     loginStrategy.authenticate("local", (err: Error, user: User) => {
       if (err) {
         logger.error(err);

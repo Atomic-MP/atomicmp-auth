@@ -9,28 +9,6 @@ import { isValidPassword } from "../../helpers";
 const router = Router();
 
 router
-  .get("/", async (req, res) => {
-    const user = req.user;
-    const requestId = req.query.id;
-    if (!requestId) {
-      res.status(400).send({ error: "Route requires id" });
-      return;
-    }
-    const [resetTarget] = await db("users").where({
-      recovery_request: requestId,
-    });
-    if (!resetTarget) {
-      res.send(createError(404, "Recovery code no longer valid"));
-      return;
-    }
-
-    res.render("recovery.pug", {
-      TITLE,
-      requestId,
-      resetTarget,
-      user,
-    });
-  })
   .post("/", async (req, res) => {
     const { requestId, password, confirmPassword } = req.body;
     if (
