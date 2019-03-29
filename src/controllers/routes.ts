@@ -31,6 +31,11 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/me", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.send(req.user);
+});
+
 router.get("/user/:id", async (req, res) => {
   if (req.isAuthenticated()) {
     const user = req.user;
