@@ -15,16 +15,6 @@ const router = Router();
 
 router
   .route("/")
-  .get((req, res) => {
-    let user;
-    if (req.isAuthenticated()) {
-      user = req.user;
-    }
-    res.render("register.pug", {
-      TITLE,
-      user,
-    });
-  })
   .post(async (req, res) => {
 
     if (!req.body || !req.body.username || !req.body.password) {

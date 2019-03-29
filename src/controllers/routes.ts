@@ -21,35 +21,31 @@ router.use("/register", registerRoutes);
 router.use("/recovery", recoveryRoutes);
 
 router.get("/", (req, res) => {
-  let user;
-  if (req.isAuthenticated()) {
-    user = req.user;
-  }
-  res.render("index.pug", {
-    TITLE,
-    user,
-  });
+  res.status(301).redirect("https://www.atomicmp.com");
 });
 
-router.get("/me", (req, res) => {
+router.get("/me", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.send(req.user);
 });
 
+router.get("/ping", async (req, res) => {
+  res.status(200).send("pong!");
+});
+
 router.get("/user/:id", async (req, res) => {
   if (req.isAuthenticated()) {
-    const user = req.user;
     const targetUserID = req.params.id;
     const targetUser: User | undefined = first(await db("users")
       .join("roles", "users.role", "=", "roles.role_id")
       .select("user_id", "username", "role_name", "faction", "created_at")
       .where("user_id", targetUserID));
-
-    res.render("user.pug", {
-      TITLE,
-      targetUser,
-      user,
-    });
+    if (targetUser) {
+      delete targetUser.hash;
+      res.status(200).send(targetUser);
+    } else {
+      res.send(createError(404, "User not found"));
+    }
   } else {
     res.redirect("/");
   }
@@ -57,16 +53,11 @@ router.get("/user/:id", async (req, res) => {
 
 router.get("/faction/:id", async (req, res) => {
   if (req.isAuthenticated()) {
-    const user = req.user;
     const targetFactionID: number = req.params.id;
     const faction = first(await db("factions").where("faction_id", targetFactionID));
     if (faction) {
       logger.info(faction);
-      res.render("faction.pug", {
-        TITLE,
-        faction,
-        user,
-      });
+      res.status(200).send(faction);
     } else {
       res.send(createError(404, "Faction not found"));
     }
