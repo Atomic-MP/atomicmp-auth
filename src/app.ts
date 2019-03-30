@@ -28,15 +28,15 @@ class App {
   }
 
   private initializeMiddlewares() {
+    this.app.use(
+      cors({
+        credentials: true,
+      }),
+    );
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(jwtMiddleware);
-    this.app.options('*', cors({
-        credentials: true,
-        origin: true,
-        optionsSuccessStatus: 200
-      }))
   }
 
   private initializeRoutes() {
