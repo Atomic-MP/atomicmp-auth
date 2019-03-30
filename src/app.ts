@@ -35,7 +35,7 @@ class App {
     this.app.use(
       cors({
         credentials: true,
-        origin: true,
+        origin: ["http://localhost:3000", "https://www.atomicmp.com", "https://atomicmp.com"],
       }),
     );
   }
