@@ -113,9 +113,11 @@ router.get("/load", async (req, res) => {
     if (!savestateKeys.has(key)) { delete user[key]; }
   }
 
-  logger.info("[LOAD] " + JSON.stringify(user))
+  logger.info("[LOAD] " + JSON.stringify(user));
 
-  user.inventory = (Array.isArray(user.inventory)) ? user.inventory : [];
+  user.inventory = Array.isArray(JSON.parse(user.inventory))
+    ? JSON.parse(user.inventory)
+    : [];
 
   if (user.faction) {
     const [factionData] = await db("factions").where(
