@@ -32,12 +32,11 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(jwtMiddleware);
-    this.app.use(
-      cors({
+    this.app.options('*', cors({
         credentials: true,
-        origin: ["http://localhost:3000", "https://www.atomicmp.com", "https://atomicmp.com"],
-      }),
-    );
+        origin: true,
+        optionsSuccessStatus: 200
+      }))
   }
 
   private initializeRoutes() {
