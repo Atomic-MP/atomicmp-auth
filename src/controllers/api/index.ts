@@ -113,11 +113,13 @@ router.get("/load", async (req, res) => {
     if (!savestateKeys.has(key)) { delete user[key]; }
   }
 
-  logger.info("[LOAD] " + JSON.stringify(user));
+  try {
+    user.inventory = JSON.parse(user.inventory)
+  } catch(e) {
+    user.inventory = []
+  }
 
-  user.inventory = Array.isArray(JSON.parse(user.inventory))
-    ? JSON.parse(user.inventory)
-    : [];
+  logger.info("[LOAD] " + JSON.stringify(user));
 
   if (user.faction) {
     const [factionData] = await db("factions").where(
