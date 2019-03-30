@@ -25,7 +25,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/me", async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.send(req.user);
 });
 
