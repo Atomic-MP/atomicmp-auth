@@ -20,10 +20,6 @@ router.use("/logout", logoutRoutes);
 router.use("/register", registerRoutes);
 router.use("/recovery", recoveryRoutes);
 
-router.get("/", (req, res) => {
-  res.status(301).redirect("https://www.atomicmp.com");
-});
-
 router.get("/me", async (req, res) => {
   res.send(req.user);
 });
@@ -63,6 +59,10 @@ router.get("/faction/:id", async (req, res) => {
   } else {
     res.redirect("/");
   }
+});
+
+router.get("/", (req, res) => {
+  res.status(301).redirect("https://www.atomicmp.com");
 });
 
 router.use((req, res) => {
