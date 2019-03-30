@@ -32,9 +32,12 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(jwtMiddleware);
-    this.app.use(cors({
-      credentials: true,
-    }));
+    this.app.use(
+      cors({
+        credentials: true,
+        origin: false,
+      }),
+    );
   }
 
   private initializeRoutes() {
