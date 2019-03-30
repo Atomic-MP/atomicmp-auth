@@ -35,7 +35,7 @@ class App {
     this.app.use(
       cors({
         credentials: true,
-        origin: false,
+        origin: true,
       }),
     );
   }
