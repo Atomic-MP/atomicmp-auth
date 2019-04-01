@@ -2,7 +2,7 @@ import first from "lodash.first";
 import passport from "passport";
 import { ExtractJwt, Strategy as JwtStrategy, StrategyOptions } from "passport-jwt";
 import User from "../models/User";
-import { db } from "../services";
+import { db, logger } from "../services";
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
 
