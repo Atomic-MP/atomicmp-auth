@@ -2,7 +2,7 @@ import first from "lodash.first";
 import passport from "passport";
 import { ExtractJwt, Strategy as JwtStrategy, StrategyOptions } from "passport-jwt";
 import User from "../models/User";
-import { db } from "../services";
+import { db, logger } from "../services";
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
 
@@ -23,7 +23,8 @@ passport.use(
     try {
       const targetUserID: string = jwtPayload.userId;
       const user: User | undefined = first(await db("users").where("user_id", targetUserID));
-
+      logger.info("Bip");
+      logger.info(user || {});
       if (user) {
         const userData = Object.assign({}, user);
         delete userData.hash;
