@@ -23,7 +23,6 @@ passport.use(
     try {
       const targetUserID: string = jwtPayload.userId;
       const user: User | undefined = first(await db("users").where("user_id", targetUserID));
-
       if (user) {
         const userData = Object.assign({}, user);
         delete userData.hash;
