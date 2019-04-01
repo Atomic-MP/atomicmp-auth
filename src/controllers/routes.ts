@@ -4,7 +4,6 @@ import first from "lodash.first";
 
 import User from "../models/User";
 import { db, logger } from "../services";
-import { TITLE } from "../utils/constants";
 
 import apiRoutes from "./api";
 import loginRoutes from "./login";
@@ -21,6 +20,7 @@ router.use("/register", registerRoutes);
 router.use("/recovery", recoveryRoutes);
 
 router.get("/me", async (req, res) => {
+  console.log(req.user);
   res.send(req.user);
 });
 
