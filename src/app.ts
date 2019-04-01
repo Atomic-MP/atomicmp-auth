@@ -28,11 +28,19 @@ class App {
   }
 
   private initializeMiddlewares() {
-    this.app.use(
-      cors({
-        credentials: true,
-      }),
-    );
+    const whitelist = ["http://localhost:3000", "https://www.atomicmp.com", "https://atomicmp.com"];
+    const corsOptions = {
+      credentials: true,
+      optionsSuccessStatus: 200,
+      origin: (origin: any, callback: any) => {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+    };
+    this.app.use(cors(corsOptions));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
