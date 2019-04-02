@@ -4,7 +4,6 @@ import { logger } from "../services";
 import jwtAuthentication from "./jwt-authentication";
 
 function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
-  console.log(req)
   jwtAuthentication.authenticate("jwt", (err: Error, user) => {
     if (err) {
       logger.error(err);
