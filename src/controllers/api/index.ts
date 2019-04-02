@@ -4,6 +4,7 @@ import createError from "http-errors";
 import first from "lodash.first";
 import protectedRoute from "../../middlewares/protected-route";
 import Appearance from "../../models/Appearance";
+import { IFaction } from "../../models/Faction";
 import SaveData from "../../models/SaveData";
 import User from "../../models/User";
 import { db, logger } from "../../services";
@@ -78,7 +79,7 @@ router.get("/user-info/:id", async (req, res) => {
 });
 router.get("/faction-info/:id", async (req, res) => {
   const targetFactionID = req.params.id;
-  const [faction] = await db("factions").where("faction_id", targetFactionID);
+  const faction: (IFaction | undefined) = first(await db("factions").where("faction_id", targetFactionID));
   if (faction) {
     res.json(faction);
   } else {
@@ -114,21 +115,22 @@ router.get("/load", async (req, res) => {
   }
 
   try {
-    user.inventory = JSON.parse(user.inventory)
-  } catch(e) {
-    user.inventory = []
+    user.inventory = JSON.parse(user.inventory);
+  } catch (e) {
+    user.inventory = [];
   }
 
   logger.info("[LOAD] " + JSON.stringify(user));
 
   if (user.faction) {
-    const [factionData] = await db("factions").where(
+    const factionData: (IFaction | undefined) = first(await db("factions").where(
       "faction_id",
       user.faction,
-    );
+    ));
+
     // tslint:disable-next-line: variable-name
     const [faction_color_r, faction_color_g, faction_color_b] = hexRgb(
-      factionData.color || "#FFFFFF",
+      (factionData === undefined) ? "#FFFFFF" : factionData.color,
       {
         format: "array",
       },
