@@ -1,10 +1,11 @@
 import bcrypt from "bcrypt";
 import { Router } from "express";
 import createError from "http-errors";
-import User from "../../models/User";
+import { IUser } from "../../models/User";
 import { db } from "../../services";
 import { SALT_ROUNDS, TITLE } from "../../utils/constants";
 
+import first from "lodash.first";
 import { isValidPassword } from "../../helpers";
 const router = Router();
 
@@ -21,9 +22,9 @@ router
       return;
     }
 
-    const [user] = await db("users").where({
+    const user: (IUser | undefined) = first(await db("users").where({
       recovery_request: requestId,
-    });
+    }));
     if (!user) {
       res.send(createError(404, "No recovery request found"));
       return;
