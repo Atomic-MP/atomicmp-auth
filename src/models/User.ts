@@ -7,7 +7,7 @@ interface IUser {
   user_id: number;
   username: string;
   role: number;
-  faction: number;
+  faction: number | null;
   health: number;
   hunger: number;
   thirst: number;
@@ -26,7 +26,7 @@ class User {
   public readonly user_id: number;
   public readonly username: string;
   public readonly role: number;
-  public readonly faction: number;
+  public readonly faction: number | null;
   public readonly health: number = 100;
   public readonly hunger: number = 0;
   public readonly thirst: number = 0;
