@@ -28,18 +28,10 @@ class App {
   }
 
   private initializeMiddlewares() {
-    const whitelist = ["http://localhost:3000", "https://www.atomicmp.com", "https://atomicmp.com"];
     const corsOptions = {
-      credentials: true,
+      allowHeaders: ["Content-Type", "Authorization"],
       optionsSuccessStatus: 200,
-      origin: (origin: any, callback: any) => {
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          logger.error(`CORS blocked request from: ${origin}`)
-          callback(null, false);
-        }
-      },
+      origin: "*",
     };
     this.app.use(cors(corsOptions));
     this.app.use(bodyParser.json());
