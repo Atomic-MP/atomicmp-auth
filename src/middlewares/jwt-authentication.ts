@@ -7,14 +7,7 @@ import { db, logger } from "../services";
 const JWT_SECRET = process.env.JWT_SECRET || "";
 
 const opts: StrategyOptions = {
-  jwtFromRequest: ExtractJwt.fromExtractors([
-    (req) => {
-      if (req.cookies) {
-        return req.cookies.jwt || "";
-      }
-      return "";
-    },
-  ]),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: JWT_SECRET,
 };
 

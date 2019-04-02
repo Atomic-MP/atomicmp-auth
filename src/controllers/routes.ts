@@ -20,7 +20,6 @@ router.use("/register", registerRoutes);
 router.use("/recovery", recoveryRoutes);
 
 router.get("/me", async (req, res) => {
-  console.log(req.user);
   res.send(req.user);
 });
 
