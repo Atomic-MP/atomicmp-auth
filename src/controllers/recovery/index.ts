@@ -3,7 +3,7 @@ import { Router } from "express";
 import createError from "http-errors";
 import { IUser } from "../../models/User";
 import { db } from "../../services";
-import { SALT_ROUNDS, TITLE } from "../../utils/constants";
+import { SALT_ROUNDS } from "../../utils/constants";
 
 import first from "lodash.first";
 import { isValidPassword } from "../../helpers";

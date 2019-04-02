@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import loginStrategy from "../../middlewares/login-strategy";
 import User from "../../models/User";
 import { logger } from "../../services";
-import { TITLE } from "../../utils/constants";
 const JWT_SECRET = process.env.JWT_SECRET || "";
 const router = Router();
 

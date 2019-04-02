@@ -7,7 +7,7 @@ import isEmpty from "lodash.isempty";
 import { isValidSignupCredentials } from "../../helpers";
 import Key from "../../models/Key";
 import { db, logger } from "../../services";
-import { SALT_ROUNDS, TITLE } from "../../utils/constants";
+import { SALT_ROUNDS } from "../../utils/constants";
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
 

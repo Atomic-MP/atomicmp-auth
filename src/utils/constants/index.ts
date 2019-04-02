@@ -5,7 +5,6 @@ interface IRole {
   role_name: string;
 }
 
-const TITLE = "Atomic MP - A Multiplayer Fallout Roleplay Experience";
 const SALT_ROUNDS = 10;
 const HEADS = 10;
 const HAIRS = 24;
@@ -35,7 +34,6 @@ const ROLES: IRole[] = [
 const ITEMS = items;
 
 export {
-  TITLE,
   SALT_ROUNDS,
   HEADS,
   HAIRS,
