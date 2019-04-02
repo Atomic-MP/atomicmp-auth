@@ -10,12 +10,12 @@ class Weapon extends Item {
   public readonly AmmoType: string;
   public readonly AimedFOV: number;
   public readonly ZoomedFOV: number;
-  public readonly "ZRecoilMIn/Max": number[];
-  public readonly "YRecoilMin/Max": number[];
-  public readonly "Up/DownSpreadMin": number[];
-  public readonly "Right/LeftSpreadMin": number[];
-  public readonly "AimedUp/DownSpread": number[];
-  public readonly "AimedRight/LeftSpread": number[];
+  public readonly "ZRecoilMIn/Max": [number, number];
+  public readonly "YRecoilMin/Max": [number, number];
+  public readonly "Up/DownSpreadMin": [number, number];
+  public readonly "Right/LeftSpreadMin": [number, number];
+  public readonly "AimedUp/DownSpread": [number, number];
+  public readonly "AimedRight/LeftSpread": [number, number];
   public readonly DefaultMagFull: number;
   public readonly MagAmount: number;
   constructor(item: any) {
