@@ -1,7 +1,5 @@
 // tslint:disable: variable-name
-
-// tslint:disable-next-line: interface-name
-interface Key {
+interface IKey {
   key_id: string;
   key: string;
   owner: string;
@@ -9,4 +7,4 @@ interface Key {
   discord_id: string;
 }
 
-export default Key;
+export default IKey;
