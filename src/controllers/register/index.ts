@@ -15,7 +15,7 @@ const router = Router();
 
 router
   .route("/")
-  .post(async (req, res) => {
+  .post(async (req, res, next) => {
 
     if (!req.body || !req.body.username || !req.body.password) {
       return res.sendStatus(400);
@@ -31,7 +31,7 @@ router
       );
       if (usernameExists) {
         logger.warn(`User ${username} already exists`);
-        return res.send(createError(409, `User ${username} already exists`));
+        return next(createError(409, `User ${username} already exists`));
       }
       const key: Key | undefined = first(
         await db("keys")
@@ -40,7 +40,7 @@ router
           .andWhere("owner", null),
       );
       if (!key) {
-        return res.send(createError(404, `Key ${key} not found`));
+        return next(createError(404, `Key ${req.body.key} not found`));
       }
       const keyID = key.key_id;
       const hash = await bcrypt.hash(req.body.password, SALT_ROUNDS);

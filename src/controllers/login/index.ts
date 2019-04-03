@@ -1,4 +1,5 @@
 import { Router } from "express";
+import createError from "http-errors";
 import jwt from "jsonwebtoken";
 import loginStrategy from "../../middlewares/login-strategy";
 import User from "../../models/User";
@@ -8,12 +9,11 @@ const router = Router();
 
 router
   .route("/")
-  .post(async (req, res) => {
+  .post(async (req, res, next) => {
     loginStrategy.authenticate("local", (err: Error, user: User) => {
       if (err) {
         logger.error(err);
-        res.send(err);
-        return;
+        return next(createError(503, "Authentication method failed"));
       }
       if (user) {
         const token = jwt.sign(
@@ -25,9 +25,9 @@ router
         );
         res.json({ token });
       } else {
-        res.sendStatus(401);
+        return next(new createError.Unauthorized("Invalid credentials"));
       }
-    })(req, res);
+    })(req, res, next);
   });
 
 export default router;
