@@ -40,7 +40,7 @@ router
           .andWhere("owner", null),
       );
       if (!key) {
-        return next(createError(404, `Key ${key} not found`));
+        return next(createError(404, `Key ${req.body.key} not found`));
       }
       const keyID = key.key_id;
       const hash = await bcrypt.hash(req.body.password, SALT_ROUNDS);
