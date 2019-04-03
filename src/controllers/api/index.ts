@@ -60,9 +60,9 @@ router.put("/set-appearance", async (req, res) => {
         nickname,
       });
     res.sendStatus(200);
-  } catch (e) {
-    logger.error("[SET-APPEARANCE][ERROR] " + e.message);
-    res.send(createError(400, e.message));
+  } catch (error) {
+    logger.error("[SET-APPEARANCE][ERROR] " + error.message);
+    res.send(createError(400, error.message));
   }
 });
 
@@ -116,7 +116,7 @@ router.get("/load", async (req, res) => {
 
   try {
     user.inventory = JSON.parse(user.inventory);
-  } catch (e) {
+  } catch (error) {
     user.inventory = [];
   }
 
