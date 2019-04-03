@@ -6,6 +6,7 @@ import cors from "cors";
 import express from "express";
 import moment from "moment";
 import router from "./controllers/routes";
+import errorMiddleware from "./middlewares/error-handler";
 import jwtMiddleware from "./middlewares/jwt-middleware";
 import { logger } from "./services";
 moment().format();
@@ -19,6 +20,7 @@ class App {
     this.port = port;
     this.initializeMiddlewares();
     this.initializeRoutes();
+    this.initializeErrorHandling();
   }
 
   public listen() {
@@ -38,6 +40,10 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(jwtMiddleware);
+  }
+
+  private initializeErrorHandling() {
+    this.app.use(errorMiddleware);
   }
 
   private initializeRoutes() {

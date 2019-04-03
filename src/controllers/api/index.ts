@@ -11,7 +11,7 @@ import { db, logger } from "../../services";
 const router = Router();
 router.use(protectedRoute);
 
-router.put("/save", async (req, res) => {
+router.put("/save", async (req, res, next) => {
   const user = req.user;
   const saveData = new SaveData(req.body)
   const {
@@ -42,7 +42,7 @@ router.put("/save", async (req, res) => {
   res.sendStatus(200);
 });
 
-router.put("/set-appearance", async (req, res) => {
+router.put("/set-appearance", async (req, res, next) => {
   const user = req.user;
 
   try {
@@ -62,32 +62,32 @@ router.put("/set-appearance", async (req, res) => {
     res.sendStatus(200);
   } catch (error) {
     logger.error("[SET-APPEARANCE][ERROR] " + error.message);
-    res.send(createError(400, error.message));
+    next(createError(400, error.message));
   }
 });
 
-router.get("/user-info/:id", async (req, res) => {
+router.get("/user-info/:id", async (req, res, next) => {
   const targetUserID = req.params.id;
-  const user: User | undefined = first(await db("users")
+  const targetUser: User | undefined = first(await db("users")
     .where("user_id", targetUserID)
     .select("username", "health", "discord_id"));
-  if (user) {
-    res.json(user);
+  if (targetUser) {
+    res.json(targetUser);
   } else {
-    res.send(createError(404, `User ${targetUserID} not found`));
+    next(createError(404, `User ${targetUserID} not found`));
   }
 });
-router.get("/faction-info/:id", async (req, res) => {
+router.get("/faction-info/:id", async (req, res, next) => {
   const targetFactionID = req.params.id;
   const faction: (IFaction | undefined) = first(await db("factions").where("faction_id", targetFactionID));
   if (faction) {
     res.json(faction);
   } else {
-    res.send(createError(404, `Faction ${targetFactionID} not found`));
+    next(createError(404, `Faction ${targetFactionID} not found`));
   }
 });
 
-router.get("/load", async (req, res) => {
+router.get("/load", async (req, res, next) => {
   // Explicitly defining the data points that should be
   // set to the client on load
   const savestateKeys = new Set([

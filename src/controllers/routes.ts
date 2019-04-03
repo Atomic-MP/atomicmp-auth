@@ -6,6 +6,8 @@ import logoutRoutes from "./logout";
 import recoveryRoutes from "./recovery";
 import registerRoutes from "./register";
 
+import createError from "http-errors";
+
 const router = Router();
 
 router.use("/api", apiRoutes);
@@ -24,10 +26,6 @@ router.get("/ping", async (req, res) => {
 
 router.get("/", (req, res) => {
   res.status(301).redirect("https://www.atomicmp.com");
-});
-
-router.use((req, res) => {
-  res.redirect("/");
 });
 
 export default router;
