@@ -25,7 +25,7 @@ router
         );
         res.json({ token });
       } else {
-        return next(new createError.Unauthorized("Bearer token denied"));
+        return next(new createError.Unauthorized("Invalid credentials"));
       }
     })(req, res, next);
   });
