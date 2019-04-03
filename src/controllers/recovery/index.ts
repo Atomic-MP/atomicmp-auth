@@ -10,6 +10,25 @@ import { isValidPassword } from "../../helpers";
 const router = Router();
 
 router
+  .get("/", async (req, res) => {
+    const requestId = req.query.id;
+    if (!requestId) {
+      res.status(400).send({ error: "Route requires id" });
+      return;
+    }
+    const [resetTarget] = await db("users").where({
+      recovery_request: requestId,
+    });
+    if (!resetTarget) {
+      res.send(createError(404, "Recovery code no longer valid"));
+      return;
+    }
+
+    res.send({
+      requestId,
+      resetTarget,
+    });
+  })
   .post("/", async (req, res) => {
     const { requestId, password, confirmPassword } = req.body;
     if (
@@ -18,7 +37,8 @@ router
       !confirmPassword ||
       !isValidPassword(req.body)
     ) {
-      res.send(createError(400, "Malformed password reset payload"));
+      const err = createError(400, "Malformed password reset payload");
+      res.status(err.status).send(err);
       return;
     }
 
@@ -26,7 +46,8 @@ router
       recovery_request: requestId,
     }));
     if (!user) {
-      res.send(createError(404, "No recovery request found"));
+      const err = createError(404, "No recovery request found");
+      res.status(err.statusCode).send(err);
       return;
     }
 
