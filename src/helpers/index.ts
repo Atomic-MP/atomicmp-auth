@@ -1,25 +1,22 @@
+import IRegistrationPayload from "../models/IRegistrationPayload"
+
 function isValidSignupCredentials({
   username,
   password,
   confirmPassword,
   key,
-}: {
-  username: string | undefined,
-  password: string | undefined,
-  confirmPassword: string | undefined,
-  key: string | undefined,
-}) {
+}: IRegistrationPayload) {
   return (
     isValidUsername(username) &&
     isValidPassword({ password, confirmPassword }) &&
-    key
+    typeof key === "string"
   );
 }
 
-function isValidUsername(username: string | undefined) {
+function isValidUsername(username?: string) {
   const validUsernameRegex = /^([a-zA-Z ]){3,24}$/;
   return (
-    typeof username !== "undefined" &&
+    typeof username === "string" &&
     username.replace(/ /g, "").length >= 3 &&
     !username.startsWith(" ") &&
     validUsernameRegex.test(username)
@@ -28,13 +25,13 @@ function isValidUsername(username: string | undefined) {
 
 function isValidPassword({ password, confirmPassword }:
   {
-    password: string | undefined,
-    confirmPassword: string | undefined,
+    password?: string,
+    confirmPassword?: string,
   }) {
   const validPasswordRegex = /^([A-Za-z\d$@$!%*?&]){8,50}$/;
   return (
-    typeof password !== "undefined" &&
-    typeof confirmPassword !== "undefined" &&
+    typeof password === "string" &&
+    typeof confirmPassword === "string" &&
     password === confirmPassword &&
     validPasswordRegex.test(password)
   );
