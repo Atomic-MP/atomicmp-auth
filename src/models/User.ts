@@ -1,4 +1,4 @@
-import Currency from "./Currency";
+import { currency } from "../utils/constants/items";
 
 // tslint:disable: variable-name
 // tslint:disable-next-line: interface-name
@@ -20,7 +20,7 @@ interface IUser {
   y_pos: number;
   z_pos: number;
   inventory: any[];
-  hash: Buffer;
+  hash?: Buffer;
 }
 class User {
   public readonly user_id: number;
@@ -118,9 +118,19 @@ class User {
     }
     this.inventory = obj.inventory;
   }
-  public getMoney(): number {
-    const heldCurrencies = this.inventory.filter((item) => item instanceof Currency);
-    return 0;
+
+  /**
+   * @returns Total value of held Currencies
+   */
+  public getMoney(): () => number {
+    return this.inventory.reduce((total, item) => {
+      const lookup = currency.get(item.id);
+      if (lookup) {
+        return total += (item.quantity * lookup.Value);
+      } else {
+        return total;
+      }
+    }, 0);
   }
 }
 export default User;
