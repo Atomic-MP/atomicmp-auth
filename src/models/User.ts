@@ -1,4 +1,5 @@
 import { currency } from "../utils/constants/items";
+import {IIncomingInventory} from "./SaveData";
 
 // tslint:disable: variable-name
 // tslint:disable-next-line: interface-name
@@ -19,7 +20,7 @@ interface IUser {
   x_pos: number;
   y_pos: number;
   z_pos: number;
-  inventory: any[];
+  inventory: IIncomingInventory[];
   hash?: Buffer;
 }
 class User {
@@ -38,7 +39,7 @@ class User {
   public readonly x_pos: number;
   public readonly y_pos: number;
   public readonly z_pos: number;
-  public inventory: any[];
+  public inventory: IIncomingInventory[];
   public hash: Buffer;
 
   constructor(obj: IUser) {
@@ -118,11 +119,10 @@ class User {
     }
     this.inventory = obj.inventory;
   }
-
   /**
    * @returns Total value of held Currencies
    */
-  public getMoney(): () => number {
+  public getMoney(): number {
     return this.inventory.reduce((total, item) => {
       const lookup = currency.get(item.id);
       if (lookup) {

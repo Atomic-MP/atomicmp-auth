@@ -7,6 +7,22 @@ const STARTING_COORDS = {
   z: -5968.092285,
 };
 
+interface IIncomingInventory {
+  id: string;
+  quantity: number;
+  mag: number;
+}
+
+interface ISaveData {
+  health: number;
+  hunger: number;
+  thirst: number;
+  x_pos: number;
+  y_pos: number;
+  z_pos: number;
+  inventory: IIncomingInventory[];
+}
+
 class SaveData {
   public readonly health: number = 1;
   public readonly hunger: number = 0;
@@ -14,7 +30,7 @@ class SaveData {
   public readonly x_pos: number = STARTING_COORDS.x;
   public readonly y_pos: number = STARTING_COORDS.y;
   public readonly z_pos: number = STARTING_COORDS.z;
-  public readonly inventory: any[];
+  public readonly inventory: (IIncomingInventory | undefined)[];
   constructor({
     health,
     hunger,
@@ -23,15 +39,7 @@ class SaveData {
     y_pos,
     z_pos,
     inventory,
-  }: {
-    health: number;
-    hunger: number;
-    thirst: number;
-    x_pos: number;
-    y_pos: number;
-    z_pos: number;
-    inventory: any[];
-  }) {
+  }: ISaveData) {
     /**
      * Save state transactions are **super fragile**
      * Instead of dropping a malformed payload, massage into
@@ -58,3 +66,4 @@ class SaveData {
 }
 
 export default SaveData;
+export { IIncomingInventory };
