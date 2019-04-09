@@ -2,7 +2,7 @@
 
 import * as bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 import express from "express";
 import moment from "moment";
 import router from "./controllers/routes";
@@ -30,8 +30,8 @@ class App {
   }
 
   private initializeMiddlewares() {
-    const corsOptions = {
-      allowHeaders: ["Content-Type", "Authorization"],
+    const corsOptions: CorsOptions = {
+      allowedHeaders: ["Content-Type", "Authorization"],
       optionsSuccessStatus: 200,
       origin: "*",
     };
