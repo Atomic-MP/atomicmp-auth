@@ -13,17 +13,17 @@ moment().format();
 
 class App {
   public app: express.Application;
-  public port: number;
+  public port?: number;
 
-  constructor(port: number) {
+  constructor() {
     this.app = express();
-    this.port = port;
     this.initializeMiddlewares();
     this.initializeRoutes();
     this.initializeErrorHandling();
   }
 
-  public listen() {
+  public listen(port: number) {
+    this.port = port;
     this.app.listen(this.port, () => {
       logger.info("Ready on " + this.port);
     });
