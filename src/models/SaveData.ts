@@ -10,7 +10,7 @@ const STARTING_COORDS = {
 interface IIncomingInventory {
   id: string;
   quantity: number;
-  mag: number;
+  mag?: number;
 }
 
 interface ISaveData {
