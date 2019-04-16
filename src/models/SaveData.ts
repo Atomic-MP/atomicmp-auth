@@ -32,7 +32,7 @@ class SaveData {
   public readonly y_pos: number = STARTING_COORDS.y;
   public readonly z_pos: number = STARTING_COORDS.z;
   public readonly rotation: number;
-  public readonly inventory: (IIncomingInventory | undefined)[];
+  public readonly inventory: Array<IIncomingInventory | undefined>;
   constructor({
     health,
     hunger,
