@@ -34,7 +34,7 @@ router
       !requestId ||
       !password ||
       !confirmPassword ||
-      !isValidPassword({password,confirmPassword})
+      !isValidPassword({password, confirmPassword})
     ) {
       return next(createError(400, "Malformed password reset payload"));
     }

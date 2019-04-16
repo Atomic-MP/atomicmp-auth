@@ -117,12 +117,6 @@ router.get("/load", async (req, res, next) => {
     if (!savestateKeys.has(key)) { delete user[key]; }
   }
 
-  try {
-    user.inventory = JSON.parse(user.inventory);
-  } catch (error) {
-    user.inventory = [];
-  }
-
   logger.info("[LOAD] " + JSON.stringify(user));
 
   if (user.faction) {

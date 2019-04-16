@@ -1,4 +1,4 @@
-import IRegistrationPayload from "../models/IRegistrationPayload"
+import IRegistrationPayload from "../models/IRegistrationPayload";
 
 function isValidSignupCredentials({
   username,

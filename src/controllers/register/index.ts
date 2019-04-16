@@ -5,10 +5,10 @@ import jwt from "jsonwebtoken";
 import first from "lodash.first";
 import isEmpty from "lodash.isempty";
 import { isValidSignupCredentials } from "../../helpers";
+import IRegistrationPayload from "../../models/IRegistrationPayload";
 import Key from "../../models/Key";
 import { db, logger } from "../../services";
 import { SALT_ROUNDS } from "../../utils/constants";
-import IRegistrationPayload from "../../models/IRegistrationPayload"
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
 
@@ -22,15 +22,14 @@ router
       return next(createError(400, "Malformed registration payload"));
     }
 
-    let {username, password, key} = req.body as IRegistrationPayload;
+    const {username: usernameUnparsed, password, key} = req.body as IRegistrationPayload;
 
-    
-    username = username.trim();
+    const username = usernameUnparsed.trim();
     // Check if username exists; case insensitive
 
     const usernameExists: boolean = !isEmpty(
       (await db.raw(
-        `SELECT * FROM users WHERE LOWER(username)=LOWER('${username}')`
+        `SELECT * FROM users WHERE LOWER(username)=LOWER('${username}')`,
       )).rows,
     );
     if (usernameExists) {
