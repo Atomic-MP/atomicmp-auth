@@ -19,6 +19,7 @@ export default function (args?: Partial<IUser>) {
     x_pos: faker.random.number(),
     y_pos: faker.random.number(),
     z_pos: faker.random.number(),
+    rotation: faker.random.number(360),
     inventory: []
   }, args)
 

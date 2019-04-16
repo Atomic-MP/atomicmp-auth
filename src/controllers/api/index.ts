@@ -13,7 +13,7 @@ router.use(protectedRoute);
 
 router.put("/save", async (req, res, next) => {
   const user = req.user;
-  const saveData = new SaveData(req.body)
+  const saveData = new SaveData(req.body);
   const {
     health,
     hunger,
@@ -21,6 +21,7 @@ router.put("/save", async (req, res, next) => {
     x_pos,
     y_pos,
     z_pos,
+    rotation,
     inventory,
   } = saveData;
 
@@ -32,6 +33,7 @@ router.put("/save", async (req, res, next) => {
       health,
       hunger,
       inventory: JSON.stringify(inventory),
+      rotation,
       thirst,
       x_pos,
       y_pos,
