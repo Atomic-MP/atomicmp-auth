@@ -7,6 +7,8 @@ import App from "../app";
 
 describe("Server constructor", () => {
   it("should run with appropriate env", () => {
-    expect(() => new App());
+    const app = new App();
+
+    expect(app).toBeInstanceOf(App);
   });
 });
