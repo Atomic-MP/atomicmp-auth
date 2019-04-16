@@ -108,6 +108,7 @@ router.get("/load", async (req, res, next) => {
     "x_pos",
     "y_pos",
     "z_pos",
+    "rotation",
     "inventory",
   ]);
 
