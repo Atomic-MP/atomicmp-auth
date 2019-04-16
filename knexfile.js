@@ -47,7 +47,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: PROD_POSTGRES_CONNECTION,
+    connection: PROD_POSTGRES_CONNECTION + '?ssl=true',
     pool: {
       min: 2,
       max: 10,
