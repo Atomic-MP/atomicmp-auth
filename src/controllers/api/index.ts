@@ -13,7 +13,7 @@ router.use(protectedRoute);
 
 router.put("/save", async (req, res, next) => {
   const user = req.user;
-  const saveData = new SaveData(req.body)
+  const saveData = new SaveData(req.body);
   const {
     health,
     hunger,
@@ -77,7 +77,7 @@ router.get("/user-info/:id", async (req, res, next) => {
     next(createError(404, `User ${targetUserID} not found`));
   }
 });
-router.get("/faction-info/:id", async (req, res, next) => {
+router.get("/faction-lookup/:id", async (req, res, next) => {
   const targetFactionID = req.params.id;
   const faction: (IFaction | undefined) = first(await db("factions").where("faction_id", targetFactionID));
   if (faction) {
