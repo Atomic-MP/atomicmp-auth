@@ -1,6 +1,6 @@
 import { Router } from "express";
 import protectedRoute from "../../middlewares/protected-route";
-import factionLookupHandler from "./factionLookupHandler";
+import factionInfoHandler from "./factionInfoHandler";
 import loadHandler from "./loadHandler";
 import saveHandler from "./saveHandler";
 import setAppearanceHandler from "./setAppearanceHandler";
@@ -13,7 +13,7 @@ router.get("/load", loadHandler);
 
 router.put("/set-appearance", setAppearanceHandler);
 
-router.get("/user-info/:id", userInfoHandler);
-router.get("/faction-lookup/:id", factionLookupHandler);
+router.get("/user/:id", userInfoHandler);
+router.get("/faction/:id", factionInfoHandler);
 
 export default router;
