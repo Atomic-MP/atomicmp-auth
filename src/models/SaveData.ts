@@ -20,6 +20,7 @@ interface ISaveData {
   x_pos: number;
   y_pos: number;
   z_pos: number;
+  rotation: number;
   inventory: IIncomingInventory[];
 }
 
@@ -30,7 +31,8 @@ class SaveData {
   public readonly x_pos: number = STARTING_COORDS.x;
   public readonly y_pos: number = STARTING_COORDS.y;
   public readonly z_pos: number = STARTING_COORDS.z;
-  public readonly inventory: (IIncomingInventory | undefined)[];
+  public readonly rotation: number;
+  public readonly inventory: Array<IIncomingInventory | undefined>;
   constructor({
     health,
     hunger,
@@ -38,6 +40,7 @@ class SaveData {
     x_pos,
     y_pos,
     z_pos,
+    rotation,
     inventory,
   }: ISaveData) {
     /**
@@ -51,6 +54,7 @@ class SaveData {
     this.health = health;
     this.hunger = hunger;
     this.thirst = thirst;
+    this.rotation = rotation;
     this.x_pos = x_pos;
     this.y_pos = y_pos;
     this.z_pos = z_pos;

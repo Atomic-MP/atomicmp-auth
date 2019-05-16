@@ -20,6 +20,7 @@ interface IUser {
   x_pos: number;
   y_pos: number;
   z_pos: number;
+  rotation: number;
   inventory: IIncomingInventory[];
   hash?: Buffer;
 }
@@ -39,6 +40,7 @@ class User {
   public readonly x_pos: number;
   public readonly y_pos: number;
   public readonly z_pos: number;
+  public readonly rotation: number;
   public inventory: IIncomingInventory[];
   public hash: Buffer;
 
@@ -113,6 +115,11 @@ class User {
       throw Error("z_pos required");
     }
     this.z_pos = obj.z_pos;
+
+    if (obj.rotation === undefined) {
+      throw Error("rotation required");
+    }
+    this.rotation = obj.rotation;
 
     if (obj.inventory === undefined) {
       throw Error("inventory required");
