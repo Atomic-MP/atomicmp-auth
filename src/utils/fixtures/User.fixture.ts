@@ -1,7 +1,7 @@
 import faker from "faker";
 import User, {IUser} from "../../models/User";
 
-export default function(args?: Partial<IUser>) {
+export default function(args?: IUser) {
   const defaults = {
     faction: faker.random.number(),
     hair: faker.random.number(),
