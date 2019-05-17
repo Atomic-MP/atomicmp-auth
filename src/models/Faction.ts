@@ -1,3 +1,5 @@
+import { IUser } from "./User";
+
 // tslint:disable: variable-name
 
 interface IFaction {
@@ -5,6 +7,7 @@ interface IFaction {
   faction_name: string;
   color: string;
   role_id: string;
+  users: Array<Partial<IUser>>;
 }
 
 class Faction {

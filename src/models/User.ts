@@ -6,6 +6,7 @@ import {IIncomingInventory} from "./SaveData";
 
 interface IUser {
   user_id: number;
+  discord_id: string;
   username: string;
   role: number;
   faction: number | null;
@@ -23,9 +24,13 @@ interface IUser {
   rotation: number;
   inventory: IIncomingInventory[];
   hash?: Buffer;
+  getMoney: () => number;
+  secureData: () => any;
+  insecureData: () => any;
 }
 class User {
   public readonly user_id: number;
+  public readonly discord_id: string;
   public readonly username: string;
   public readonly role: number;
   public readonly faction: number | null;
@@ -138,6 +143,26 @@ class User {
         return total;
       }
     }, 0);
+  }
+
+  public secureData() {
+    return {
+      ...this.insecureData(),
+      inventory: this.inventory,
+      rotation: this.rotation,
+      x_pos: this.x_pos,
+      y_pos: this.y_pos,
+      z_pos: this.z_pos,
+    };
+  }
+
+  public insecureData() {
+    return {
+      discord_id: this.discord_id,
+      nickname: this.nickname,
+      user_id: this.user_id,
+      username: this.username,
+    };
   }
 }
 export default User;
