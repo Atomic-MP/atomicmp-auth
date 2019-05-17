@@ -31,8 +31,8 @@ interface IUserSecureData extends IUserInsecureData {
 interface IUser extends IUserSecureData, IUserInsecureData {
   hash?: Buffer;
   getMoney: () => number;
-  secureData: () => any;
-  insecureData: () => any;
+  secureData: () => IUserSecureData;
+  insecureData: () => IUserInsecureData;
 }
 
 class User {
