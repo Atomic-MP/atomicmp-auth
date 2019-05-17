@@ -15,6 +15,8 @@ interface IUserInsecureData {
   hair: number;
   hair_color: number;
   is_male: boolean;
+  created_at: Date;
+  last_seen: Date;
 }
 
 interface IUserSecureData extends IUserInsecureData {
@@ -49,6 +51,8 @@ class User {
   public readonly hair_color: number = 1;
   public readonly is_male: boolean = true;
   public readonly nickname: string;
+  public readonly created_at: Date;
+  public readonly last_seen: Date;
   public readonly x_pos: number;
   public readonly y_pos: number;
   public readonly z_pos: number;
@@ -137,6 +141,14 @@ class User {
       throw Error("inventory required");
     }
     this.inventory = obj.inventory;
+    if (obj.created_at === undefined) {
+      throw Error("created_at required");
+    }
+    this.created_at = obj.created_at;
+    if (obj.last_seen === undefined) {
+      throw Error("last_seen required");
+    }
+    this.last_seen = obj.last_seen;
   }
   /**
    * @returns Total value of held Currencies
@@ -168,12 +180,14 @@ class User {
 
   public insecureData(): IUserInsecureData {
     return {
+      created_at: this.created_at,
       discord_id: this.discord_id,
       faction: this.faction,
       hair: this.hair,
       hair_color: this.hair_color,
       head: this.head,
       is_male: this.is_male,
+      last_seen: this.last_seen,
       nickname: this.nickname,
       role: this.role,
       user_id: this.user_id,

@@ -2,7 +2,8 @@ import faker from "faker";
 import User, {IUser} from "../../models/User";
 
 export default function(args?: Partial<IUser>) {
-  const defaults = {
+  const defaults: any = {
+    created_at: faker.date.past(),
     discord_id: faker.random.word(),
     faction: faker.random.number(),
     getMoney: () => {/** */ },
@@ -14,6 +15,7 @@ export default function(args?: Partial<IUser>) {
     insecureData: () => {/** */ },
     inventory: [],
     is_male: faker.random.boolean(),
+    last_seen: faker.date.past(),
     nickname: faker.name.firstName(),
     role: faker.random.number(),
     rotation: faker.random.number(360),
