@@ -7,10 +7,14 @@ import { db } from "../../services";
 const userInfoHandler = async (req: Request, res: Response, next: NextFunction) => {
   const targetUserID = req.params.id;
   const targetUser: User | undefined = first(await db("users")
-    .where("user_id", targetUserID)
-    .select("username", "health", "discord_id"));
+    .where("user_id", targetUserID));
   if (targetUser) {
-    res.json(targetUser);
+    const user = new User(targetUser);
+    if (user.user_id === req.user.id || (user.faction && user.faction === req.user.faction)) {
+      res.json(user.secureData());
+    } else {
+      res.json(user.insecureData());
+    }
   } else {
     next(createError(404, `User ${targetUserID} not found`));
   }

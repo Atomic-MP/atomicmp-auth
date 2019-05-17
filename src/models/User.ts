@@ -4,36 +4,43 @@ import {IIncomingInventory} from "./SaveData";
 // tslint:disable: variable-name
 // tslint:disable-next-line: interface-name
 
-interface IUser {
-  user_id: number;
+interface IUserInsecureData {
   discord_id: string;
+  nickname: string;
+  user_id: number;
   username: string;
   role: number;
-  faction: number | null;
-  health: number;
-  hunger: number;
-  thirst: number;
+  faction?: number;
   head: number;
   hair: number;
   hair_color: number;
   is_male: boolean;
-  nickname: string;
+}
+
+interface IUserSecureData extends IUserInsecureData {
+  health: number;
+  hunger: number;
+  thirst: number;
   x_pos: number;
   y_pos: number;
   z_pos: number;
   rotation: number;
   inventory: IIncomingInventory[];
+}
+
+interface IUser extends IUserSecureData, IUserInsecureData {
   hash?: Buffer;
   getMoney: () => number;
   secureData: () => any;
   insecureData: () => any;
 }
+
 class User {
   public readonly user_id: number;
   public readonly discord_id: string;
   public readonly username: string;
   public readonly role: number;
-  public readonly faction: number | null;
+  public readonly faction?: number;
   public readonly health: number = 100;
   public readonly hunger: number = 0;
   public readonly thirst: number = 0;
@@ -145,21 +152,30 @@ class User {
     }, 0);
   }
 
-  public secureData() {
+  public secureData(): IUserSecureData {
     return {
       ...this.insecureData(),
+      health: this.health,
+      hunger: this.hunger,
       inventory: this.inventory,
       rotation: this.rotation,
+      thirst: this.thirst,
       x_pos: this.x_pos,
       y_pos: this.y_pos,
       z_pos: this.z_pos,
     };
   }
 
-  public insecureData() {
+  public insecureData(): IUserInsecureData {
     return {
       discord_id: this.discord_id,
+      faction: this.faction,
+      hair: this.hair,
+      hair_color: this.hair_color,
+      head: this.head,
+      is_male: this.is_male,
       nickname: this.nickname,
+      role: this.role,
       user_id: this.user_id,
       username: this.username,
     };
