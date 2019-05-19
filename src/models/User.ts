@@ -149,6 +149,10 @@ class User {
       throw Error("last_seen required");
     }
     this.last_seen = obj.last_seen;
+    if (obj.discord_id === undefined) {
+      throw Error("discord_id required");
+    }
+    this.discord_id = obj.discord_id;
   }
   /**
    * @returns Total value of held Currencies
