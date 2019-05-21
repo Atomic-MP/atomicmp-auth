@@ -10,7 +10,7 @@
     "start": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "debug": "nodemon -r dotenv/config --nolazy --inspect",
-    "format": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
+    "format:js": "prettier --write 'src/**/*.js' 'src/*/!(node_modules)/**/*.js'",
     "lint:js": "eslint 'src/**/*.js' --ignore-path .gitignore",
     "lint:ts": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
     "compile": "tsc",
@@ -27,11 +27,14 @@
   ],
   "lint-staged": {
     "*.js": [
-      "npm run format",
+      "npm run format:js",
       "npm run lint:js",
       "git add"
     ],
-    "*.ts": []
+    "*.ts": [
+      "npm run lint:ts",
+      "git add"
+    ]
   },
   "author": "Miles Florence",
   "license": "ISC",
