@@ -24,7 +24,7 @@ Avoid extending the classes unless the method is needed in multiple locations. D
 ### `routes`
 The endpoint definitions of the Express server.
 
-When creating an endpoing that branches out (ex. `/user/1`, `/user/1/inventory` & `/user/1/location`) create a directory that bundles all required routes and import it higher up using the `router.use()` method.
+When creating an endpoint that branches out (ex. `/user/1`, `/user/1/inventory` & `/user/1/location`), create a new directory with an `index.ts` file that bundles all required routes, and import it higher up using the `router.use()` method.
 
 ### `scripts`
 Quick and dirty scripts for db management or analytics.
