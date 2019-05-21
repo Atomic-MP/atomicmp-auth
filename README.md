@@ -1,8 +1,7 @@
 # AtomicMP Auth
 An authentication server for a Fallout-like MMO.
 
-Check us out at [our website](http://www.atomicmp.com/)
-
+Check us out at [our website](https://www.atomicmp.com/)
 
 ## Navigating the Source Code
 
@@ -17,10 +16,12 @@ Helpers should be rigidly tested in the `__tests__` subdirectory.
 
 ### `middlewares`
 Middlewares used in routing.
+
 These can be used for authentication, authorization, or error handling.
 
 ### `models`
 `interface`'s and `class`es used in multiple locations.
+
 Avoid extending the classes unless the method is needed in multiple locations. Doing so unneccessarily will result in long-term performance issues.
 
 ### `routes`
@@ -38,4 +39,5 @@ Initializing these once and importing them elsewhere is more efficient.
 
 ### `utils`
 A catch-all for abstractions that don't belong anywhere more specific.
+
 ex: constants and fixtures
