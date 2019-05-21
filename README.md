@@ -10,7 +10,9 @@ All source code can be found in the `/src` directory.
 
 ### `helpers`
 These are simple funcitons, used in more than one location.
-All helpers can be destructured directly from the `helpers` directory
+
+All helpers can be destructured directly from the `helpers` directory.
+
 Helpers should be rigidly tested in the `__tests__` subdirectory.
 
 ### `middlewares`
