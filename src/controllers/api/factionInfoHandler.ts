@@ -13,7 +13,7 @@ const factionInfoHandler = async (req: Request, res: Response, next: NextFunctio
       .map((user: IUser) => new User(user));
 
     // Members of this faction should get more data
-    const users = faction.faction_id === req.user.faction
+    const users = req.user && faction.faction_id === req.user.faction
       ? usersData.map((user) => user.secureData())
       : usersData.map((user) => user.insecureData());
 
