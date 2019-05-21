@@ -4,7 +4,7 @@ import { IFaction } from "../../models/Faction";
 import { db } from "../../services";
 
 const factionInfoHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const factions: IFaction[] = await db("factions").select("*");
+  const factions: IFaction[] = await db("factions").select();
   if (factions) {
     res.json({
       factions,

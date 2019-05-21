@@ -6,9 +6,9 @@ import { db } from "../../../services";
 
 const getUserAppearance = async (req: Request, res: Response, next: NextFunction) => {
   const targetUserID = req.params.id;
-  const targetUser: User | undefined = first(await db("users")
+  const targetUser = await db("users")
     .where("user_id", targetUserID)
-    .select("head", "hair", "hair_color", "is_male", "nickname"));
+    .first("head", "hair", "hair_color", "is_male", "nickname") as (User | undefined);
   if (targetUser) {
     res.json({
       hair: targetUser.hair,

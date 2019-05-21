@@ -7,7 +7,7 @@ import { db } from "../../services";
 
 const factionInfoHandler = async (req: Request, res: Response, next: NextFunction) => {
   const targetFactionID = req.params.id;
-  const faction: (IFaction | undefined) = first(await db("factions").where("faction_id", targetFactionID));
+  const faction = await db("factions").first().where("faction_id", targetFactionID) as (IFaction | undefined);
   if (faction) {
     const usersData: IUser[] = (await db("users").where("faction", targetFactionID))
       .map((user: IUser) => new User(user));

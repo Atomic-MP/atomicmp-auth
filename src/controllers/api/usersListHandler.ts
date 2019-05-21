@@ -4,7 +4,7 @@ import User, { IUser } from "../../models/User";
 import { db } from "../../services";
 
 const usersListHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const users: IUser[] = (await db("users").select("*")).map((user: IUser) => new User(user));
+  const users: IUser[] = (await db("users").select()).map((user: IUser) => new User(user));
   if (users) {
     res.json({
       users: users.map((user) => user.insecureData()),

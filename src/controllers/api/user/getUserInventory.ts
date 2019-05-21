@@ -6,11 +6,14 @@ import { db } from "../../../services";
 
 const getUserInventory = async (req: Request, res: Response, next: NextFunction) => {
   const targetUserID = req.params.id;
-  const targetUser: User | undefined = first(await db("users")
+  const targetUser = await db("users")
     .where("user_id", targetUserID)
-    .select("inventory", "user_id", "faction"));
+    .first("inventory", "user_id", "faction") as (User | undefined);
   if (targetUser) {
-    if (targetUser.user_id === req.user.id || (targetUser.faction && targetUser.faction === req.user.faction)) {
+
+    if (req.user &&
+      (targetUser.user_id === req.user.id
+    || targetUser.faction && targetUser.faction === req.user.faction)) {
       res.json({inventory: targetUser.inventory});
     } else {
       next(createError(401, `Cannot access User ${targetUserID}'s inventory`));

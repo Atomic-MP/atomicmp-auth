@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import first from "lodash.first";
-import User from "../../../models/User";
+import User, { IUser } from "../../../models/User";
 import { db } from "../../../services";
 
 const getUserInfoHandler = async (req: Request, res: Response, next: NextFunction) => {
   const targetUserID = req.params.id;
-  const targetUser: User | undefined = first(await db("users")
-    .where("user_id", targetUserID));
+  const targetUser = await db("users")
+    .first()
+    .where("user_id", targetUserID) as (IUser | undefined);
   if (targetUser) {
     const user = new User(targetUser);
 

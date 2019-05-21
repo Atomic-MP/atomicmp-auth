@@ -6,11 +6,13 @@ import { db } from "../../../services";
 
 const getUserLocation = async (req: Request, res: Response, next: NextFunction) => {
   const targetUserID = req.params.id;
-  const targetUser: User | undefined = first(await db("users")
+  const targetUser = await db("users")
     .where("user_id", targetUserID)
-    .select("x_pos", "y_pos", "z_pos", "rotation", "user_id", "faction"));
+    .first("x_pos", "y_pos", "z_pos", "rotation", "user_id", "faction") as (User | undefined);
   if (targetUser) {
-    if (targetUser.user_id === req.user.id || (targetUser.faction && targetUser.faction === req.user.faction)) {
+    if (req.user &&
+      ( targetUser.user_id === req.user.id ||
+        targetUser.faction && targetUser.faction === req.user.faction)) {
       res.json({
         rotation: targetUser.rotation,
         x_pos: targetUser.x_pos,

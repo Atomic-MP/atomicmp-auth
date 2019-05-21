@@ -17,7 +17,8 @@ passport.use(
   new JwtStrategy(opts, async (jwtPayload: {userId: string}, done) => {
     try {
       const targetUserID: string = jwtPayload.userId;
-      const user: User | undefined = first(await db("users").where("user_id", targetUserID));
+      const user: User | undefined = await db("users").first().where("user_id", targetUserID);
+
       if (user) {
         const userData = Object.assign({}, user);
         delete userData.hash;

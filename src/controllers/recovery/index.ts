@@ -15,9 +15,11 @@ router
     if (!requestId) {
       return next(createError(401, "Route requires id"));
     }
-    const resetTarget: IUser | undefined = first(await db("users").where({
+    const resetTarget = await db("users")
+    .first()
+    .where({
       recovery_request: requestId,
-    }));
+    }) as (IUser | undefined);
 
     if (!resetTarget) {
       return next(createError(404, "Recovery code no longer valid"));

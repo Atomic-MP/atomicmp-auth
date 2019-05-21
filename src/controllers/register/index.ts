@@ -38,7 +38,7 @@ router
     }
     const keyData = first(
       await db("keys")
-        .select("key_id", "discord_id")
+        .first("key_id", "discord_id")
         .where("key", key)
         .andWhere("owner", null),
     ) as (Key | undefined);
