@@ -8,7 +8,7 @@ Check us out at [our website](https://www.atomicmp.com/)
 All source code can be found in the `/src` directory.
 
 ### `helpers`
-These are simple funcitons, used in more than one location.
+These are simple functions used in more than one location.
 
 All helpers can be destructured directly from the `helpers` directory.
 
