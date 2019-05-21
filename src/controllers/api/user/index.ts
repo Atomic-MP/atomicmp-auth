@@ -1,6 +1,6 @@
 import { Router } from "express";
 import getUserAppearance from "./getUserAppearance";
-import getUserInfoHandler from "./getUserInfoHandler";
+import getUserInfoHandler from "./getUserInfo";
 import getUserInventory from "./getUserInventory";
 import getUserLocation from "./getUserLocation";
 
