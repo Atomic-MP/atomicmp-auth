@@ -36,34 +36,37 @@ router
       logger.warn(`User ${username} already exists`);
       return next(createError(409, `User ${username} already exists`));
     }
-    const keyData: Key | undefined = first(
+    const keyData = first(
       await db("keys")
         .select("key_id", "discord_id")
         .where("key", key)
         .andWhere("owner", null),
-    );
+    ) as (Key | undefined);
     if (!keyData) {
       return next(createError(404, `Key ${key} not found`));
     }
-    const keyID = keyData.key_id;
+    const { key_id, discord_id } = keyData;
     const hash = await bcrypt.hash(password, SALT_ROUNDS);
     const userId: number = first(
       await db("users")
         .returning("user_id")
         .insert({
           created_at: new Date(),
-          discord_id: keyData.discord_id,
+          discord_id,
           faction: null,
           hash,
           health: 100,
           hunger: 100,
           role: 3,
+          rotation: 0,
           thirst: 100,
           username,
+          x_pos: 69449.953125,
+          y_pos: -26285.0,
         }),
-    ) || 1;
+    ) as number;
     await db("keys")
-      .where("key_id", keyID)
+      .where("key_id", key_id)
       .update("owner", userId);
     const token = jwt.sign(
       {
