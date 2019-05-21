@@ -5,9 +5,9 @@ import cookieParser from "cookie-parser";
 import cors, { CorsOptions } from "cors";
 import express from "express";
 import moment from "moment";
-import router from "./controllers/routes";
 import errorMiddleware from "./middlewares/error-handler";
 import jwtMiddleware from "./middlewares/jwt-middleware";
+import router from "./routes";
 import { logger } from "./services";
 moment().format();
 
