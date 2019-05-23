@@ -10,7 +10,9 @@ const mapDataHandler = async (req: Request, res: Response, next: NextFunction) =
     .filter((user: IUser) => {
       return (user.x_pos != null && user.y_pos != null && user.rotation != null) &&
       (
+        // Moderator+ should get all available user data
         isModerator(req.user.role) ||
+        // Users should recieve the data of fellow faction members
         (req.user.faction && req.user.faction === user.faction)
       );
     })
