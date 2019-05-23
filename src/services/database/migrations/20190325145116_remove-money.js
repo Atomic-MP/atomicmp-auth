@@ -11,6 +11,6 @@ exports.up = knex => {
 
 exports.down = knex => {
   return knex.schema.table('users', table => {
-    table.dropColumn('money');
+    table.integer('money');
   });
 };

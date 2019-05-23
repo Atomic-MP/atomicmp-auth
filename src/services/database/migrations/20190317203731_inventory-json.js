@@ -13,6 +13,6 @@ exports.up = knex => {
 
 exports.down = knex => {
   return knex.schema.table('users', table => {
-    table.dropColumn('inventory');
+    table.text('inventory');
   });
 };
