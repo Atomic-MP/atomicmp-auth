@@ -37,4 +37,12 @@ function isValidPassword({ password, confirmPassword }:
   );
 }
 
-export { isValidSignupCredentials, isValidUsername, isValidPassword };
+function isAdmin(role: number) {
+  return role >= 5;
+}
+
+function isModerator(role: number) {
+  return role >= 4;
+}
+
+export { isValidSignupCredentials, isValidUsername, isValidPassword, isAdmin, isModerator };

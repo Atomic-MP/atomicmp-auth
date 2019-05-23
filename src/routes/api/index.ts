@@ -3,6 +3,7 @@ import protectedRoute from "../../middlewares/protected-route";
 import factionInfoHandler from "./factionInfoHandler";
 import factionsListHandler from "./factionsListHandler";
 import loadHandler from "./loadHandler";
+import mapRouter from "./map";
 import saveHandler from "./saveHandler";
 import setAppearanceHandler from "./setAppearanceHandler";
 import userRouter from "./user";
@@ -15,6 +16,7 @@ router.get("/faction/:id", factionInfoHandler);
 router.get("/factions", factionsListHandler);
 router.use(protectedRoute);
 
+router.get("/map", mapRouter);
 router.put("/save", saveHandler);
 router.get("/load", loadHandler);
 
