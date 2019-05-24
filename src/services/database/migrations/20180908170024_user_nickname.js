@@ -1,6 +1,10 @@
 exports.up = knex => {
-  return knex.schema.table('users', table => {
-    table.string('nickname');
+  return knex.schema.hasColumn('users', 'nickname').then(nicknameExists => {
+    if (!nicknameExists) {
+      return knex.schema.table('users', table => {
+        table.string('nickname');
+      });
+    }
   });
 };
 
