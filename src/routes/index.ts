@@ -28,7 +28,7 @@ router.get("/", (req, res) => {
 });
 
 router.all("*", async (req, res, next) => {
-  next(new NotFound());
+  next(new NotFound("test"));
 });
 
 export default router;

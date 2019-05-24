@@ -3,7 +3,7 @@ import { NotFound } from "http-errors";
 
 const router = Router();
 
-router.get("/me", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   if (!req.user) {
     return next(new NotFound("No user found. Did you include a token?"));
   }
