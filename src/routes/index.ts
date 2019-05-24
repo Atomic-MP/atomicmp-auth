@@ -6,7 +6,7 @@ import logoutRoutes from "./logout";
 import recoveryRoutes from "./recovery";
 import registerRoutes from "./register";
 
-import createError from "http-errors";
+import {NotFound} from "http-errors";
 
 const router = Router();
 
@@ -16,7 +16,10 @@ router.use("/logout", logoutRoutes);
 router.use("/register", registerRoutes);
 router.use("/recovery", recoveryRoutes);
 
-router.get("/me", async (req, res) => {
+router.get("/me", async (req, res, next) => {
+  if (!req.user) {
+    next(new NotFound("No user found. Did you include a token?"));
+  }
   res.send(req.user);
 });
 
@@ -26,6 +29,10 @@ router.get("/ping", async (req, res) => {
 
 router.get("/", (req, res) => {
   res.status(301).redirect("https://www.atomicmp.com");
+});
+
+router.all("*", async (req, res, next) => {
+  next(new NotFound());
 });
 
 export default router;
