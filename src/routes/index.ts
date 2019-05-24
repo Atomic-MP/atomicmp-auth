@@ -3,10 +3,11 @@ import { Router } from "express";
 import apiRoutes from "./api";
 import loginRoutes from "./login";
 import logoutRoutes from "./logout";
+import meRoutes from "./me";
 import recoveryRoutes from "./recovery";
 import registerRoutes from "./register";
 
-import {NotFound} from "http-errors";
+import { NotFound } from "http-errors";
 
 const router = Router();
 
@@ -16,12 +17,7 @@ router.use("/logout", logoutRoutes);
 router.use("/register", registerRoutes);
 router.use("/recovery", recoveryRoutes);
 
-router.get("/me", async (req, res, next) => {
-  if (!req.user) {
-    next(new NotFound("No user found. Did you include a token?"));
-  }
-  res.send(req.user);
-});
+router.use("/me", meRoutes);
 
 router.get("/ping", async (req, res) => {
   res.status(200).send("pong!");
