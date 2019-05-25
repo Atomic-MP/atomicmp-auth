@@ -35,12 +35,12 @@ const loadHandler = async (req: Request, res: Response, next: NextFunction) => {
   logger.info("[LOAD] " + JSON.stringify(user));
 
   if (user.faction) {
-    const factionColor = await db("factions")
-      .first("color")
+    const factionColor = (await db("factions")
       .where(
         "faction_id",
         user.faction,
-      ) as (IFaction["color"] | undefined);
+      )
+      .first("color")).color as (IFaction["color"] | undefined);
 
     // tslint:disable-next-line: variable-name
     const [faction_color_r, faction_color_g, faction_color_b] = hexRgb(
