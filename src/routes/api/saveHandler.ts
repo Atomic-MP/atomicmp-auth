@@ -24,6 +24,7 @@ const saveHandler = async (req: Request, res: Response, next: NextFunction) => {
       health,
       hunger,
       inventory: JSON.stringify(inventory),
+      last_seen: new Date(),
       rotation,
       thirst,
       x_pos,
