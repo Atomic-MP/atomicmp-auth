@@ -19,6 +19,11 @@ const mapDataHandler = async (req: Request, res: Response, next: NextFunction) =
     .map((user: IUser) => new User(user));
   if (users) {
     res.json({
+      player: {
+        rotation: req.user.rotation,
+        x_pos: req.user.x_pos,
+        y_pos: req.user.y_pos,
+      },
       users: users.map(({
         faction,
         rotation,
