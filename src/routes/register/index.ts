@@ -15,8 +15,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "";
 const router = Router();
 
 router
-  .route("/")
-  .post(async (req, res, next) => {
+  .post("/", async (req, res, next) => {
 
     if (!isValidSignupCredentials(req.body)) {
       return next(createError(400, "Malformed registration payload"));
