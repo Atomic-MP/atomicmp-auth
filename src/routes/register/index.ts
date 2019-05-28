@@ -35,12 +35,10 @@ router
       logger.warn(`User ${username} already exists`);
       return next(createError(409, `User ${username} already exists`));
     }
-    const keyData = first(
-      await db("keys")
-        .select("key_id", "discord_id")
-        .where("key", key)
-        .andWhere("owner", null),
-    ) as (Key | undefined);
+    const keyData = await db("keys")
+      .first("key_id", "discord_id")
+      .where("key", key)
+      .andWhere("owner", null) as (Key | undefined);
     if (!keyData) {
       return next(createError(404, `Key ${key} not found`));
     }
