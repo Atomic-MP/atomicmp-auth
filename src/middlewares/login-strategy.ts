@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import first from "lodash.first";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import User from "../models/User";
@@ -12,11 +11,11 @@ passport.use(
       usernameField: "username",
     },
     async (username: string, password: string, done) => {
-      const user: User | undefined = await db("users")
+      const user: IUser | undefined = await db("users")
         .first()
         .where("username", username);
       // User not found
-      if (!user) {
+      if (!user || !user.hash) {
         // Do not send specific error to prevent user enumeration
         return done(null, false);
       }
@@ -35,7 +34,7 @@ passport.use(
         if (err) {
           return done(err);
         }
-        return done(null, !isValid ? null : user);
+        return done(null, !isValid ? null : new User(user));
       });
     },
   ),

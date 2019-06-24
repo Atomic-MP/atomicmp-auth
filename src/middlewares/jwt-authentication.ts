@@ -1,8 +1,7 @@
-import first from "lodash.first";
 import passport from "passport";
 import { ExtractJwt, Strategy as JwtStrategy, StrategyOptions } from "passport-jwt";
 import User from "../models/User";
-import { db, logger } from "../services";
+import { db } from "../services";
 
 const JWT_SECRET = process.env.NODE_ENV === "test"
   ? "test"
@@ -17,15 +16,11 @@ passport.use(
   new JwtStrategy(opts, async (jwtPayload: {userId: string}, done) => {
     try {
       const targetUserID: string = jwtPayload.userId;
-      const user: User | undefined = await db("users").first().where("user_id", targetUserID);
+      const userData: IUser | undefined = await db("users")
+        .first()
+        .where("user_id", targetUserID);
 
-      if (user) {
-        const userData = Object.assign({}, user);
-        delete userData.hash;
-        return done(null, userData);
-      } else {
-        return done(null, false);
-      }
+      return done(null, userData ? new User(userData) : false);
     } catch (err) {
       return done(err, false);
     }

@@ -4,14 +4,14 @@ import { logger } from "../services";
 import jwtAuthentication from "./jwt-authentication";
 
 function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
-  jwtAuthentication.authenticate("jwt", (err: Error, user) => {
+  jwtAuthentication.authenticate("jwt", (err: Error, user: User) => {
     if (err) {
       logger.error(err);
       res.sendStatus(503);
       return;
     }
     if (user) {
-      req.user = new User(user);
+      req.user = user;
     }
 
     next();
