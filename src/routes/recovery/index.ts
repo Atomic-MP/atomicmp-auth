@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import { Router } from "express";
 import createError from "http-errors";
-import { IUser } from "../../models/User";
 import { db } from "../../services";
 import { SALT_ROUNDS } from "../../utils/constants";
 

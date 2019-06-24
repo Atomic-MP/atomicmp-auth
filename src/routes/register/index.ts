@@ -5,8 +5,6 @@ import jwt from "jsonwebtoken";
 import first from "lodash.first";
 import isEmpty from "lodash.isempty";
 import { isValidSignupCredentials } from "../../helpers";
-import IRegistrationPayload from "../../models/IRegistrationPayload";
-import Key from "../../models/Key";
 import { db, logger } from "../../services";
 import { SALT_ROUNDS } from "../../utils/constants";
 
@@ -38,7 +36,7 @@ router
     const keyData = await db("keys")
       .first("key_id", "discord_id")
       .where("key", key)
-      .andWhere("owner", null) as (Key | undefined);
+      .andWhere("owner", null) as (IKey | undefined);
     if (!keyData) {
       return next(createError(404, `Key ${key} not found`));
     }

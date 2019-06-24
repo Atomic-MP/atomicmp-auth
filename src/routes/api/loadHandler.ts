@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import hexRgb from "hex-rgb";
-import first from "lodash.first";
-import { IFaction } from "../../models/Faction";
 import { db, logger } from "../../services";
 
 const loadHandler = async (req: Request, res: Response, next: NextFunction) => {

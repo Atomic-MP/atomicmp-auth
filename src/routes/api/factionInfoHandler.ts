@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
-import first from "lodash.first";
-import { IFaction } from "../../models/Faction";
-import User, { IUser } from "../../models/User";
+import User from "../../models/User";
 import { db } from "../../services";
 
 const factionInfoHandler = async (req: Request, res: Response, next: NextFunction) => {

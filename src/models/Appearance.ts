@@ -1,13 +1,6 @@
 // tslint:disable: variable-name
 
 import { HAIR_COLORS, HAIRS, HEADS } from "../utils/constants";
-interface IAppearance {
-  nickname: string;
-  head: number;
-  hair: number;
-  hair_color: number;
-  is_male: boolean;
-}
 
 class Appearance {
   public readonly nickname: string;

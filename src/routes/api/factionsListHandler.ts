@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
-import { IFaction } from "../../models/Faction";
 import { db } from "../../services";
 
 const factionInfoHandler = async (req: Request, res: Response, next: NextFunction) => {

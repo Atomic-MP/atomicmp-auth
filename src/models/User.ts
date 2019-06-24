@@ -1,42 +1,6 @@
 import { currency } from "../utils/constants/items";
-import {IIncomingInventory} from "./SaveData";
 
 // tslint:disable: variable-name
-// tslint:disable-next-line: interface-name
-
-interface IUserInsecureData {
-  discord_id: string;
-  nickname: string;
-  user_id: number;
-  username: string;
-  role: number;
-  faction?: number;
-  head: number;
-  hair: number;
-  hair_color: number;
-  is_male: boolean;
-  created_at: Date;
-  last_seen: Date;
-}
-
-interface IUserSecureData extends IUserInsecureData {
-  health: number;
-  hunger: number;
-  thirst: number;
-  x_pos: number;
-  y_pos: number;
-  z_pos: number;
-  rotation: number;
-  inventory: IIncomingInventory[];
-}
-
-interface IUser extends IUserSecureData, IUserInsecureData {
-  hash?: Buffer;
-  getMoney: () => (number);
-  secureData: () => IUserSecureData;
-  insecureData: () => IUserInsecureData;
-}
-
 class User {
   public readonly user_id: number;
   public readonly discord_id: string;
@@ -200,4 +164,3 @@ class User {
   }
 }
 export default User;
-export { IUser };

@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
-import first from "lodash.first";
 import User from "../../../models/User";
 import { db } from "../../../services";
 
