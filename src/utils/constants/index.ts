@@ -1,10 +1,5 @@
 import { items } from "./items";
 
-interface IRole {
-  role_id: number;
-  role_name: string;
-}
-
 const SALT_ROUNDS = 10;
 const HEADS = 10;
 const HAIRS = 24;

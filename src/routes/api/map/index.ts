@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { isModerator } from "../../../helpers";
-import User, { IUser } from "../../../models/User";
+import User from "../../../models/User";
 import { db } from "../../../services";
 
 const mapDataHandler = async (req: Request, res: Response, next: NextFunction) => {

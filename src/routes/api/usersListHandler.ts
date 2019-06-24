@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
-import User, { IUser } from "../../models/User";
+import User from "../../models/User";
 import { db } from "../../services";
 
 const usersListHandler = async (req: Request, res: Response, next: NextFunction) => {

@@ -1,14 +1,4 @@
-import { IUser } from "./User";
-
 // tslint:disable: variable-name
-
-interface IFaction {
-  faction_id: number;
-  faction_name: string;
-  color: string;
-  role_id: string;
-  users: Array<Partial<IUser>>;
-}
 
 class Faction {
   public readonly faction_id: number;
@@ -25,4 +15,3 @@ class Faction {
 }
 
 export default Faction;
-export { IFaction };

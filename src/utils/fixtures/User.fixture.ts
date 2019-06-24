@@ -1,5 +1,5 @@
 import faker from "faker";
-import User, {IUser} from "../../models/User";
+import User from "../../models/User";
 
 export default function(args?: Partial<IUser>) {
   const defaults: any = {

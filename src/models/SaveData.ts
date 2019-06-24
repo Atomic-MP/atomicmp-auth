@@ -7,23 +7,6 @@ const STARTING_COORDS = {
   z: -5968.092285,
 };
 
-interface IIncomingInventory {
-  id: string;
-  quantity: number;
-  mag?: number;
-}
-
-interface ISaveData {
-  health: number;
-  hunger: number;
-  thirst: number;
-  x_pos: number;
-  y_pos: number;
-  z_pos: number;
-  rotation: number;
-  inventory: IIncomingInventory[];
-}
-
 class SaveData {
   public readonly health: number = 1;
   public readonly hunger: number = 0;
@@ -70,4 +53,3 @@ class SaveData {
 }
 
 export default SaveData;
-export { IIncomingInventory };
