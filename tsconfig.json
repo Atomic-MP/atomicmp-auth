@@ -13,7 +13,7 @@
       "node_modules/@types", 
       "node_modules/@atomicmp"
     ],
-    "noImplicitAny": true
+    // "noImplicitAny": true
   },
   "include": ["./src/**/*"]
 }
