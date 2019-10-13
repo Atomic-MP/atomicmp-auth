@@ -21,6 +21,7 @@ class User {
   public readonly y_pos: number;
   public readonly z_pos: number;
   public readonly rotation: number;
+  public readonly xp: number;
   public inventory: IIncomingInventory[];
   public hash: Buffer;
 
@@ -104,6 +105,11 @@ class User {
     if (obj.inventory === undefined) {
       throw Error("inventory required");
     }
+      if (obj.xp === undefined) {
+      throw Error("xp required");
+    }
+    this.xp = obj.xp;
+    
     this.inventory = obj.inventory;
     if (obj.created_at === undefined) {
       throw Error("created_at required");
@@ -143,6 +149,7 @@ class User {
       x_pos: this.x_pos,
       y_pos: this.y_pos,
       z_pos: this.z_pos,
+      xp: this.xp,
     };
   }
 
