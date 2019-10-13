@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   knex.schema.alterTable('users', function(t) {
-	  t.integer('xp');
+	  t.integer('xp').notNullable().defaultTo(0);
   }
 };
 
