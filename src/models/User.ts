@@ -110,6 +110,11 @@ class User {
     if (obj.inventory === undefined) {
       throw Error("inventory required");
     }
+      if (obj.xp === undefined) {
+      throw Error("xp required");
+    }
+    this.xp = obj.xp;
+    
     this.inventory = obj.inventory;
     if (obj.created_at === undefined) {
       throw Error("created_at required");
