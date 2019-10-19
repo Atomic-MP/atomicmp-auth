@@ -7,6 +7,7 @@ const saveHandler = async (req: Request, res: Response, next: NextFunction) => {
   const saveData = new SaveData(req.body);
   const {
     health,
+    xp,
     hunger,
     thirst,
     x_pos,
@@ -22,6 +23,7 @@ const saveHandler = async (req: Request, res: Response, next: NextFunction) => {
     .where("user_id", user.user_id)
     .update({
       health,
+      xp,
       hunger,
       inventory: JSON.stringify(inventory),
       last_seen: new Date(),
