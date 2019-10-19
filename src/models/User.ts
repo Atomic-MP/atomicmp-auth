@@ -101,6 +101,11 @@ class User {
       throw Error("rotation required");
     }
     this.rotation = obj.rotation;
+    
+    if (obj.xp === undefined) {
+      throw Error("xp required");
+    }
+    this.xp = obj.xp;
 
     if (obj.inventory === undefined) {
       throw Error("inventory required");

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const db = require('../services/database');
+const { db } = require('../services');
 
 db('users')
   .whereNotNull('inventory')
