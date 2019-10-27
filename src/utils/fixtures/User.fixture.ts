@@ -21,6 +21,7 @@ export default function(args?: Partial<IUser>) {
     user_id: faker.random.number(),
     username: faker.name.firstName(),
     x_pos: faker.random.number(),
+    xp: faker.random.number(),
     y_pos: faker.random.number(),
     z_pos: faker.random.number(),
   };

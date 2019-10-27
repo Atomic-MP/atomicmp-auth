@@ -7,14 +7,14 @@ const saveHandler = async (req: Request, res: Response, next: NextFunction) => {
   const saveData = new SaveData(req.body);
   const {
     health,
-    xp,
     hunger,
+    inventory,
     thirst,
+    rotation,
     x_pos,
+    xp,
     y_pos,
     z_pos,
-    rotation,
-    inventory,
   } = saveData;
 
   logger.info(`inventory: ${JSON.stringify(inventory)}`);
@@ -23,13 +23,13 @@ const saveHandler = async (req: Request, res: Response, next: NextFunction) => {
     .where("user_id", user.user_id)
     .update({
       health,
-      xp,
       hunger,
       inventory: JSON.stringify(inventory),
       last_seen: new Date(),
       rotation,
       thirst,
       x_pos,
+      xp,
       y_pos,
       z_pos,
     });

@@ -11,6 +11,7 @@ class SaveData {
   public readonly health: number = 1;
   public readonly hunger: number = 0;
   public readonly thirst: number = 0;
+  public readonly xp: number = 0;
   public readonly x_pos: number = STARTING_COORDS.x;
   public readonly y_pos: number = STARTING_COORDS.y;
   public readonly z_pos: number = STARTING_COORDS.z;
@@ -20,6 +21,7 @@ class SaveData {
     health,
     hunger,
     thirst,
+    xp,
     x_pos,
     y_pos,
     z_pos,
@@ -37,6 +39,7 @@ class SaveData {
     this.health = health;
     this.hunger = hunger;
     this.thirst = thirst;
+    this.xp = xp;
     this.rotation = rotation;
     this.x_pos = x_pos;
     this.y_pos = y_pos;

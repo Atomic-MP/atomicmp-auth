@@ -57,6 +57,7 @@ router
           thirst: 100,
           username,
           x_pos: 69449.953125,
+          xp: 0,
           y_pos: -26285.0,
         }),
     ) as number;

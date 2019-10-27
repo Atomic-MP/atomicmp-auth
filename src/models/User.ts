@@ -101,7 +101,7 @@ class User {
       throw Error("rotation required");
     }
     this.rotation = obj.rotation;
-    
+
     if (obj.xp === undefined) {
       throw Error("xp required");
     }
@@ -110,11 +110,11 @@ class User {
     if (obj.inventory === undefined) {
       throw Error("inventory required");
     }
-      if (obj.xp === undefined) {
+    if (obj.xp === undefined) {
       throw Error("xp required");
     }
     this.xp = obj.xp;
-    
+
     this.inventory = obj.inventory;
     if (obj.created_at === undefined) {
       throw Error("created_at required");
@@ -152,9 +152,9 @@ class User {
       rotation: this.rotation,
       thirst: this.thirst,
       x_pos: this.x_pos,
+      xp: this.xp,
       y_pos: this.y_pos,
       z_pos: this.z_pos,
-      xp: this.xp,
     };
   }
 

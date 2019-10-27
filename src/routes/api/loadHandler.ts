@@ -13,6 +13,7 @@ const loadHandler = async (req: Request, res: Response, next: NextFunction) => {
     "health",
     "hunger",
     "thirst",
+    "xp",
     "head",
     "hair",
     "hair_color",
